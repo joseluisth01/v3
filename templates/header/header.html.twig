@@ -1,0 +1,498 @@
+<div style="background-color: #C3C3C4; width:100%" class="prepre-header">
+	<div class="pre-header d-tablet">
+		<div class="row">
+			{% if config.empresa.telefono %}
+				<div class="col-auto">
+					<a href="tel:{{ config.empresa.telefonoUri }}" class="mr-4">
+						<i class="mdi mdi-phone mdi-18px mr-1"></i>
+						{{ config.empresa.telefono }}</a>
+				</div>
+			{% endif %}
+			{% if config.empresa.whatsapp %}
+				<div class="col-auto">
+					<a href="https://wa.me/34{{ config.empresa.whatsapp }}" target="_blank" rel="noreferrer">
+						<i class="mdi mdi-whatsapp mdi-18px mr-1"></i>
+						{{ config.empresa.whatsapp }}</a>
+				</div>
+			{% endif %}
+			{% if config.empresa.email %}
+				<div class="col-auto">
+					<a href="mailto:{{ config.empresa.email }}" class="mr-4">
+						<i class="mdi mdi-email mdi-18px mr-1"></i>
+						{{ config.empresa.email }}</a>
+				</div>
+			{% endif %}
+
+		</div>
+		<div class="horarioresponsive">
+			<i class="mdi mdi-clock mdi-18px mr-1"></i>
+			<span>{{ config.empresa.horario }}</span>
+		</div>
+
+	</div>
+</div>
+
+
+{# MOBILE #}
+{% include 'header/header.mobile.html.twig' %}
+<div class="container2">
+	<header class="d-tablet" id="header-main">
+
+		<a href="{{ url('home') }}" class="logoheader">
+			<img src="{{ asset(config.logo) }}" title="{{ config.nombreWeb }}" alt="{{ config.nombreWeb }}">
+		</a>
+		<div class="search">
+			<form class="input-group" action="{{ url('search') }}" method="GET" accept-charset="utf-8">
+				<input type="text" class="inputsearchheader form-control no-box-shadow text-dark" name="q" placeholder="Buscar en la tienda..." value="{{ textSearch ?? '' }}">
+				<div class="input-group-append">
+					<button type="submit" class="botonbuscarheader btn btn-light text-dark btn-outline-secondary no-box-shadow"><img src="{{ asset('images/buscador.svg') }}" width="20" height="20" alt="Buscar" title="Buscar"></button>
+				</div>
+			</form>
+
+			{# Login y Carrito movidos al lado del buscador #}
+			<div class="d-flex align-items-center ml-3">
+				{% if not app.user %}
+					<a href="{{ url('cart-view') }}" class="nav-item mr-3">
+						<img src="{{ asset('images/carrito.svg') }}" width="40" height="40" alt="Carrito" title="Carrito">
+					</a>
+					<a href="{{ url('app_login') }}" class="nav-item">
+						<img src="{{ asset('images/login.svg') }}" width="40" height="40" alt="Login" title="Login">
+					</a>
+				{% else %}
+
+					<a href="{{ url('cart-view') }}" class="nav-item mr-3">
+						<img src="{{ asset('images/carrito.svg') }}" width="40" height="40" alt="Carrito" title="Carrito">
+					</a>
+					<div class="nav-item dropdown">
+						<span data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button">
+							<img src="{{ asset('images/login.svg') }}" width="40" height="40" alt="Gestion" title="Gestion">
+						</span>
+						<ul class="dropdown-menu container w-auto mt-1">
+							<li>
+								{% if app.user.isAdmin %}
+									<a href="{{ url('admin') }}" class="dropdown-item py-2">
+										ADMINISTRACIÓN
+									</a>
+								{% endif %}
+							</li>
+							<li>
+								<a class="dropdown-item py-2" href="{{ url('gestion') }}">
+									GESTIÓN
+								</a>
+							</li>
+							<li>
+								<a class="dropdown-item py-2" href="{{ url('cliente-seleccion') }}">
+									SELECCIONAR CLIENTE
+								</a>
+							</li>
+							<li>
+								<a class="dropdown-item py-2" href="{{ url('app_logout') }}">
+									CERRAR SESIÓN
+								</a>
+							</li>
+						</ul>
+					</div>
+				{% endif %}
+			</div>
+		</div>
+
+	</header>
+</div>
+
+<div class="theme-bg menuinferior" style="box-shadow: 0px 2px 8px 0px #000000CC;">
+	<button id="menu-toggle" class="menu-toggle d-none" style="margin:0 auto">
+		<i style="color:white !important" class="mdi mdi-menu mdi-24px "></i>
+	</button>
+
+	<form class="input-group" action="{{ url('search') }}" method="GET" accept-charset="utf-8">
+				<input type="text" class="inputsearchheader form-control no-box-shadow text-dark" name="q" placeholder="Buscar en la tienda..." value="{{ textSearch ?? '' }}">
+				<div class="input-group-append">
+					<button type="submit" class="botonbuscarheader btn btn-light text-dark btn-outline-secondary no-box-shadow"><img src="{{ asset('images/buscador.svg') }}" width="20" height="20" alt="Buscar" title="Buscar"></button>
+				</div>
+	</form>
+
+	<nav id="nav-main" class="main-nav d-tablet header-navigation d-flex justify-content-between flex-grow-1 px-5">
+		<div>
+			<a href="#" class="nav-item enlacenavheader" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				<i class="mdi mdi-format-list-text mr-2"></i>CATÁLOGO
+			</a>
+			{% if categorias is defined %}
+				{% include 'main/categorias.html.twig' %}
+			{% elseif familias is defined %}
+				{% include 'main/familias.html.twig' %}
+			{% endif %}
+		</div>
+		{% if config.data.promocionesboolean %}
+			<span>
+				<a href="{{ path('promociones') }}" class="enlacenavheader">PROMOCIONES</a>
+			</span>
+		{% endif %}
+		{% if config.data.quienessomosboolean %}
+			<span>
+				<a href="{{ path('quienessomos') }}" class="enlacenavheader">QUIENES SOMOS</a>
+			</span>
+		{% endif %}
+		{% if config.data.recursosboolean %}
+			<span>
+				<a href="{{ path('recursos') }}" class="enlacenavheader">RECURSOS</a>
+			</span>
+		{% endif %}
+		{% if cms is defined and config.data.mostrar_info_cms_nav %}
+			<div class="nav-item">
+				<span data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button">
+					INFORMACIÓN
+				</span>
+				<ul class="dropdown-menu container w-auto mt-1">
+					{% for item in cms %}
+						<li>
+							<a class="dropdown-item py-3" href="{{ url('textos', { item: item.web_url})}}">
+								<i class="mdi mdi-text-box-outline mr-1"></i>
+								{{item.nombre}}
+							</a>
+						</li>
+					{% endfor %}
+					{% if config.formularioRecogida %}
+						<li>
+							<a class="dropdown-item py-3" href="{{ url('recogida')}}">
+								<i class="mdi mdi-text-box-outline mr-1"></i>
+								FORMULARIO RECOGIDA
+							</a>
+						</li>
+					{% endif %}
+				</ul>
+			</div>
+		{% endif %}
+	</nav>
+	<div id="dropdown-menu" class="dropdown-menu d-none">
+		<div>
+			<a href="#" class="nav-item enlacenavheader" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				CATÁLOGO
+			</a>
+			{% if categorias is defined %}
+				<ul class="dropdown-menu submenu2 mobile-menu" style="display: none;">
+					{% for categoria in categorias %}
+						{% set categoria_id = categoria.url|split('-')[0] %}
+						<li class="has-submenu py-1 item-menu-cat" data-id="{{ categoria_id }}">
+							<div class="d-flex align-items-center">
+								<a href="{{ url('categoria-grid', { 'webUrl': categoria.url }) }}" class="dropdown-item flex-grow-1 d-flex align-items-center" style="height: 35px;">
+									<span>{{ categoria.nombre }}</span>
+								</a>
+								<button class="btn-toggle-submenu btn btn-sm mr-2" type="button" aria-expanded="false">
+									<i class="mdi mdi-chevron-down"></i>
+								</button>
+							</div>
+							<div class="menu-cat dropdown-menu wrapper-fam-items submenu3" id="wrapper-fam-items-{{ categoria_id }}" style="display: none;">
+								<div class="fam-items">
+									{% for familia in categoria.fam %}
+										<div>
+											<a class="title" href="{{ url('familia-grid', { 'param': familia.url }) }}">{{ familia.nombre }}</a>
+											<ul class="mt-2">
+												{% for subfamilia in familia.sub %}
+													<li class="service-box-v1">
+														<a href="{{ url('subfamilia', { 'param': subfamilia.url }) }}">{{ subfamilia.nombre }}</a>
+													</li>
+												{% endfor %}
+											</ul>
+										</div>
+									{% endfor %}
+								</div>
+							</div>
+						</li>
+					{% endfor %}
+				</ul>
+			{% elseif familias is defined %}
+				<ul class="dropdown-menu submenu2 mobile-menu" style="display: none;">
+					{% for familia in familias %}
+						{% set familia_id = familia.url|split('-')[0] %}
+						<li class="has-submenu py-1 item-menu-cat" data-id="{{ familia_id }}">
+							<div class="d-flex align-items-center">
+								<a href="{{ url('familia-grid', { 'param': familia.url }) }}" class="dropdown-item flex-grow-1 d-flex align-items-center" style="height: 35px;">
+									<span>{{ familia.nombre }}</span>
+								</a>
+								<button class="btn-toggle-submenu btn btn-sm mr-2" type="button" aria-expanded="false">
+									<i class="mdi mdi-chevron-down"></i>
+								</button>
+							</div>
+							<div class="menu-cat dropdown-menu wrapper-fam-items submenu3" id="wrapper-fam-items-{{ familia_id }}" style="display: none;">
+								<div class="fam-items">
+									<ul class="mt-2">
+										{% for subfamilia in familia.sub %}
+											<li class="service-box-v1">
+												<a href="{{ url('subfamilia', { 'param': subfamilia.url }) }}">{{ subfamilia.nombre }}</a>
+											</li>
+										{% endfor %}
+									</ul>
+								</div>
+							</div>
+						</li>
+					{% endfor %}
+				</ul>
+			{% endif %}
+		</div>
+		{% if config.data.promocionesboolean %}
+			<span>
+				<a href="{{ path('promociones') }}" class="enlacenavheader">PROMOCIONES</a>
+			</span>
+		{% endif %}
+		{% if config.data.quienessomosboolean %}
+			<span>
+				<a href="{{ path('quienessomos') }}" class="enlacenavheader">QUIENES SOMOS</a>
+			</span>
+		{% endif %}
+		{% if config.data.recursosboolean %}
+			<span>
+				<a href="{{ path('recursos') }}" class="enlacenavheader">RECURSOS</a>
+			</span>
+		{% endif %}
+		{% if cms is defined and config.data.mostrar_info_cms_nav %}
+			<div class="nav-item" style="text-align:center">
+				<span class="enlacenavheader" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button">
+					INFORMACIÓN
+				</span>
+				<ul class="dropdown-menu container w-auto mt-1">
+					{% for item in cms %}
+						<li>
+							<a class="dropdown-item py-3" href="{{ url('textos', { item: item.web_url})}}">
+								<i class="mdi mdi-text-box-outline mr-1"></i>
+								{{item.nombre}}
+							</a>
+						</li>
+					{% endfor %}
+					{% if config.formularioRecogida %}
+						<li>
+							<a class="dropdown-item py-3" href="{{ url('recogida')}}">
+								<i class="mdi mdi-text-box-outline mr-1"></i>
+								FORMULARIO RECOGIDA
+							</a>
+						</li>
+					{% endif %}
+				</ul>
+			</div>
+		{% endif %}
+	</div>
+	<script>
+		document.addEventListener("DOMContentLoaded", function () { // Menu móvil hamburguesa
+const menuToggle = document.getElementById("menu-toggle");
+const dropdownMenu = document.getElementById("dropdown-menu");
+
+menuToggle.addEventListener("click", function () {
+dropdownMenu.classList.toggle("active");
+// No mostramos automáticamente el submenú de catálogo
+});
+
+// Manejadores para el botón del catálogo - uno para desktop y otro para móvil
+const desktopCatalogLink = document.querySelector('#nav-main .enlacenavheader[data-toggle="dropdown"]');
+const desktopSubmenu = document.querySelector('#nav-main .submenu2');
+
+const mobileCatalogLink = document.querySelector('#dropdown-menu .enlacenavheader[data-toggle="dropdown"]');
+const mobileSubmenu = document.querySelector('#dropdown-menu .submenu2');
+
+// Manejador para versión desktop
+if (desktopCatalogLink && desktopSubmenu) {
+desktopCatalogLink.addEventListener('click', function (e) {
+e.preventDefault();
+e.stopPropagation();
+
+if (desktopSubmenu.classList.contains('show')) {
+desktopSubmenu.classList.remove('show');
+desktopSubmenu.style.display = 'none';
+} else {
+desktopSubmenu.classList.add('show');
+desktopSubmenu.style.display = 'block';
+desktopSubmenu.style.marginTop = '34px';
+}
+});
+}
+
+// Manejador para versión móvil
+if (mobileCatalogLink && mobileSubmenu) {
+mobileCatalogLink.addEventListener('click', function (e) {
+e.preventDefault();
+e.stopPropagation();
+console.log("Mobile catalog click");
+
+if (mobileSubmenu.classList.contains('show')) {
+mobileSubmenu.classList.remove('show');
+mobileSubmenu.style.display = 'none';
+} else {
+mobileSubmenu.classList.add('show');
+mobileSubmenu.style.display = 'block !important';
+}
+});
+}
+
+// Función para abrir el catálogo desde el slider
+window.openCatalogMenu = function () {
+if (window.innerWidth >= 768) { // Desktop
+if (desktopSubmenu && ! desktopSubmenu.classList.contains('show')) {
+desktopSubmenu.classList.add('show');
+desktopSubmenu.style.display = 'block';
+desktopSubmenu.style.marginTop = '34px';
+}
+} else { // Mobile
+if (mobileSubmenu && ! mobileSubmenu.classList.contains('show')) {
+dropdownMenu.classList.add('active');
+mobileSubmenu.classList.add('show');
+mobileSubmenu.style.display = 'block';
+}
+}
+};
+
+// Cerrar al hacer clic fuera (desktop)
+document.addEventListener('click', function (event) {
+if (desktopSubmenu) {
+const isClickInsideMenu = desktopSubmenu.contains(event.target);
+const isClickOnCatalogLink = desktopCatalogLink && desktopCatalogLink.contains(event.target);
+const isClickOnCatalogButton = event.target.classList.contains('btnsliderprincipal');
+
+if (! isClickInsideMenu && ! isClickOnCatalogLink && ! isClickOnCatalogButton && desktopSubmenu.classList.contains('show')) {
+desktopSubmenu.classList.remove('show');
+desktopSubmenu.style.display = 'none';
+}
+}
+});
+
+// Evitar que se cierre al hacer clic dentro del menú (desktop)
+if (desktopSubmenu) {
+desktopSubmenu.addEventListener('click', function (e) {
+e.stopPropagation();
+});
+}
+
+// Manejo de botones de expansión en móvil
+const toggleButtons = document.querySelectorAll('.btn-toggle-submenu');
+toggleButtons.forEach(button => {
+button.addEventListener('click', function (e) {
+e.preventDefault();
+e.stopPropagation();
+
+const menuItem = this.closest('.has-submenu');
+const submenu = menuItem.querySelector('.submenu3');
+
+// Cerrar otros submenús abiertos
+menuItem.closest('ul').querySelectorAll('.submenu3.show').forEach(menu => {
+if (menu !== submenu) {
+menu.classList.remove('show');
+menu.style.display = 'none';
+menu.closest('.has-submenu').querySelector('.btn-toggle-submenu i').classList.replace('mdi-chevron-up', 'mdi-chevron-down');
+}
+});
+
+// Toggle actual submenú
+if (submenu.classList.contains('show')) {
+submenu.classList.remove('show');
+submenu.style.display = 'none';
+this.querySelector('i').classList.replace('mdi-chevron-up', 'mdi-chevron-down');
+} else {
+submenu.classList.add('show');
+submenu.style.display = 'block';
+this.querySelector('i').classList.replace('mdi-chevron-down', 'mdi-chevron-up');
+}
+});
+});
+});
+	</script>
+
+	<style>
+		/* Estilos para el menú móvil */
+		@media(max-width: 767.98px) {
+			.mobile-menu {
+				display: none !important;
+				position: static !important;
+				margin: 0 !important;
+				padding: 0.5rem 0 !important;
+				transform: none !important;
+				width: 100% !important;
+				max-height: 80vh !important;
+				overflow-y: auto !important;
+			}
+
+			.mobile-menu.show {
+				display: block !important;
+			}
+
+			#dropdown-menu .submenu3.show {
+				height: auto !important;
+			}
+
+			.submenu2 {
+				margin-bottom: 30px !important;
+				box-shadow: 0 0 5px 0 #00000000;
+				background-color: #dcdcdc99;
+			}
+
+			.has-submenu .d-flex {
+				width: 100%;
+			}
+
+			.btn-toggle-submenu {
+				padding: 0.25rem 0.5rem;
+				background: none;
+				border: none;
+				color: white;
+			}
+
+			.btn-toggle-submenu:focus {
+				outline: none;
+			}
+
+			.submenu3.show {
+				position: static !important;
+				transform: none !important;
+				width: 100%;
+				margin-left: 1rem;
+				border: none;
+				box-shadow: none;
+				background-color: rgba(255, 255, 255, 0.1);
+				padding: 10px !important;
+			}
+
+			.submenu3 .fam-items .title {
+				font-size: 18px !important;
+			}
+
+			.mobile-menu .has-submenu {
+				border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+			}
+
+			.mobile-menu .has-submenu:last-child {
+				border-bottom: none;
+			}
+
+			.dropdown-menu.active {
+				display: block !important;
+				width: 100%;
+				background-color: inherit;
+				border: none;
+				box-shadow: none;
+				margin-top: 0;
+				padding: 1rem;
+			}
+
+			#dropdown-menu span,
+			#dropdown-menu a.enlacenavheader {
+				display: block;
+				padding: 0.5rem 0;
+				color: white;
+				border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+			}
+
+			.fam-items {
+				display: block !important;
+			}
+
+			.fam-items > div {
+				padding: 0.5rem 0;
+			}
+
+			.service-box-v1 a {
+				color: rgba(255, 255, 255, 0.8) !important;
+			}
+
+			.title {
+				font-weight: bold;
+				color: white !important;
+			}
+		}
+	</style>
+</div>

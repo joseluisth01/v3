@@ -1,0 +1,111 @@
+{% extends 'admin/base.html.twig' %}
+{% block body %}
+  <div id="app-val">
+    <div class="d-flex justify-content-between mb-3">
+      <h4>OPINIONES / VALORACIONES</h4>
+      <div>
+        <select v-model="estado" @change="leeValoraciones" class="form-control">
+          <option value="-2">Todas</option>
+          <option value="0">Sin valorar</option>
+          <option value="1">Aprobadas</option>
+          <option value="-1">Rechazadas</option>
+        </select>
+      </div>
+    </div>
+    <ul class="list-group">
+      <li v-for="(item, index) in valoraciones" :key="item.id" class="list-group-item">
+        <div class="row">
+          <div class="col">
+            <div class="d-flex justify-content-between">
+              <h1 class=" d-inline text-warning mr-2" v-html=" item.valoracion"></h1>
+              <div class="d-flex align-items-center">
+                <span class="font-sm mr-3">Estado:</span>
+                <i class="font-lg mdi" :class="[item.estado > 0 ? 'mdi-thumb-up text-success' : (item.estado < 0 ? 'mdi-thumb-down text-danger': 'mdi-help-circle-outline')]"></i>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <div v-if="item.validacion_usuario != ''" class="border border-dark mb-1 px-2 d-flex justify-content-between">
+                  <div class="d-inline-block">
+                    <span class="font-weight-bold mr-2">Validado por:</span>${item.validacion_usuario}
+                  </div>
+                  <span class="ml-3">${item.validacion_fecha}</span>
+                </div>
+                <div>
+                  <span class="font-weight-bold mr-2">${ item.referencia }</span>
+                  ${ item.articulo }
+                </div>
+                <div>
+                  <span class="font-weight-bold mr-4">${ item.fecha }</span>
+                  <span v-if="item.intervalo != ''">{${ item.intervalo })</span>
+                </div>
+                <div class="d-flex flex-wrap">
+                  <span class="font-weight-bold mr-2">${ item.cliente }</span>
+                  <span class="mr-md-3">(${ item.cli_alias })</span>
+                  <span v-if="item.verificado" class="text-success font-weight-bold">&check; Compra verificada</span>
+                </div>
+                <div>
+                  <div class="font-weight-bold font-sm">Opinión</div>
+                  <div>${ item.opinion }</div>
+                </div>
+                <div>
+                  <div class="font-weight-bold font-sm">Ventajas</div>
+                  <div>${ item.pros }</div>
+                </div>
+                <div>
+                  <div class="font-weight-bold font-sm">Desventajas</div>
+                  <div>${ item.contras }</div>
+                </div>
+              </div>
+              <div class="col-auto">
+                <img width="60" :src="'../' +item.imagen" :alt="item.articulo">
+              </div>
+            </div>
+          </div>
+          <div class="col-auto">
+            <button class="btn btn-block btn-success" @click="aprobar(item.id, index)">
+              <i class="mdi mdi-check mr-2"></i>Aprobar
+            </button>
+            <button class="btn btn-block btn-danger" @click="rechazar(item.id, index)">
+              <i class="mdi mdi-close-circle-outline mr-2"></i>Rechazar
+            </button>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+{% endblock %}
+{% block javascripts %}
+  <script>
+    new Vue( {
+      delimiters: [
+        '${', '}'
+      ],
+      el: '#app-val',
+      data() {
+        return { valoraciones: [], orden: 'new', estado: 0 };
+      },
+      created() {
+        this.leeValoraciones();
+      },
+      methods: {
+        path() {
+          return T.path.apply( null, arguments );
+        },
+        leeValoraciones() {
+          let self = this;
+          $.get( T.path( 'art-valoracion/list', this.estado, this.orden ), function( datos ) {
+            self.valoraciones = datos;
+          } );
+        },
+        aprobar( id, index ) {
+          $.post( this.path( 'admin/valoraciones/aprueba', id ), null, () => this.valoraciones[ index ].estado = 1 );
+        },
+        rechazar( id, index ) {
+          $.post( this.path( 'admin/valoraciones/rechaza', id ), null, () => this.valoraciones[ index ].estado = -1 );
+
+        }
+      }
+    } );
+  </script>
+{% endblock %}

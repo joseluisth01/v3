@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+  <style>
+    .mar-name-title {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: var(--theme-main-color);
+      text-shadow: 1px 0 1px #ccc, 0 1px 1px #eee, 2px 1px 1px #ccc, 1px 2px 1px #eee, 3px 2px 1px #ccc, 2px 3px 1px #eee, 4px 3px 1px #ccc, 3px 4px 1px #eee, 5px 4px 1px #ccc, 4px 5px 1px #eee;
+    }
+  </style>
+{% endblock %}
+{% block body %}
+  <main>
+    {% if lista_familias is empty %}
+      <div class="text-center py-5">
+        <div class="text-center mar-name-title">{{ marca.nombre }}</div>
+        <h1>La marca no tiene familias</h1>
+      </div>
+    {% else %}
+      <div class="text-center">
+        <span class="mar-name-title">{{ marca.nombre }}</span>
+      </div>
+      <div class="familias-grid-container">
+        {% for fam in lista_familias %}
+          <a href="{{ url('familia-grid', {param: fam.url ~ '/_' ~ marca.web_url}) }}">
+            <div style="background: url('{{ asset(fam.url_imagen) }}') no-repeat center">
+              <div class="name theme-bg font-weight-bold">{{ fam.nombre }}</div>
+            </div>
+          </a>
+        {% endfor %}
+      </div>
+      <div class="product-list-container-2">
+        {% for art in articulos %}
+          {% include 'articulo/art-minificha-2.html.twig' %}
+        {% endfor %}
+      </div>
+
+    {% endif %}
+  </main>
+{% endblock %}

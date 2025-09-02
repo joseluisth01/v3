@@ -1,0 +1,101 @@
+<div class="modal-header">
+    <h5 class="modal-title text-success" id="carrito-add-ok-title">
+        <i class="mdi mdi-check mr-2"></i>Producto añadido a su carrito
+    </h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <div class="container-fluid">
+        <div class="row font-weight-bold mb-2">
+            {{ art.nombre }}
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <img width="120" src="{{ asset(art.imagen) }}" alt="{{ art.nombre }}">
+            </div>
+            <div class="col-6 d-flex flex-column justify-content-center align-items-center">
+                <table>
+                    <tbody>
+                        <tr>
+                            <td><b>Precio: </b></td>
+                            <td class="pl-2">{{ art.precio|price }}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Cantidad: </b></td>
+                            <td class="pl-2">{{ art.unidades }}</td>
+                        </tr>
+                        {% if art.talla is not empty %}
+                        <tr class="mt-2">
+                            <td><b>Talla: </b></td>
+                            <td class="pl-2">{{ art.talla }}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Color: </b></td>
+                            <td class="pl-2">{{ art.color }}</td>
+                        </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+                {% if art.web_alerta is not empty %}
+                <small class="text-danger mt-2">{{ art.web_alerta }}</small>
+                {% endif %}
+            </div>
+        </div>
+        <div class="row my-2">
+            Tiene <b class="px-1">{{ tot.unidades }}</b> {{ tot.unidades is same as(1) ? 'artículo' : 'artículos' }} en su carrito
+        </div>
+        {% if portes.euros > 0 %}
+        <div class="row d-flex justify-content-between">
+            <div><b class="pr-2">Total artículos:</b> {{ tot.total | price }}</div>
+            <div><b>Portes:</b> {{ portes.euros_mas_iva | price }}</div>
+            <div><b class="pr-2">Total carrito:</b> {{ tot.total_con_portes | price }}</div>
+        </div>
+        {% else %}
+        <div class="row">
+            <b class="pr-2">Total carrito:</b> {{ tot.total | price }}
+        </div>
+        {% endif %}
+        {% if portes.gratis > 0 %}
+        <div class="row mt-3">
+            <small><b>Portes gratis a partir de {{ portes.gratis | price }}.</b></small>
+        </div>
+        {% if portes.falta > 0 %}
+        <div class="row">
+            {% if portes.falta == 1 %}
+            <small>Le falta {{ portes.falta | price }} para que su envío sea gratuito.</small>
+            {% else %}
+            <small>Le faltan {{ portes.falta | price }} para que su envío sea gratuito.</small>
+            {% endif %}
+        </div>
+        {% endif %}
+        {% endif %}
+    </div>
+</div>
+<div class="modal-footer d-flex justify-content-between">
+    <button class="btnseguircomprando btn btn-primary" data-dismiss="modal"><i class="mdi mdi-check mr-2"></i>
+        Continuar<span class="d-none d-sm-inline"> comprando</span>
+    </button>
+    <a class="btn btn-success" href="{{ url('cart-view') }}"><i class="mdi mdi-cart mr-2"></i> Ir al carrito</a>
+</div>
+
+<script>
+    // Asegurarnos de que el modal se cierra correctamente
+    $(document).ready(function() {
+        // Botón para continuar comprando
+        $('.btnseguircomprando').on('click', function() {
+            $('#modal-cart-add-ok').modal('hide'); // Cierra el modal
+        });
+
+        // Botón de la "X" para cerrar
+        $('.close', '#modal-cart-add-ok').on('click', function() {
+            $('#modal-cart-add-ok').modal('hide'); // Cierra el modal
+        });
+
+        // Si el botón de "Ir al carrito" también debe cerrar el modal
+        $('.btn-success', '#modal-cart-add-ok').on('click', function() {
+            $('#modal-cart-add-ok').modal('hide'); // Cierra el modal
+        });
+    });
+</script>

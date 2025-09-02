@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+  <main>
+    {% include 'tools/breadcrumb.html.twig' %}
+    <div class="d-flex justify-content-center align-items-center mt-5">
+      <h1 class="fam-name-title">{{ sub.nombre }}</h1>
+    </div>
+    {% if articulos is empty %}
+      <div class="d-flex justify-content-center align-items-center py-5 my-5">
+        <div class="h1">No hay artículos que coincidan con su filtro</div>
+      </div>
+    {% else %}
+      <div class=" d-flex flex-wrap flex-md-nowrap justify-content-center">
+        {% include 'tools/atributos.html.twig' %}
+        <div class="w-100">
+          <div class="product-list-container">
+            {% for art in articulos %}
+              {% include 'articulo/art-minificha.html.twig' %}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      <div class="description">
+        {{ sub.web_description | raw}}
+      </div>
+    {% endif %}
+    {% include 'tools/pagination.html.twig' %}
+  </main>
+{% endblock %}

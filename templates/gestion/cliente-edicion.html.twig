@@ -1,0 +1,143 @@
+<div class="modal-header py-2">
+    <h4 class="modal-title" id="cli-edit-title"><i class="mdi mdi-account-edit mr-2"></i>Cliente {{cli.codigo == 0 ? 'Nuevo' : ''}}</h4>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+</div>
+<div class="modal-body">
+    <form action="{{ url('cliente-save') }}" method="POST" id="cli-edit-form">
+        <div class="row">
+            {% if cli.codigo is not empty %}
+            <div class="col-3">
+                <label for="cli-edit-codigo">Código</label>
+                <input type="text" class="form-control form-control-sm" name="codigo" id="cli-edit-codigo" value="{{cli.codigo}}" readonly>
+            </div>
+            <div class="col-1 d-none d-md-block"></div>
+            {% endif %}
+            <div class="col-6 col-md-4">
+                <label for="cli-edit-tipofiscal">Tipo persona</label>
+                <select class="form-control form-control-sm" name="tipofiscal" id="cli-edit-tipofiscal" value="{{cli.tipofiscal}}">
+                    <option value="F">Física</option>
+                    <option value="J">Jurídica</option>
+                </select>
+            </div>
+            <div class="col-1 d-none d-md-block"></div>
+            <div class="col-6 col-md-3">
+                <label for="cli-edit-cif">CIF</label>
+                <input type="text" class="form-control form-control-sm" name="cif" id="cli-edit-cif" value="{{cli.cif}}">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label for="cli-edit-nombre">Nombre</label>
+                <input type="text" class="form-control form-control-sm" name="nombre" id="cli-edit-nombre" value="{{cli.nombre}}">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <label for="cli-edit-apellido1">Apellidos</label>
+                <input type="text" class="form-control form-control-sm" name="apellido1" id="cli-edit-apellido1" value="{{cli.apellido1}}">
+            </div>
+            <div class="col-12 col-md-6">
+                <label class="d-none d-md-block" for="cli-edit-apellido2">&nbsp;</label>
+                <input type="text" class="form-control form-control-sm mt-2 mt-md-0" name="apellido2" id="cli-edit-apellido2" value="{{cli.apellido2}}">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label for="cli-edit-direccion">Dirección</label>
+                <input type="text" class="form-control form-control-sm" name="direccion" id="cli-edit-direccion" value="{{cli.direccion}}">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label for="cli-edit-localidad">Localidad</label>
+                <input type="text" class="form-control form-control-sm" name="localidad" id="cli-edit-localidad" value="{{cli.localidad}}">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4 col-md-3">
+                <label for="cli-edit-cpostal">C.Postal</label>
+                <input type="text" class="form-control form-control-sm" name="cpostal" id="cli-edit-cpostal" value="{{cli.cpostal}}" @blur="cPostalBlur">
+            </div>
+            <div class="col-8 col-md-9">
+                <label for="cli-edit-provincia">Provincia</label>
+                <select class="form-control form-control-sm" name="provincia" id="cli-edit-provincia">
+                    <option value="0"></option>
+                    {% for pro in provincias %}
+                    <option value="{{ pro.codigo }}" {% if cli.provincia == pro.codigo %} selected {% endif %}>{{ pro.nombre }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 col-md-3">
+                <label for="cli-edit-telefono1">Teléfono 1</label>
+                <input type="text" class="form-control form-control-sm" name="telefono1" id="cli-edit-telefono1" value="{{cli.telefono1}}">
+            </div>
+            <div class="col-6 col-md-3">
+                <label for="cli-edit-telefono2">Teléfono 2</label>
+                <input type="text" class="form-control form-control-sm" name="telefono2" id="cli-edit-telefono2" value="{{cli.telefono2}}">
+            </div>
+            <div class="col-6 col-md-3">
+                <label for="cli-edit-telefono3">Móvil</label>
+                <input type="text" class="form-control form-control-sm" name="telefono3" id="cli-edit-telefono3" value="{{cli.telefono3}}">
+            </div>
+            <div class="col-6 col-md-3">
+                <label for="cli-edit-telefono4">Fax</label>
+                <input type="text" class="form-control form-control-sm" name="telefono4" id="cli-edit-telefono4" value="{{cli.telefono4}}">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label for="cli-edit-email">Email</label>
+                <input type="text" class="form-control form-control-sm" name="email" id="cli-edit-email" value="{{cli.email}}">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label for="cli-edit-tipo">Tipo</label>
+                <select class="form-control form-control-sm" name="tipo" id="cli-edit-tipo">
+                    <option value="0"></option>
+                    {% for tipo in tiposCli %}
+                    <option value="{{ tipo.codigo }}" {% if cli.tipo == tipo.codigo %} selected {% endif %}>{{ tipo.nombre }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label for="cli-edit-fpago">Forma de Pago</label>
+                <select class="form-control form-control-sm" name="fpago" id="cli-edit-fpago">
+                <option value="0"></option>
+                {% for fpago in formasPago %}
+                <option value=" {{ fpago.codigo }}" {% if cli.fpago == fpago.codigo %} selected {% endif %}>{{ fpago.nombre }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label for="cli-edit-tarifabase">Tarifa</label>
+                <select class="form-control form-control-sm" name="tarifabase" id="cli-edit-tarifabase">
+                    <option value="0"></option>
+                    {% for tar in tarifas %}
+                    <option value="{{ tar.codigo }}" {% if cli.tarifabase == tar.codigo %} selected {% endif %}>{{ tar.nombre }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label for="cli-edit-observaciones">Observaciones</label>
+                <textarea name="observaciones" id="cli-edit-observaciones" rows="3" class="form-control form-control-sm">{{cli.observaciones}}</textarea>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-success" id="btn-cli-edit-ok"><span class="mdi mdi-check mr-2"></span>Grabar</button>
+    <button type="button" class="btn btn-danger" data-dismiss="modal"><span class="mdi mdi-close mr-2"></span>Cancelar</button>
+</div>
+<script>
+    $(CLI.setup);  // Inicializamos la ventana de edición de clientes
+</script>
+

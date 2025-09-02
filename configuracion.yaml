@@ -1,0 +1,104 @@
+razon_social: 'TICTAC COMUNICACIÓNN'
+cif: B29960366
+direccion: 'Calle Julio César, 10 local'
+codigo_postal: '14007'
+localidad: Córdoba
+provincia: Córdoba
+telefono: '666666666'
+email_cliente_nuevo: ''
+email_pedidos: ''
+horario: 'Lunes a Viernes; 09:00 - 14:00 |  16:00 - 19:00  /  Sábado; 10:00 - 13:00'
+nombre_web: 'TIENDA ONLINE V3 ERP'
+meta_tags_description: 'Software de gestion V3,Mayorista informático de tinta, redes y hardware. Servicio técnico informático. Tienda de informática online. Reparación de ordenadores, impresoras, portátiles y consolas en Córdoba.'
+meta_tags_keywords: 'v3 software,sat,rma,gestion,v3 gestion,ecommerce,tinta,original,compatible,hardware,redes,sat,servicio técnico,tienda de informática,reparacion,ordenadores,portátiles,portátil,consola,informática cordoba'
+cookiestxt: 'En cumplimiento la Directiva 2009/136/CE, necesitamos descargar cookies en tu navegador para identificar la sesión del usuario, aunque este sea totalmente anónimo por seguridad.'
+footertxt: 'Non et sit veniam sint in nostrud eiusmod reprehenderit ex labore do voluptate reprehenderit dolore. Aute amet nostrud velit sint adipisicing commodo nulla cupidatat cillum. Et irure esse nostrud excepteur laboris. Ad cupidatat dolor et elit nostrud sit id consequat.'
+stock_remoto: 'Disponible en 48h'
+txt_precio_cero: Consultar
+cliente_acceso_email: false
+stock_alm_disp: true
+stock_unificar: false
+mostrar_unidades: false
+mostrar_footer: true
+mostrar_newsletter: true
+mostrar_categorias: true
+mostrar_marcas: true
+mostrar_info_cms_nav: true
+mostrar_atributos: true
+puntos_fuertes: true
+parseHtmlDesc: true
+slider: true
+slider_height: 548
+slider_size_auto: true
+slider_banner: false
+mostrarweb2: false
+tarifa: 1
+estilo: '#04569B'
+lbl_nostock: ''
+imagen_logo: 3
+logo_mobile: ''
+agente: 1
+banco: 1
+serie_ventas: A18
+almacen: 1
+formapago: 1
+sat_url: ''
+validar_cif_registro: true
+bancotxt: ''
+portes_gratis: 0
+portes_euros: 0.0
+portes_select: true
+latitud: '37.89305797973808'
+longitud: '-4.770302684193201'
+georegion: ES-CO
+google_maps: 'https://www.google.es/maps/place/Componentes+de+Control+S.L./@37.8931492,-4.7702557,17z/data=!4m5!3m4!1s0xd6cdf9d4a255555:0x5d540ec60024b5b!8m2!3d37.8931492!4d-4.768067?hl=es'
+red_facebook: 'https://www.facebook.com/'
+red_twitter: 'https://www.facebook.com/'
+red_youtube: 'https://www.facebook.com/'
+red_skype: 'https://www.facebook.com/'
+red_linkedin: 'https://www.facebook.com/'
+red_whatsapp: '666666666'
+red_instagram: 'https://www.facebook.com/'
+redsys_activar: false
+Ds_Merchant_MerchantName: VIII
+Ds_Merchant_MerchantCode: '999008881'
+Ds_Merchant_Terminal: '001'
+Ds_Merchant_Currency: '978'
+redsys_url: 'https://sis-t.redsys.es:25443/sis/realizarPago'
+redsys_tipo_cifrado: HMAC_SHA256_V1
+redsys_clave_encriptacion: sq7HjrUOBfKmC576ILgskD5srU870gJ7
+email: info@dominioempresa.es
+imagenes_webp: true
+alta_clientes_web: true
+sat_almacen: 1
+sat_serie: A18
+smtp_host: smtp.gmail.com
+smtp_port: '587'
+smtp_ssl: true
+smtp_mail: jjlltthh99@gmail.com
+smtp_name: 'CDC WEB'
+smtp_auth: true
+smtp_user: jjlltthh99@gmail.com
+smtp_pwd: 'iwwt eryf diob zrcf'
+analytics: ''
+main_h1_text: 'TIENDA ONLINE V3 ERP - TICTAC COMUNICACIÓN'
+title: ''
+bloqueo_venta_sin_stock: true
+blog_url: ''
+email_copia_pedidos: ''
+email_recogida: ''
+tarifa_esp_dto: 0
+valoraciones: true
+formulario_recogida: true
+cpostal_filtro: ''
+kit_digital: true
+quienessomosboolean: true
+recursosboolean: true
+promocionesboolean: true
+color_hex: '#04569B'
+color_secundario: '#008FCD'
+color_tercero: '#E99712'
+mostrar_formulario: false
+mostrar_opiniones: true
+mostrar_garantias: false
+slider_text_color: '#FFFFFF'

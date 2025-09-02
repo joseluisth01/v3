@@ -1,0 +1,61 @@
+<style>
+	.container-pagination {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+
+	.container-pagination > .pagination {
+		margin-bottom: 0.5rem;
+	}
+
+	.container-pagination>.pagination:nth-child(2) {
+		margin-left: -1px;
+		margin-right: -1px;
+	}
+
+	.container-pagination > .separator {
+		width: 100% !important;
+
+	}
+
+	@media(min-width: 768px) {
+		.container-pagination > .separator {
+			display: none;
+		}
+	}
+</style>
+
+
+<div class="container-pagination">
+	{% for item in pagination.items %}
+		{% if loop.index == 1 %}
+			<ul class="pagination">
+		{% elseif loop.index == loop.length - 1 %}
+			</ul>
+			<div class="separator"></div>
+			<ul class="pagination">
+			{% endif %}
+			{% if item.separator %}
+				<li class="page-item disabled">
+					<span class="page-link">...</span>
+				</li>
+			{% else %}
+				<li class="page-item {{item.class}}">
+					{% set linkColor = item.class == 'disabled' ? '' : (item.class == 'active' ? 'theme-bg' : 'theme-color') %}
+					<a href="{{ item.url }}" class="page-link {{ linkColor }}">
+						{% autoescape false %}
+							{{ item.text }}
+						{% endautoescape %}
+					</a>
+				</li>
+			{% endif %}
+			{% if loop.index == 2 %}
+			</ul>
+			<div class="separator"></div>
+			<ul class="pagination">
+		{% elseif loop.index == loop.length %}
+			</ul>
+		{% endif %}
+	{% endfor %}
+</div>

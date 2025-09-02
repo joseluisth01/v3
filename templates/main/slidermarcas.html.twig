@@ -1,0 +1,115 @@
+<h2 class="titulogeneral">Trabajamos con las Mejores Marcas</h2>
+{% set images = get_brand_images() %}
+<div id="carouselMarcas" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <div class="d-flex justify-content-center gridfotosmarcas">
+                {% for image in images %}
+                    <div class="col-3 single-item">
+                        <img src="{{ asset(image) }}" class="d-block" alt="Marca {{ loop.index }}">
+                    </div>
+                {% else %}
+                    <p>No hay imágenes disponibles en este momento.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <!-- Control Izquierda -->
+    <button class="carousel-control-prev" type="button" id="prevBtn">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" width="40" height="40">
+            <path d="M24.5,0.932L10,15.532L24.5,30.132L28.8,25.732L16.2,15.532L28.8,5.332Z"></path>
+        </svg>
+    </button>
+    <!-- Control Derecha -->
+    <button class="carousel-control-next" type="button" id="nextBtn">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" width="40" height="40">
+            <path d="M15.5,0.932L30,15.532L15.5,30.132L11.2,25.732L23.8,15.532L11.2,5.332Z"></path>
+        </svg>
+    </button>
+</div>
+
+<style>
+    /* Personaliza el color de las flechas */
+    button svg path {
+        fill: gray; /* Cambia el color de las flechas */
+    }
+
+    /* Hover para cambiar de color */
+    button:hover svg path {
+        fill: darkgray; /* Cambia el color cuando se pasa el mouse */
+    }
+
+    /* Ajusta el tamaño del botón para que no sea muy grande */
+    button {
+        background: none;
+        border: none;
+        cursor: pointer;
+        outline: none;
+    }
+
+    /* Posición de las flechas */
+    .carousel-control-prev,
+    .carousel-control-next {
+        top: 50%;
+        transform: translateY(-50%);
+    }
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const items = document.querySelectorAll("#carouselMarcas .single-item");
+        const totalItems = items.length;
+        let currentIndex = 0;
+
+        const updateCarousel = () => {
+            items.forEach((item, index) => {
+                if (index >= currentIndex && index < currentIndex + 4) {
+                    item.style.display = "block";
+                } else {
+                    item.style.display = "none";
+                }
+            });
+        };
+
+        document.querySelector("#nextBtn").addEventListener("click", function () {
+            if (currentIndex + 4 < totalItems) {
+                currentIndex += 1;
+            } else {
+                currentIndex = 0;
+            }
+            updateCarousel();
+        });
+
+        document.querySelector("#prevBtn").addEventListener("click", function () {
+            if (currentIndex > 0) {
+                currentIndex -= 1;
+            } else {
+                currentIndex = totalItems - 4;
+            }
+            updateCarousel();
+        });
+
+        const startAutoSlide = () => {
+            return setInterval(() => {
+                if (currentIndex + 4 < totalItems) {
+                    currentIndex += 1;
+                } else {
+                    currentIndex = 0;
+                }
+                updateCarousel();
+            }, 3000);
+        };
+
+        let autoSlideInterval = startAutoSlide();
+
+        document.querySelector("#carouselMarcas").addEventListener("mouseenter", () => {
+            clearInterval(autoSlideInterval);
+        });
+
+        document.querySelector("#carouselMarcas").addEventListener("mouseleave", () => {
+            autoSlideInterval = startAutoSlide();
+        });
+
+        updateCarousel();
+    });
+</script>

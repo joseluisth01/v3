@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Configuración Recursos{% endblock %}
+
+{% block body %}
+<br><br><br>
+<div class="quienes-somos-containerrr">
+    <h2 class="quienes-somos-title">Configuración Recursos</h2>
+
+    <form action="{{ path('adminconfig-recursos-add') }}" method="POST" enctype="multipart/form-data">
+        <div class="form-group">
+            <strong><label for="imagen">Imagen:</label></strong>
+            <input type="file" id="imagen" name="imagen" class="form-control" accept="image/*" required>
+        </div>
+
+        <div class="form-group">
+            <strong><label for="archivo">Archivo del catálogo:</label></strong>
+            <input type="file" id="archivo" name="archivo" class="form-control" accept=".pdf,.doc,.docx,.xls,.xlsx" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Guardar</button>
+    </form>
+
+    <hr class="my-4">
+    <br>
+
+    <h2 class="mb-4 quienes-somos-title">Recursos Disponibles</h2>
+    {% if recursos is empty %}
+        <p class="text-center">No hay recursos personalizados. Se están mostrando los recursos por defecto en la página principal.</p>
+    {% else %}
+        <div class="row">
+            {% for recurso in recursos %}
+                <div class="col-md-4 mb-4 tarjetaconfig">
+                    <img src="{{ asset(recurso.imagen) }}" class="card-img-top" alt="Imagen del recurso"
+                         onerror="this.src='{{ asset('images/default/no-image.webp') }}'">
+                    <div class="card-body text-center">
+                        <a href="{{ asset(recurso.archivo) }}" target="_blank" class="btn btn-info mb-2">Ver Archivo</a>
+                        <form action="{{ path('config-recursos') }}" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este recurso?');">
+                            <input type="hidden" name="id" value="{{ recurso.id }}">
+                            <button type="submit" class="btn btn-danger btn-danger-gestion-opiniones">Eliminar</button>
+                        </form>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

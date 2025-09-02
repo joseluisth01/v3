@@ -1,0 +1,73 @@
+$color-primary: hsl(206, 36%, 20%);
+$color-danger: hsl(356, 62%, 38%);
+
+.icon {
+    height: 0.6rem;
+    margin: 0 0.1rem;
+}
+
+.slide-menu {
+    width: 340px;
+    background-color: $color-primary;
+
+    &,
+    a {
+        //font-size: 0.8rem;
+        color: #fff;
+    }
+
+    a {
+        padding: 0.9rem 1.5rem;
+        border-bottom: solid 1px darken($color-primary, 8%);
+        text-decoration: none;
+
+        &:hover {
+            background-color: darken($color-primary, 6%);
+        }
+    }
+
+    .controls {
+        display: flex;
+        margin-bottom: 1rem;
+
+        .btn.logo {
+            text-align: left;
+            padding-left: 0;
+        }
+
+        .btn.logo:before {
+            content: '';
+        }
+    }
+
+    .btn {
+        padding: 0.75rem 1.5rem;
+        flex: 1 0 auto;
+        //font-size: 90%;
+        color: #fff;
+        background-color: darken($color-primary, 6%);
+        text-transform: uppercase;
+
+        &:first-of-type {
+            text-align: left;
+
+            &:before {
+                content: '⮜';
+                margin-right: 0.5rem;
+            }
+        }
+
+        &:last-of-type {
+            text-align: right;
+
+            &:before {
+                content: '✕';
+                margin-right: 0.5rem;
+            }
+        }
+    }
+
+    .slide-menu__backlink {
+        text-transform: uppercase;
+    }
+}

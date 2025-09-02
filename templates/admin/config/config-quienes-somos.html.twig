@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Configuración Quiénes Somos{% endblock %}
+
+{% block stylesheets %}
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
+    {{ parent() }}
+    <style>
+        .quienes-somos-container {
+            padding: 20px;
+        }
+        .quienes-somos-form {
+            max-width: 90%;
+            margin: 0 auto;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+    </style>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(function() {
+            $('.summernote').summernote({
+                lang: 'es-ES'
+            });
+        });
+    </script>
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/lang/summernote-es-ES.min.js"></script>
+{% endblock %}
+
+{% block body %}
+    <br><br><br>
+    <div class="quienes-somos-container">
+        {% for label, messages in app.flashes %}
+            <div class="alert alert-{{ label }}">
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endfor %}
+
+        <h2 class="quienes-somos-title">Editar Página "Quiénes Somos"</h2>
+
+        <form id="config-somos-form" class="quienes-somos-form" method="POST" enctype="multipart/form-data" action="{{ path('admin-config-somos-add') }}">
+            <!-- Título -->
+            <div class="form-group">
+                <label for="somos_titulo">Título</label>
+                <input type="text" id="somos_titulo" name="somos_titulo" class="form-control" placeholder="Título de la sección" value="{{ titulo }}" required>
+            </div>
+            <!-- Texto -->
+            <div class="form-group">
+                <label for="somos_texto">Texto</label>
+                <textarea id="somos_texto" name="somos_texto" class="form-control summernote" required>{{ texto|raw }}</textarea>
+            </div>
+            <!-- Imagen -->
+            <div class="form-group">
+                <label for="somos_imagen">Imagen</label>
+                <input type="file" id="somos_imagen" name="somos_imagen" class="form-control" accept="image/*">
+            </div>
+            <!-- Botón Submit -->
+            <div class="form-group">
+                <button type="submit" class="btn btn-success">
+                    <i class="mdi mdi-content-save mr-3"></i>Guardar
+                </button>
+            </div>
+        </form>
+    </div>
+{% endblock %}
+
+

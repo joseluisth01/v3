@@ -1,0 +1,68 @@
+<style>
+	#art-sel-table tbody {
+		font-size: .9rem;
+	}
+
+	#art-sel-table tbody td {
+		vertical-align: middle;
+	}
+
+	#art-sel-table tbody td span.badge {
+		font-size: .9rem;
+	}
+
+
+	#art-sel-table tbody td strong {
+		font-size: .8rem;
+	}
+
+	#art-sel-table_info,
+	#art-sel-table_paginate ul.pagination li a {
+		font-size: .9rem;
+	}
+</style>
+<div class="modal fade" id="modal-sel-art" tabindex="-1" role="dialog" aria-labelledby="art-sel-title" style="z-index:1055">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header py-2">
+				<h4 class="modal-title" id="art-sel-title"><i class="mdi mdi-folder-table-outline mr-2"></i>Selección artículo</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="form-group col-12 col-md">
+						<div class="input-group">
+							<input type="text" class="form-control no-box-shadow" id="art-sel-filter" autofocus placeholder="Referencia  - Nombre">
+							<div class="input-group-append">
+								<button type="button" class="btn btn-outline-secondary border-left-0 border" id="art-sel-btn-clear">
+									<i class="mdi mdi-close-circle"></i>
+								</button>
+							</div>
+						</div>
+					</div>
+					<div class="col-12 col-md-auto">
+						<button type="button" id="art-sel-btn-search" class="btn btn-primary btn-block"><span class="mdi mdi-magnify mr-3"></span>Buscar</a>
+					</div>
+				</div>
+				<div class="row p-2">
+					<table id="art-sel-table" class="table table-striped display w-100">
+						<thead>
+							<tr>
+								<th></th>
+								<th>Artículo</th>
+								<th>Precio</th>
+								<th>Stock</th>
+								<th></th>
+								<th></th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal"><span class="mdi mdi-close mr-2"></span>Cerrar</button>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="{{ asset('js/seleccion/articulos.js') }}"></script>

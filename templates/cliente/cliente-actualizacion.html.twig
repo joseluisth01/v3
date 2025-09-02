@@ -1,0 +1,131 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<h1 class="font-weight-normal container py-1 text-center">
+    <i class="mdi mdi-card-account-details-outline mr-3"></i>
+    Datos de cliente
+</h1>
+{% if mensaje is not empty %}
+<div class="alert alert-success text-center mb-0" role="alert">
+    <h1>{{ mensaje }}</h1>
+</div>
+{% endif %}
+<main class="container-fluid bg-white py-2">
+    <form action="{{ url('cliente-actualizar') }}" method="POST" class="row justify-content-center mb-3" id="form-edit-cli">
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('client-update') }}">
+        <div class="col col-md-10 col-lg-8 col-xl-6">
+            <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <input type="text" class="form-control" name="nombre" id="nombre" value="{{ cli.nombre }}" autofocus>
+            </div>
+            <div class="row" id="row-apellidos">
+                <div class="form-group col-md-6">
+                    <label for="apellido1">Apellido1</label>
+                    <input type="text" class="form-control" name="apellido1" id="apellido1" value="{{ cli.apellido1 }}">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="apellido2">Apellido2</label>
+                    <input type="text" class="form-control" name="apellido2" id="apellido2" value="{{ cli.apellido2 }}">
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label for="cif">{{ cli.tipofiscal == 'F' ? 'NIF': 'CIF' }}</label>
+                    <input type="text" class="form-control" id="cif" value="{{ cli.cif }}" readonly>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="direccion">Dirección</label>
+                <input type="text" class="form-control" name="direccion" id="direccion" value="{{ cli.direccion }}">
+            </div>
+            <div class=" form-group">
+                <label for="localidad">Localidad</label>
+                <input type="text" class="form-control" name="localidad" id="localidad" value="{{ cli.localidad }}">
+            </div>
+            <div class=" row">
+                <div class="form-group col-4">
+                    <label for="cpostal">C.Postal</label>
+                    <input type="text" class="form-control" name="cpostal" id="cpostal" value="{{ cli.cpostal }}">
+                </div>
+                <div class=" col">
+                    <label for="provincia">Provincia</label>
+                    <select class="form-control" name="provincia" id="provincia">
+                        <option value="0">&nbsp;</option>
+                        {% for pro in provincias %}
+                        <option value="{{pro.codigo}}" {{ pro.codigo==cli.provincia ? 'selected' : '' }}>{{pro.nombre}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class=" form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" name="email" value="{{ cli.email }}">
+            </div>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label for="telefono1">Teléfono 1</label>
+                    <input type="text" class="form-control" id="telefono1" name="telefono1" value="{{ cli.telefono1 }}">
+                </div>
+                <div class=" form-group col-md-6">
+                    <label for="telefono2">Teléfono 2</label>
+                    <input type="text" class="form-control" id="telefono2" name="telefono2" value="{{ cli.telefono2 }}">
+                </div>
+            </div>
+            <div class="row my-3 justify-content-around">
+                <div class="col-6 col-md-4">
+                    <button type="submit" class="btn btn-success btn-block">
+                        <i class="mdi mdi-content-save-outline mr-3"></i>Grabar
+                    </button>
+                </div>
+                <div class="col-6 col-md-4 m-1 m-sm-0">
+                    <a href="{{ url('home') }}" class="btn btn-danger btn-block">
+                        <i class="mdi mdi-undo-variant mr-3"></i>Volver
+                    </a>
+                </div>
+            </div>
+        </div>
+    </form>
+</main>
+{% endblock %}
+{% block javascripts %}
+<script>
+$(function () {
+    function getEmail() {
+        return $('#email').val();
+    }
+    $('#form-edit-cli').validate({
+        rules: {
+            nombre: 'required',
+            direccion: 'required',
+            localidad: 'required',
+            cpostal: { required: true, seleccionaProvincia: '#provincia' },
+            provincia: { selectNumeric: true },
+            email: {
+                    required: true,
+                    email: true,
+                    remote: {
+                        url: T.path('cliente/existe-otro'),
+                        type: 'post',
+                        data: {
+                            codigo: {{ cli.codigo }},
+                            email: getEmail
+                        },
+                    },
+                },
+        },
+        messages: {
+                email: {
+                    remote: 'El email pertenece a otro cliente.',
+                },
+            },
+    });
+
+    $('#form-edit-cli').on('submit', function () {
+        if (!$(this).valid()) {
+            return false;
+        }
+        T.loading('Actualizando información...');
+        return true;
+    });
+});
+</script>
+{% endblock %}

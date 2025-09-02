@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ asset('vendor/datatables/datatables.min.css') }}">
+<script src="{{ asset('vendor/datatables/datatables.min.js') }}"></script>
+{% endblock %}
+{% block body %}
+<h1 class="font-weight-normal container" style="margin-top:60px"><i class="mdi mdi-account mr-2"></i>Selección cliente</h1>
+<main class="container bg-white seleccioncliente">
+	<div class="row mx-0">
+		<div class="form-group col-12 col-md">
+			<div class="input-group">
+				<input type="text" class="form-control no-box-shadow" id="cli-sel-filter" autofocus placeholder="Nombre cliente">
+				<div class="input-group-append">
+					<button type="button" class="btn btn-outline-secondary border-left-0 border" id="cli-sel-btn-clear">
+						<i class="mdi mdi-close-circle"></i>
+					</button>
+				</div>
+			</div>
+		</div>
+		<div class="col-12 col-md-auto">
+			<button type="button" id="cli-sel-btn-search" class="btn btn-primary btn-block"><span class="mdi mdi-magnify mr-3"></span>Buscar</a>
+		</div>
+	</div>
+	<div class="row p-2 mx-0">
+		<table id="cli-sel-table" class="table table-striped display w-100">
+			<thead>
+				<tr>
+					<th>Código</th>
+					<th>Nombre</th>
+					<th></th>
+				</tr>
+			</thead>
+		</table>
+	</div>
+</main>
+{% endblock %}
+{% block javascripts %}
+<script src="{{ asset('js/seleccion/clientes.js') }}"></script>
+<script>
+$(function() {
+	$(function() {
+		SEL_CLI.fnSelReg = function (codigo, nombre) {
+			let postData = { codigo: codigo, verif: T.primeNumber(codigo), act: {{ actualiza_carrito ? 1: 0 }} };
+			$.post(T.path('cliente/seleccion'), postData, function(resp) {
+				if (!T.stringEmpty(resp)) {
+					window.location = resp;
+				} else {
+					window.location = T.path();
+				}
+			});
+		};
+		SEL_CLI.init();
+	});
+});
+</script>
+{% endblock %}

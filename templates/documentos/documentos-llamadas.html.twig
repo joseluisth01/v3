@@ -1,0 +1,107 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<main class="container-fluid">
+    <h1 class="font-weight-normal"><i class="mdi mdi-file-phone-outline mr-3"></i>Llamadas factura {{ cab.serie }}-{{ cab.numero }}</h1>
+    <div class="row justify-content-around my-2 text-nowrap mx-0">
+        <div class="col-12 col-md-auto mb-2 mb-md-0">
+            <a href="{{ url('documentos-print-llamadas', {factura: cab.id, contrato:actual, facturables: facturables}) }}" class="btn btn-block btn-primary px-3">
+                <i class="mdi mdi-file-pdf-outline mr-3"></i>Descargar PDF
+            </a>
+        </div>
+        <div class="col-12 col-md-auto mb-2 mb-md-0">
+            <a href="{{ url('documentos-view', {id: cab.id}) }}" class="btn btn-block btn-primary px-3">
+                <i class="mdi mdi-undo-variant mr-3"></i>Volver
+            </a>
+        </div>
+    </div>
+    <div class="row justify-content-around" style="font-size: 1.1rem;">
+        <div class="col-auto row">
+            <label class="col-auto col-form-label" for="contrato">Contrato</label>
+            <div class="col-auto">
+                <select name="contrato" id="contrato" class="form-control">
+                    {% for con in contratos %}
+                    <option value="{{ con.id }}" {{ con.id==actual ? ' selected' : '' }}>{{ con.telefono }} - {{con.concepto}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="col-auto">
+            <div class="custom-control custom-switch mt-2">
+                <input type="checkbox" class="custom-control-input" name="facturables" id="facturables" {{ facturables !=0 ? ' checked' : '' }}>
+                <label class="custom-control-label" for="facturables">Sólo llamadas facturables</label>
+            </div>
+        </div>
+    </div>
+    <div class="document-view my-2 p-3">
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <div class="font-weight-bolder">{{ cab.cli_nombre }}</div>
+                <div>{{ cab.cli_direccion }}</div>
+                <div>{{ cab.cli_localidad }} - {{ cab.cli_cpostal }} - {{ cab.cli_provincia }}</div>
+            </div>
+            {% if cab.cli_fin_nombre is not empty %}
+            <div class="col-md-6">
+                <div class="font-weight-bolder">{{ cab.cli_fin_nombre }}</div>
+                <div>{{ cab.cli_fin_direccion }}</div>
+                <div>{{ cab.cli_fin_localidad }} - {{ cab.cli_fin_cpostal }} - {{ cab.cli_fin_provincia }}</div>
+            </div>
+            {% endif %}
+        </div>
+        <div class="row cabecera mb-3 text-nowrap">
+            <div class="col-12 col-md mt-1 mt-md-0">
+                <b>Fecha:</b> {{ cab.fecha|date('d-m-Y') }}
+            </div>
+            <div class="col-12 col-md mt-1 mt-md-0">
+                <b>{{ cab.nombreDoc}} Nº.:</b> {{ cab.serie }}-{{ cab.numero }}
+            </div>
+            <div class="col-12 col-md mt-1 mt-md-0">
+                <b class="d-none d-md-inline">Forma de pago:</b>
+                <b class="d-md-nonr">F. Pago:</b>
+                {{ cab.fpago }}
+            </div>
+        </div>
+        <div class="row cart-table border-bottom border-dark font-weight-bold pb-2">
+            <div class="col-3 col-md-2 col-lg-1 pr-0">Fecha</div>
+            <div class="col-2 d-none d-md-table-cell px-0">Hora</div>
+            <div class="col-3 col-sm-2 col-lg-1 px-0">Origen</div>
+            <div class="col-3 col-sm-2 col-lg-1 px-0">Destino</div>
+            <div class="col col-md-2 col-lg-1 text-right">Duración</div>
+            <div class="col d-none d-lg-table-cell">Tipo</div>
+            <div class="col-2 d-none d-lg-table-cell text-right">Establecimiento</div>
+            <div class="col col-lg-1 d-none d-md-table-cell text-right">Importe</div>
+        </div>
+        {% for lin in llamadas %}
+        <div class="row pt-1">
+            <div class="col-3 col-md-2 col-lg-1 pr-0">
+                <div>{{ lin.fecha }}</div>
+                <div class="d-md-none">{{ lin.hora }}</div>
+            </div>
+            <div class="col-2 d-none d-md-table-cell px-0">{{ lin.hora }}</div>
+            <div class="col-3 col-sm-2 col-lg-1 px-0">{{ lin.origen }}</div>
+            <div class="col-3 col-sm-2 col-lg-1 px-0">{{ lin.destino }}</div>
+            <div class="col col-md-2 col-lg-1 text-right">
+                <div>{{ lin.duracion }}</div>
+                <div class="d-md-none">{{ lin.importe | price }}</div>
+            </div>
+            <div class="col d-none d-lg-table-cell">{{ lin.tipo }}</div>
+            <div class="col-2 d-none d-lg-table-cell text-right">{{ lin.establecimiento == 0 ? '' : lin.establecimiento|price }}</div>
+            <div class="col col-lg-1 d-none d-md-table-cell text-right">{{ lin.importe|price }}</div>
+        </div>
+        {% endfor %}
+    </div>
+</main>
+{% endblock %}
+{% block javascripts %}
+<input type="hidden" id="factura" value="{{ cab.id }}">
+<script>
+    $(function () {
+        function reload() {
+            let factura = $('#factura').toInt(),
+                contrato = $('#contrato').toInt(),
+                facturables = $('#facturables').prop('checked') ? 1 : 0;
+            window.location = T.path('documentos/llamadas', factura, contrato, facturables);
+        }
+        $('#contrato, #facturables').on('change', reload);
+    });
+</script>
+{% endblock %}

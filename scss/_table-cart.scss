@@ -1,0 +1,19 @@
+/* Tabla carritos */
+table.cart-table {
+    & > tbody > tr {
+        height: 100px;
+        border-bottom: 1px solid #aaa;
+    }
+
+    thead {
+        border-bottom: 1px solid black;
+    }
+    td,
+    th {
+        vertical-align: middle;
+    }
+}
+
+table.cart-total td {
+    padding-bottom: 0;
+}

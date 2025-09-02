@@ -1,0 +1,30 @@
+parameters:
+    uploads_directory: '%kernel.project_dir%/public/uploads'
+services:
+    # Configuración por defecto para todos los servicios en este archivo
+    _defaults:
+        autowire: true       # Inyecta automáticamente las dependencias.
+        autoconfigure: true  # Registra automáticamente servicios como comandos, suscriptores, etc.
+    # Hace que las clases en src/ estén disponibles como servicios
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Entity/'
+            - '../src/Kernel.php'
+            - '../src/Tests/'
+    # Registrar el servicio de BrandImagesService
+    App\Service\BrandImagesService:
+        arguments:
+            $connection: '@doctrine.dbal.default_connection'
+    # Registrar la extensión Twig para hacer disponible el servicio en Twig
+    App\Twig\BrandImagesExtension:
+        arguments:
+            $brandImagesService: '@App\Service\BrandImagesService'
+        tags:
+            - { name: twig.extension }
+    # Registrar el servicio de categorías
+    app.categoria_service:
+        class: App\Service\CategoriaService
+        arguments:
+            - '@App\Service\ConfigService'

@@ -1,0 +1,339 @@
+{# <link rel="stylesheet" href="{{ asset('css/temas/theme.css') }}">
+<link rel="stylesheet" href="{{ asset('css/temas/theme2.css') }}">
+<link rel="stylesheet" href="{{ asset('css/temas/theme3.css') }}"> #}
+<div class="form-group row">
+	<div class="col">
+		<label for="nombre_web">Nombre de la web</label>
+		<input type="text" class="form-control" name="nombre_web" id="nombre_web" value="{{ config.data.nombre_web }}">
+	</div>
+</div>
+<div class="form-group row">
+	<div class="col">
+		<label for="meta_tags_description">Descripción</label>
+		<textarea class="form-control" rows="2" name="meta_tags_description" id="meta_tags_description" class="materialize-textarea">{{ config.data.meta_tags_description }}</textarea>
+	</div>
+</div>
+<div class="form-group row">
+	<div class="col">
+		<label for="meta_tags_keywords">Palabras clave</label>
+		<textarea class="form-control" rows="2" name="meta_tags_keywords" id="meta_tags_keywords" class="materialize-textarea">{{ config.data.meta_tags_keywords }}</textarea>
+	</div>
+</div>
+<div class="form-group row">
+	<div class="col">
+		<label for="footertxt">Texto "Acerca de"</label>
+		<textarea class="form-control" rows="2" name="footertxt" id="footertxt" class="materialize-textarea">{{ config.data.footertxt }}</textarea>
+	</div>
+</div>
+<div class="form-group row">
+	<div class="col">
+		<label for="cookiestxt">Texto de aviso de cookies</label>
+		<textarea class="form-control" rows="2" name="cookiestxt" id="cookiestxt" class="materialize-textarea">{{ config.data.cookiestxt }}</textarea>
+	</div>
+</div>
+<div class="form-group row">
+	<div class="col">
+		<label for="main_h1_text">Texto elemento H1 página inicial</label>
+		<input type="text" class="form-control" name="main_h1_text" id="main_h1_text" value="{{ config.data.main_h1_text }}">
+	</div>
+</div>
+
+
+<div class="form-group row">
+	<div class="col">
+		<div class="d-flex justify-content-between">
+			<label for="mobile-img">Logo pequeño</label>
+			<div class="small pt-1">(Para cabecera, móviles y barra de navegación)</div>
+		</div>
+		<input type="file" class="form-control form-control-sm" name="img_mobile" id="mobile-img">
+		<div id="msg-mobile-img"></div>
+		<img src="{{ asset(logoSmall) }}" class="img-fluid" alt="Logo pequeño">
+	</div>
+</div>
+<br><br>
+
+<h4 style="text-align:center">MÁS FUNCIONALIDADES</h4><br>
+<div class="form-group row">
+	<div class="col">
+		<div class="custom-control custom-switch">
+			<input type="checkbox" class="custom-control-input" name="parseHtmlDesc" id="parseHtmlDesc" {{ config.data.parseHtmlDesc ? 'checked' : '' }}>
+			<label class="custom-control-label" for="parseHtmlDesc">Limpiar HTML de la descripción de los artículos</label>
+		</div>
+	</div>
+</div>
+{# <div class="form-group row">
+	<div class="col">
+		<div class="custom-control custom-switch">
+			<input type="checkbox" class="custom-control-input" name="mostrarweb2" id="mostrarweb2" {{ config.data.mostrarweb2 ? 'checked' : '' }}>
+			<label class="custom-control-label" for="mostrarweb2">Utilizar campo
+				<span class="font-weight-bold font-italic">
+					<u>Mostrar web 2</u>
+				</span>
+				de los artículos</label>
+		</div>
+	</div>
+</div> #}
+
+
+<div class="form-group row">
+	<div class="col">
+		<div class="custom-control custom-switch">
+			<input type="checkbox" class="custom-control-input" name="mostrar_categorias" id="mostrar_categorias" {{ config.data.mostrar_categorias ? 'checked' : '' }}>
+			<label class="custom-control-label" for="mostrar_categorias">Mostrar categorías en vez de familias</label>
+		</div>
+	</div>
+</div>
+
+<div class="form-group row">
+	<div class="col">
+		<div class="custom-control custom-switch">
+			<input type="checkbox" class="custom-control-input" name="mostrar_atributos" id="mostrar_atributos" {{ config.data.mostrar_atributos ? 'checked' : '' }}>
+			<label class="custom-control-label" for="mostrar_atributos">Mostrar filtro Marcas - Atributos</label>
+		</div>
+	</div>
+</div>
+<div class="form-group row">
+	<div class="col">
+		<div class="custom-control custom-switch">
+			<input type="checkbox" class="custom-control-input" name="mostrar_info_cms_nav" id="mostrar_info_cms_nav" {{ config.data.mostrar_info_cms_nav ? 'checked' : '' }}>
+			<label class="custom-control-label" for="mostrar_info_cms_nav">Mostrar botón
+				<span class="font-weight-bold">Información</span>
+				en barra de navegación</label>
+		</div>
+	</div>
+</div>
+<div class="form-group row">
+	<div class="col">
+		<div class="custom-control custom-switch">
+			<input type="checkbox" class="custom-control-input" name="puntos_fuertes" id="puntos_fuertes" {{ config.data.puntos_fuertes ? 'checked' : '' }}>
+			<label class="custom-control-label" for="puntos_fuertes">Mostrar puntos fuertes</label>
+		</div>
+	</div>
+</div>
+<div class="form-group row">
+	<div class="col">
+		<div class="custom-control custom-switch">
+			<input type="checkbox" class="custom-control-input" name="validar_cif_registro" id="validar_cif_registro" {{ config.data.validar_cif_registro ? 'checked' : '' }}>
+			<label class="custom-control-label" for="validar_cif_registro">Validar CIF / NIF en alta nuevos clientes</label>
+		</div>
+	</div>
+</div>
+<div class="form-group row">
+	<div class="col">
+		<div class="custom-control custom-switch">
+			<input type="checkbox" class="custom-control-input" name="cliente_acceso_email" id="cliente_acceso_email" {{ config.data.cliente_acceso_email ? 'checked' : '' }}>
+			<label class="custom-control-label" for="cliente_acceso_email">Clientes sólo acceden con email (NIF deshabilitado)</label>
+		</div>
+	</div>
+</div>
+<div class="form-group row">
+	<div class="col">
+		<div class="custom-control custom-switch">
+			<input type="checkbox" class="custom-control-input" name="alta_clientes_web" id="alta_clientes_web" {{ config.data.alta_clientes_web ? 'checked' : '' }}>
+			<label class="custom-control-label" for="alta_clientes_web">Los clientes se pueden registrar en la web</label>
+		</div>
+	</div>
+</div>
+<div class="form-group row">
+	<div class="col">
+		<div class="custom-control custom-switch">
+			<input type="checkbox" class="custom-control-input" name="imagenes_webp" id="imagenes_webp" {{ config.data.imagenes_webp ? 'checked' : '' }}>
+			<label class="custom-control-label" for="imagenes_webp">Formato de imágenes WebP</label>
+		</div>
+	</div>
+</div>
+<div class="form-group row">
+	<div class="col">
+		<div class="custom-control custom-switch">
+			<input type="checkbox" class="custom-control-input" name="valoraciones" id="valoraciones" {{ config.data.valoraciones ? 'checked' : '' }}>
+			<label class="custom-control-label" for="valoraciones">Opiniones de artículos</label>
+		</div>
+	</div>
+</div>
+<div class="form-group row">
+	<div class="col">
+		<div class="custom-control custom-switch">
+			<input type="checkbox" class="custom-control-input" name="formulario_recogida" id="formulario_recogida" {{ config.data.formulario_recogida ? 'checked' : '' }}>
+			<label class="custom-control-label" for="formulario_recogida">Formulario recogida dispositivos</label>
+		</div>
+	</div>
+</div>
+
+<br><br>
+<h4 style="text-align:center">STOCK - ALMACÉN</h4>
+<div class="form-group row">
+	<div class="col">
+		<div class="custom-control custom-switch">
+			<input type="checkbox" class="custom-control-input" name="stock_unificar" id="stock_unificar" {{ config.data.stock_unificar ? 'checked' : '' }}>
+			<label class="custom-control-label" for="stock_unificar">Unificar stock virtual</label>
+		</div>
+	</div>
+</div>
+<div class="form-group row">
+	<div class="col">
+		<div class="custom-control custom-switch">
+			<input type="checkbox" class="custom-control-input" name="mostrar_unidades" id="mostrar_unidades" {{ config.data.mostrar_unidades ? 'checked' : '' }}>
+			<label class="custom-control-label" for="mostrar_unidades">Mostrar unidades en stock</label>
+		</div>
+	</div>
+</div>
+<div class="form-group row">
+	<div class="col">
+		<div class="custom-control custom-switch">
+			<input type="checkbox" class="custom-control-input" name="stock_alm_disp" id="stock_alm_disp" {{ config.data.stock_alm_disp ? 'checked' : '' }}>
+			<label class="custom-control-label" for="stock_alm_disp">Calcular stock almacenes disponibles</label>
+		</div>
+	</div>
+</div>
+<div class="form-group row">
+	<label for="stock_remoto" class="col-auto col-form-label">Texto stock remoto</label>
+	<div class="col">
+		<input type="text" class="form-control" name="stock_remoto" id="stock_remoto" type="text" value="{{ config.data.stock_remoto }}">
+	</div>
+</div>
+<div class="form-group row">
+	<label for="txt_precio_cero" class="col-auto col-form-label">Texto precio cero</label>
+	<div class="col">
+		<input type="text" class="form-control" name="txt_precio_cero" id="txt_precio_cero" type="text" value="{{ config.data.txt_precio_cero }}">
+	</div>
+</div>
+<div class="form-group row">
+	<label for="almacen" class="col-auto col-form-label">Almacén</label>
+	<div class="col">
+		<select class="custom-select" name="almacen" id="almacen">
+			{% for alm in almacenes %}
+				<option value="{{ alm.codigo }}" {{ alm.codigo==config.data.almacen ? 'selected' : '' }}>{{ alm.nombre }}</option>
+			{% endfor %}
+		</select>
+	</div>
+</div>
+<br><br>
+
+
+<h4 style="text-align:center">PORTES</h4>
+<div class="form-group row">
+	<div class="col">
+		<div class="custom-control custom-switch">
+			<input type="checkbox" class="custom-control-input" name="portes_select" id="portes_select" {{ config.data.portes_select ? 'checked' : '' }}>
+			<label class="custom-control-label" for="portes_select">Mostrar desplegable selección portes</label>
+		</div>
+	</div>
+</div>
+<div class="form-group row">
+	<div class="col-12 col-sm-6">
+		<label for="portes_gratis">Importe mínimo portes gratis</label>
+		<input type="text" class="form-control text-right" name="portes_gratis" id="portes_gratis" value="{{ config.data.portes_gratis }}">
+	</div>
+	<div class="col-12 col-sm-6">
+		<div class="d-flex justify-content-between">
+			<label for="portes_euros">Precio portes</label>
+			<small>(IVA incluido)</small>
+		</div>
+		<input type="text" class="form-control text-right" name="portes_euros" id="portes_euros" value="{{ portes }}">
+	</div>
+</div><br><br>
+
+
+<h4 style="text-align:center">VENTAS</h4>
+<div class="form-group row">
+	<div class="col">
+		<div class="custom-control custom-switch">
+			<input type="checkbox" class="custom-control-input" name="bloqueo_venta_sin_stock" id="bloqueo_venta_sin_stock" {{ config.data.bloqueo_venta_sin_stock ? 'checked' : '' }}>
+			<label class="custom-control-label" for="bloqueo_venta_sin_stock">Bloquear venta si no hay stock</label>
+		</div>
+	</div>
+</div>
+<div class="form-group row">
+	<div class="col">
+		<label for="serie_ventas">Serie de venta</label>
+		<select class="custom-select" name="serie_ventas" id="serie_ventas">
+			{% for serie in series %}
+				<option value="{{ serie }}" {{ serie==config.data.serie_ventas ? 'selected' : '' }}>{{ serie }}</option>
+			{% endfor %}
+		</select>
+	</div>
+</div>
+<div class="form-group row">
+	<div class="col">
+		<label for="tarifa">Tarifa de precios</label>
+		<select class="custom-select" name="tarifa" id="tarifa">
+			{% for tar in tarifas %}
+				<option value="{{ tar.codigo }}" {{ tar.codigo == config.data.tarifa ? 'selected' : '' }}>{{ tar.nombre }}</option>
+			{% endfor %}
+		</select>
+	</div>
+	<div class="col">
+		<label for="tarifa_esp_dto">Tarifa Especial Descuentos</label>
+		<select class="custom-select" name="tarifa_esp_dto" id="tarifa_esp_dto">
+			{% for tarE in tarifasEspDto %}
+				<option value="{{ tarE.codigo }}" {{ tarE.codigo == config.data.tarifa_esp_dto ? 'selected' : '' }}>{{ tarE.nombre }}</option>
+			{% endfor %}
+		</select>
+	</div>
+</div>
+
+<div class="form-group row">
+	<div class="col">
+		<label for="agente">Agente web</label>
+		<select class="custom-select" name="agente" id="agente">
+			{% for age in agentes %}
+				<option value="{{ age.codigo }}" {{ age.codigo==config.data.agente ? 'selected' : '' }}>{{ age.nombre }}</option>
+			{% endfor %}
+		</select>
+	</div>
+</div>
+<div class="form-group row">
+	<div class="col">
+		<label for="banco">Banco</label>
+		<select class="custom-select" name="banco" id="banco">
+			{% for ban in bancos %}
+				<option value="{{ ban.codigo }}" {{ ban.codigo==config.data.banco ? 'selected' : '' }}>{{ ban.nombre }}</option>
+			{% endfor %}
+		</select>
+	</div>
+</div>
+<div class="form-group row">
+	<div class="col ">
+		<label for="formapago">Forma de pago</label>
+		<select class="custom-select" name="formapago" id="formapago">
+			{% for fp in formaspago %}
+				<option value="{{ fp.codigo }}" {{ fp.codigo==config.data.formapago ? 'selected' : '' }}>{{ fp.nombre }}</option>
+			{% endfor %}
+		</select>
+	</div>
+</div><br><br>
+
+
+<h4 style="text-align:center">SAT</h4>
+<div class="form-group row">
+	<div class="col">
+		<label for="sat_serie">Serie partes de SAT</label>
+		<select class="custom-select" name="sat_serie" id="sat_serie">
+			{% for serie in seriesSAT %}
+				<option value="{{ serie }}" {{ serie==config.satSerie ? 'selected' : '' }}>{{ serie }}</option>
+			{% endfor %}
+		</select>
+	</div>
+</div>
+<div class="form-group row">
+	<div class="col">
+		<label for="sat_almacen">Almacén</label>
+		<select class="custom-select" name="sat_almacen" id="sat_almacen">
+			{% for alm in almacenes %}
+				<option value="{{ alm.codigo }}" {{ alm.codigo==config.satAlmacen ? 'selected' : '' }}>{{ alm.nombre }}</option>
+			{% endfor %}
+		</select>
+	</div>
+</div><br><br>
+
+
+<h4 style="text-align:center">ALTA DE CLIENTES</h4>
+<div class="form-group row">
+	<div class="col">
+		<label for="cpostal_filtro">Códigos postales no admitidos</label>
+		<input type="text" class="form-control" name="cpostal_filtro" id="cpostal_filtro" value="{{ config.data.cpostal_filtro }}">
+		<div>
+			<small class="text-danger">Inicio códigos postales. Separados por comas. Ej: (28080, 08)</small>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,85 @@
+{% extends 'password_reset/base.html.twig' %}
+{% block body %}
+  <div class="login-form my-5">
+    <div class="row justify-content-center">
+      <div class="col-auto ml-5">
+        <div class="text-center">
+          <a href="{{url('home')}}"><img src="{{ asset(config.logo) }}" width="250" title="{{ config.nombreWeb}}" alt="{{config.nombreWeb}}"></a>
+        </div>
+        <div class="h2 text-center my-3 font-weight-bold">Cambio de clave de acceso</div>
+        <div class="card">
+          <div class="card-body">
+            <p class="my-4">{{ nombre }}</p>
+            <form id="form-password-change" method="post" action="{{ url('password-change') }}">
+              <div class=" form-group">
+                <label for="password">Nueva contraseña</label>
+                <div class="input-group">
+                  <input type="password" name="password" id="password" class="form-control" required autofocus>
+                  <div class="input-group-append">
+                    <button type="button" class="btn btn-outline-secondary border-left-0 border py-0 btn-show-hide" data-target="password">
+                      <i class="mdi mdi-eye-outline"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class=" form-group">
+                <label for="password2">Repita la contraseña</label>
+                <div class="input-group">
+                  <input type="password" name="password2" id="password2" class="form-control" required>
+                  <div class="input-group-append">
+                    <button type="button" class="btn btn-outline-secondary border-left-0 border py-0 btn-show-hide" data-target="password2">
+                      <i class="mdi mdi-eye-outline"></i>
+                    </button>
+                  </div>
+                </div>
+
+              </div>
+              <div class="text-center mt-3">
+                <button class="btn btn-primary px-3 my-0" type="submit">Cambiar clave de acceso</button>
+              </div>
+              <input type="hidden" name="codigo" value="{{ codigo }}">
+              <input type="hidden" name="email" value="{{ email }}">
+              <input type="hidden" name="cif" id="cif" value="{{ cif }}">
+              <input type="hidden" name="token" value="{{ csrf_token('reset-password') }}">
+              <input type="hidden" name="_current_sess_id" value={{ app.session.getId }}>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+{% block javascripts %}
+  <script>
+    $( function() {
+      $( '.btn-show-hide' ).on( 'click', function() {
+        let self = $( this ),
+          idTarget = self.data( 'target' ),
+          target = $( '#' + idTarget ),
+          icon = self.children( 'i.mdi' );
+
+        if ( target.attr( 'type' ) == 'text' ) {
+          target.attr( 'type', 'password' );
+          icon.removeClass( 'mdi-eye-off-outline' ).addClass( 'mdi-eye-outline' );
+        } else {
+          target.attr( 'type', 'text' );
+          icon.removeClass( 'mdi-eye-outline' ).addClass( 'mdi-eye-off-outline' );
+        } target.focus();
+      } );
+
+      $( '#form-password-change' ).on( 'submit', function() {
+        let p1 = $( '#password' ).val(),
+          p2 = $( '#password2' ).val()
+        if ( p1 !== p2 ) {
+          T.modalOk( 'Las claves no coinciden;Compruebe que ha introducido las claves correctamente.', 'Cambio clave de acceso' );
+          return false;
+        }
+        if ( p1.toUpperCase() == $( '#cif' ).val() ) {
+          T.modalOk( 'No puede utilizar su NIF como clave;Introduzca otra clave para acceder.', 'Cambio clave de acceso' );
+          return false;
+        }
+        return true;
+      } );
+    } );
+  </script>
+{% endblock %}

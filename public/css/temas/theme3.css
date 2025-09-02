@@ -1,0 +1,113 @@
+/* .btnanadircarrito{
+    background-color: var(--theme-tercer-color) !important;
+} */
+
+.btnvermasarticulos {
+    width: 278px !important;
+    height: 36px !important;
+    border-radius: 5px !important;
+    opacity: 0px;
+    box-shadow: 0px 2px 4px 0px #000000CC;
+    font-family: 'Montserrat';
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 20.72px;
+    letter-spacing: 0.05em;
+    text-align: center;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    margin: 0 auto !important;
+    background-color: var(--theme-tercer-color) !important;
+    color: white !important;
+    display: block !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: all 0.3s ease-in-out !important;
+}
+
+.btnvermasarticulos:hover {
+    color: var(--theme-tercer-color) !important;
+    background-color: white !important;
+}
+
+.enlacesfooter {
+    color: var(--theme-tercer-color) !important;
+}
+
+.footersocial i {
+    color: var(--theme-tercer-color) !important;
+}
+
+#btn-suscripcion:hover {
+    background-color: var(--theme-tercer-color) !important;
+}
+
+.formulario_map_btn {
+    background: var(--theme-tercer-color) !important;
+}
+
+.formulario_map_btn:hover {
+    opacity: 0.7;
+}
+
+.iconosinstock {
+    color: var(--theme-tercer-color) !important;
+    font-size: 25px;
+}
+
+.porcentajedto {
+    font-family: 'ibrand';
+    font-size: 45px !important;
+    font-weight: 400 !important;
+    line-height: 47.25px;
+    letter-spacing: 0.05em;
+    text-align: right;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    color: var(--theme-tercer-color) !important;
+}
+
+.add2cart {
+    width: 100%;
+    height: 36px !important;
+    top: 947px;
+    left: 864px;
+    gap: 0px;
+    border-radius: 5px !important;
+    opacity: 0px;
+    font-family: 'Montserrat';
+    font-size: 17px !important;
+    font-weight: 700;
+    line-height: 20.72px;
+    letter-spacing: 0.05em;
+    text-align: center;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    background-color: var(--theme-tercer-color) !important;
+    margin-top: 20px;
+    box-shadow: 0px 2px 4px 0px #000000CC;
+    border: 0px !important;
+}
+
+
+
+.page-item .page-link:hover{
+    background-color: var(--theme-tercer-color) !important;
+}
+
+.btn-success{
+    background-color: var(--theme-tercer-color) !important;
+    border-color: var(--theme-tercer-color) !important;
+    font-family: 'Montserrat';
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    text-align: center;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    text-transform: uppercase;
+    color: white;
+    border: 0px !important;
+}
+

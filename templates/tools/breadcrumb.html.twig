@@ -1,0 +1,15 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb d-flex justify-content-start">
+    {% for item in breadcrumb %}
+        {% if item.param %}
+            {% if item.active %}
+                <li class="breadcrumb-item text-dark" aria-current="page">{{item.nombre}}</li>
+            {% else %}
+                <li class="breadcrumb-item"><a href="{{ url(item.ruta, {param: item.param}) }}">{{item.nombre}}</a></li>
+            {% endif %}
+        {% else %}
+            <li class="breadcrumb-item"><a href="{{ url(item.ruta) }}">{{item.nombre}}</a></li>
+        {% endif %}
+    {% endfor %}
+  </ol>
+</nav>

@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Configurar Marcas{% endblock %}
+
+{% block body %}
+<br><br>
+    <div class="container-gestion-opiniones">
+        <h2 class="config-marcas-title">Subir Marcas Nuevas</h2>
+
+        <!-- Formulario de subida de imágenes -->
+        <form method="POST" enctype="multipart/form-data" action="{{ path('adminconfig-marcas-add') }}" class="config-marcas-form">
+            <div class="form-group">
+                <label for="marca_imagen" class="config-marcas-label">Seleccionar Imagen</label>
+                <input type="file" id="marca_imagen" name="marca_imagen" accept="image/*" required class="config-marcas-input">
+            </div>
+
+            <button type="submit" class="btn config-marcas-btn btn-primary-gestion-opiniones">Subir Imagen</button>
+        </form>
+
+        <!-- Mensajes Flash -->
+        <div class="config-marcas-flash-messages">
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success config-marcas-alert">{{ message }}</div>
+            {% endfor %}
+            {% for message in app.flashes('error') %}
+                <div class="alert alert-danger config-marcas-alert">{{ message }}</div>
+            {% endfor %}
+        </div>
+        <br>
+        <!-- Mostrar las imágenes existentes -->
+        <h2 class="config-marcas-subtitle">Imágenes Subidas</h2>
+        <div class="config-marcas-gallery">
+            {% for imagen in imagenes %}
+                <div class="config-marcas-card">
+                    <div style="">
+                    <img src="{{ asset(imagen.imagen) }}" alt="Marca" class="config-marcas-image">
+                    </div>
+                    <form method="POST" action="{{ path('configmarcas-delete', { id: imagen.id }) }}" class="config-marcas-delete-form">
+                        <button type="submit" class="btn btn-danger-gestion-opiniones ">Eliminar</button>
+                    </form>
+                </div>
+            {% else %}
+                <p class="config-marcas-empty">No hay imágenes disponibles.</p>
+            {% endfor %}
+            
+        </div>
+        <br><br>
+    </div>
+{% endblock %}

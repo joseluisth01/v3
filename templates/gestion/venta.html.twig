@@ -1,0 +1,170 @@
+{% extends 'gestion/base.html.twig' %}
+{% block stylesheets %}
+  <style>
+    table,
+    .detalle {
+      font-size: 0.8rem;
+
+    }
+    div.detalle div.row > div {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    div.row.header {
+      border-bottom: 1px solid black;
+      padding-bottom: 1em;
+      font-weight: bold
+    }
+
+    #venta table td {
+      cursor: default;
+    }
+
+    .va-sub {
+      vertical-align: sub;
+    }
+  </style>
+{% endblock %}
+{% block body %}
+  <div class="p-1 bg-white" id="venta">
+    <div class="row">
+      <div class="col-12 col-lg-6">
+        <label for="almacen">Almacén</label>
+        <select name="almacen" id="almacen" class="form-control" v-model="almacen">
+          <option value="0"></option>
+          {% for alm in almacenes %}
+            <option value="{{ alm.codigo }}" {{ app.user.getAlmacen==alm.codigo ? 'selected' :'' }}>{{ alm.nombre }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="d-flex justify-content-between">
+          <label class="pt-2 pt-md-0" for="cli_nombre">Cliente</label>
+          <div class="d-md-none d-flex justify-content-right">
+            <button type="button" class="btn btn-outline-secondary border py-0" @click="clienteSeleccion">
+              <i class="mdi mdi-magnify mdi-24px"></i>
+            </button>
+            <button type="button" class="btn btn-outline-secondary border py-0" @click="clienteEdicion">
+              <i class="mdi mdi-account-edit-outline mdi-24px"></i>
+            </button>
+            <button type="button" class="btn btn-outline-secondary border py-0" @click="clienteNuevo">
+              <i class="mdi mdi-account-plus-outline mdi-24px"></i>
+            </button>
+          </div>
+        </div>
+        <div class="input-group">
+          <input type="text" class="form-control no-box-shadow" id="cli_nombre" value="{{ app.user.getClientName }}" v-model="cliNombre" readonly>
+          <div class="input-group-append d-none d-md-inline-block">
+            <button type="button" class="btn btn-outline-secondary border-left-0 border py-0" @click="clienteSeleccion">
+              <i class="mdi mdi-magnify mdi-24px"></i>
+            </button>
+          </div>
+          <div class="input-group-append d-none d-md-inline-block">
+            <button type="button" class="btn btn-outline-secondary border-left-0 border py-0" @click="clienteEdicion">
+              <i class="mdi mdi-account-edit-outline mdi-24px"></i>
+            </button>
+          </div>
+          <div class="input-group-append d-none d-md-inline-block">
+            <button type="button" class="btn btn-outline-secondary border py-0" @click="clienteNuevo">
+              <i class="mdi mdi-account-plus-outline mdi-24px"></i>
+            </button>
+          </div>
+        </div>
+        <input type="hidden" id="cli_codigo" value="{{app.user.getClient}}" v-model="cliCodigo">
+      </div>
+    </div>
+    <div class="row my-2">
+      <div class="col-6 col-lg-3 text-center">
+        <button class="btn btn-success btn-block" :disabled="sinCliente" @click="articuloSeleccion">
+          <i class="mdi mdi-cart-plus mdi-24px mr-2 va-sub"></i>Añadir artículo</button>
+      </div>
+      <div class="col-6 col-lg-3 text-center order-lg-4">
+        <button class="btn btn-danger btn-block" :disabled="sinLineas" @click="carritoBorra">
+          <i class="mdi mdi-close-circle mdi-24px mr-2 va-sub"></i>Borrar pedido</button>
+      </div>
+      <div class="col-6 col-lg-3 text-center mt-1 mt-lg-0">
+        <button class="btn btn-primary btn-block" :disabled="sinCliente" @click="grabaPedido">
+          <i class="mdi mdi-clipboard mdi-24px mr-2 va-sub"></i>Grabar pedido</button>
+      </div>
+      <div class="col-6 col-lg-3 text-center mt-1 mt-lg-0">
+        <button class="btn btn-primary btn-block" :disabled="sinCliente" @click="grabaAlbaran">
+          <i class="mdi mdi-clipboard-text mdi-24px mr-2 va-sub"></i>Grabar albarán</button>
+      </div>
+    </div>
+    <div class="mt-2 detalle container-fluid">
+      <div class="row header">
+        <div class="col-auto d-none d-lg-inline-block">
+          <div style="min-width: 75px"></div>
+        </div>
+        <div class="col">Artículo</div>
+        <div class="col-12 d-lg-none"></div>
+        <div class="d-none d-md-inline-block col-md-2 d-lg-none"></div>
+        <div class="col-4 col-md-3 col-lg-2 text-right">Cantidad</div>
+        <div class="col-3 col-md-3 col-lg-1 text-right">Precio</div>
+        <div class="col-3 col-md-3 col-lg-1 text-right">Total</div>
+        <div class="col-auto">
+          <div style="min-width: 1.75em"></div>
+        </div>
+      </div>
+      <div class="row border-bottom pb-2 pb-lg-0" v-for="(lin, index) in lineas" :key="lin.id">
+        <div class="col-auto d-none d-lg-table-cell">
+          <img height="75" :src="url(lin.imagen)" :alt="lin.nombre">
+        </div>
+        <div class="col d-flex flex-column justify-content-center">
+          <div>${lin.referencia}</div>
+          <h6 class="mb-0">${lin.nombre}</h6>
+          <div v-show="lin.talla != null">
+            <b>Talla:</b>${lin.talla}&nbsp;&nbsp;&nbsp;<b>Color:</b>${lin.color}
+          </div>
+        </div>
+        <div class="col-12 d-lg-none"></div>
+        <div class="d-none d-md-inline-block col-md-2 d-lg-none"></div>
+        <div class="col-4 col-md-3 col-lg-2 text-right">
+          <div class="product-quantity">
+            <input type="text" class="product-quantity form-control input-sm" v-model="lin.unidades" @change="lineaActualizaUd(index)" :data-id="lin.id">
+          </div>
+        </div>
+        <div class="col-3 col-md-3 col-lg-1 text-right">
+          ${numToString(lin.precio)}
+        </div>
+        <div class="col-3 col-md-3 col-lg-1 text-right">
+          ${numToString(lin.unidades * lin.precio)}
+        </div>
+        <div class="col-auto px-2">
+          <button class="btn btn-primary btn-sm" data-id="lin.id" @click="lineaBorra(index)">
+            <i class="mdi mdi-trash-can-outline mdi-18px"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="row mx-0">
+      <div class="col-md-6"></div>
+      <div class="col-md-6 px-0 text-right">
+        <table class="table table-borderless font-weight-bold text-right cart-total">
+          <tbody>
+            <tr>
+              <td>Base Imponible:</td>
+              <td>${numToString(total.base)} €</td>
+            </tr>
+            <tr v-for="item in total.iva">
+              <td>IVA ${numToString(item.iva)}%</td>
+              <td>${numToString(item.importe)} €</td>
+            </tr>
+            <tr>
+              <td>Total</td>
+              <td>${numToString(total.total)} €</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  {% include 'seleccion/clientes.html.twig' %}
+  {% include 'seleccion/articulos.html.twig' %}
+{% endblock %}
+{% block javascripts %}
+  <script src="{{ asset('js/cliente-edicion.js') }}"></script>
+  <script type="module" src="{{ asset('js/venta.js') }}"></script>
+{% endblock %}

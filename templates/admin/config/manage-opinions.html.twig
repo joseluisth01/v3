@@ -1,0 +1,114 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Configuración Opiniones - {{ config.title }}{% endblock %}
+
+{% block body %}
+<br>
+<div class="container-gestion-opiniones">
+    <h2>Gestión de Opiniones</h2>
+
+    <!-- Botón de Salir -->
+    <div class="btn-container-gestion-opiniones">
+        <button type="button" class="btn btn-secondary-gestion-opiniones" onclick="window.history.back();">Salir</button>
+    </div>
+
+    <!-- Tabla de opiniones -->
+    <table class="table-gestion-opiniones">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Estrellas</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for opinion in opiniones %}
+                <tr>
+                    <td>{{ opinion.nombre }}</td>
+                    <td>
+                        {% for i in 1..opinion.rating %}
+                            ⭐
+                        {% endfor %}
+                    </td>
+                    <td>
+                        <form method="post" action="{{ path('adminmanage-opinions') }}">
+                            <input type="hidden" name="opinion_id" value="{{ opinion.id }}">
+                            <button type="submit" class="btn btn-danger-gestion-opiniones" onclick="return confirm('¿Seguro que deseas eliminar esta opinión?')">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h4>AGREGAR NUEVA OPINIÓN</h4>
+    <div class="form-group-gestion-opiniones row-gestion-opiniones">
+        <div class="col-md-6-gestion-opiniones">
+            <label for="opinion_nombre" class="label-gestion-opiniones">Nombre</label>
+            <input type="text" class="input-gestion-opiniones" name="opinion_nombre" id="opinion_nombre" placeholder="Nombre del usuario">
+        </div>
+        <div class="col-md-6-gestion-opiniones">
+            <label for="opinion_tiempo" class="label-gestion-opiniones">Tiempo</label>
+            <input type="text" class="input-gestion-opiniones" name="opinion_tiempo" id="opinion_tiempo" placeholder="Ejemplo: hace 3 meses">
+        </div>
+    </div>
+    <div class="form-group-gestion-opiniones row-gestion-opiniones">
+        <div class="col-md-6-gestion-opiniones">
+            <label for="opinion_rating" class="label-gestion-opiniones">Calificación</label>
+            <input type="number" class="input-gestion-opiniones" name="opinion_rating" id="opinion_rating" min="1" max="5" placeholder="1 a 5">
+        </div>
+        <div class="col-md-6-gestion-opiniones">
+            <label for="opinion_avatar" class="label-gestion-opiniones">Avatar (letra)</label>
+            <input type="text" class="input-gestion-opiniones" name="opinion_avatar" id="opinion_avatar" maxlength="1" placeholder="Ejemplo: N">
+        </div>
+    </div>
+    <div class="form-group-gestion-opiniones">
+        <label for="opinion_texto" class="label-gestion-opiniones">Texto de la opinión</label>
+        <textarea class="textarea-gestion-opiniones" name="opinion_texto" id="opinion_texto" rows="4" placeholder="Escribe la opinión aquí"></textarea>
+    </div>
+    <div class="form-group-gestion-opiniones">
+        <button type="button" id="agregar_opinion_btn" class="btn btn-primary-gestion-opiniones">Agregar Opinión</button>
+    </div>
+
+    <script>
+document.getElementById('agregar_opinion_btn').addEventListener('click', async () => {
+    const nombre = document.querySelector('.input-gestion-opiniones#opinion_nombre').value;
+    const tiempo = document.querySelector('.input-gestion-opiniones#opinion_tiempo').value;
+    const rating = document.querySelector('.input-gestion-opiniones#opinion_rating').value;
+    const avatar = document.querySelector('.input-gestion-opiniones#opinion_avatar').value;
+    const texto = document.querySelector('.textarea-gestion-opiniones#opinion_texto').value;
+
+    try {
+        const response = await fetch('/v3/admin/add-opinion', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ nombre, tiempo, rating, avatar, texto }),
+        });
+
+        // Log para verificar el estado de la respuesta
+        console.log('Estado de la respuesta:', response.status);
+
+        if (response.ok) {
+            const data = await response.json();
+
+            location.reload(); // Recargar la página para reflejar los cambios
+        } else {
+            const errorData = await response.json();
+            console.error('Error al agregar la opinión:', errorData);
+            alert('Hubo un error al agregar la opinión: ' + (errorData.error || 'Desconocido'));
+        }
+    } catch (error) {
+        console.error('Error en la solicitud:', error);
+        alert('Hubo un error al conectar con el servidor.');
+    }
+});
+
+</script>
+</div>
+
+{% endblock %}
+
+
+

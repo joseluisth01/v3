@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+  <style>
+    body {
+      background-color: #ededed;
+    }
+    h1 {
+      margin-top: 1.2rem;
+    }
+    .info-direccion > h4 {
+      margin-top: 1.2rem;
+    }
+    .info-direccion > div {
+      margin-top: 0.35rem;
+    }
+  </style>
+{% endblock %}
+{% block body %}
+  <main>
+    <div class="row mx-2 mx-md-5">
+      <h1 class="col font-weight-bold" itemprop="legalName">{{ config.empresa.nombre }}</h1>
+    </div>
+    <div class="row mx-2 mx-md-5 mb-2">
+      <section class="col-12 col-md-8">
+        <h1>¿QUIENES SOMOS?</h1>
+        <div class="py-2 px-5 mb-3">
+          {{ config.data.footertxt}}
+        </div>
+        <h1>¿DONDE ESTAMOS?</h1>
+        <div class="py-2 px-5 mb-3">
+          <div>{{ config.empresa.direccion }}</div>
+          <div class="mb-2">{{config.empresa.cpostal}}-{{config.empresa.localidad}},{{config.empresa.provincia}}</div>
+          {% if config.data.google_maps is not empty %}
+            <a href="{{ config.data.google_maps }}" target="_blank">
+              <img class="img-fluid w-100" src="{{ asset('images/gmaps.jpg') }}" alt="{{ config.empresa.direccion }}">
+            </a>
+          {% endif %}
+        </div>
+        {% if cms is defined %}
+          <h1>INFORMACIÓN</h1>
+          <div class="py-2 px-5 mb-3">
+            {% for item in cms %}
+              <div class="mb-3">
+                <i class="mdi mdi-chevron-right mdi-18px"></i>
+                <a style="font-weight: 500;" href="{{ url('textos', { item: item.web_url})}}">{{item.nombre}}</a>
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </section>
+      <section class="col-12 col-md-4 info-direccion">
+        <h4>DIRECCIÓN</h4>
+        <address itemprop="address" itemscope="" itemtype="http://schema.org/Address">
+          <div itemprop="streetAddress">{{ config.empresa.direccion }}</div>
+          <div>
+            <span itemprop="postalCode">{{config.empresa.cpostal}}</span>
+            -
+            <span itemprop="addressLocality">{{config.empresa.localidad}}</span>,
+            <span itemprop="addressRegion">{{config.empresa.provincia}}</span>
+          </div>
+        </address>
+        <h4>CONTACTO</h4>
+        <div>
+          <i class="mdi mdi-phone mdi-18px mr-2"></i>
+          <span itemprop="telephone">{{ config.empresa.telefono }}</span>
+        </div>
+        <div>
+          <i class="mdi mdi-email mdi-18px mr-2"></i>
+          <span itemprop="email">{{ config.empresa.email }}</span>
+        </div>
+        <h4>HORARIO</h4>
+        <div>{{ config.empresa.horario }}</div>
+      </section>
+    </div>
+  </main>
+{% endblock %}

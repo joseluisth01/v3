@@ -1,0 +1,210 @@
+{% extends 'gestion/base.html.twig' %}
+{% block stylesheets %}
+<style>
+    .collapsible-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .collapsible-body {
+        padding: .5rem 1rem 1rem 1rem;
+    }
+
+    .collapsible-body,
+    .collapsible-header:focus {
+        background-color: white;
+    }
+
+    tr>td:nth-child(3),
+    tr>th:nth-child(3) {
+        text-align: right;
+    }
+
+    td,
+    th {
+        padding-top: .5rem;
+        padding-bottom: .5rem;
+    }
+</style>
+{% endblock %}
+{% block body %}
+<ul class="collapsible popout">
+    {% for cart in carritos %}
+    <li id="carrito-{{cart.session_id}}">
+        <div class="collapsible-header">
+            {{cart.nombre | default('Sin cliente')}}
+            <div>
+                <span title="Fecha de la última actualización">
+                    <i class="mdi mdi-calendar-today mdi-18px mr-0"></i>{{cart.fecha}}
+                </span>
+                <i class="mdi mdi-chevron-right mdi-18px mx-0"></i>
+                <span title="Listado de artículos del carrito">{{cart.items}} artículos</span>
+                <i class="mdi mdi-chevron-right mdi-18px mx-0"></i>
+                <span title="Importe total de la compra">{{cart.total}} €</span>
+            </div>
+        </div>
+        <div class="collapsible-body">
+            {% set btnDisable = cart.cliente == 0 ? 'disabled' : '' %}
+            {% set colorBtnPedido = cart.cliente == 0 ? 'btn-secondary' : 'btn-success' %}
+            {% set colorBtnEmail = cart.cliente == 0 ? 'btn-secondary' : 'btn-primary' %}
+            <div class="d-flex justify-content-around" data-cli="{{cart.cliente}}" data-email="{{cart.email}}" data-session="{{cart.session_id}}">
+                <button class="btn btn-pedido {{ colorBtnPedido }}" title="Pasar el carrito a pedido" {{ btnDisable }}>
+                    <i class="mdi mdi-cart-arrow-right mdi-24px mr-2"></i>Pasar a pedido
+                </button>
+                <button class="btn btn-email {{ colorBtnEmail }}" title="Enviar un recordatorio por email al cliente" {{ btnDisable }}>
+                    <i class="mdi mdi-email-send mdi-24px mr-2"></i>Enviar recordatorio
+                </button>
+                <button class="btn btn-danger btn-borrar" title="Borrar todo el carrito">
+                    <i class="mdi mdi-cart-off mdi-24px mr-2"></i>Eliminar carrito
+                </button>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Referencia</th>
+                        <th>Nombre</th>
+                        <th>Uds</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for lin in cart.lineas %}
+                    <tr>
+                        <td>{{lin.referencia}}</td>
+                        <td>{{lin.nombre}}</td>
+                        <td>{{lin.unidades}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </li>
+    {% endfor %}
+</ul>
+
+<div class="modal fade" id="modal-email" tabindex="-1" role="dialog" aria-labelledby="modal-email-title" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal-email-title">Email recordatorio cliente</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="form-dlg-send-email">
+                    <div class="form-group">
+                        <label>Dirección de correo</label>
+                        <input type="text" class="form-control" name="email" id="dlg-send-email" placeholder="Introduzca el email del cliente">
+                    </div>
+                    <div class="form-group">
+                        <label>Asunto</label>
+                        <input type="text" class="form-control" name="subject" id="dlg-send-subject" value="¡Gracias por visitarnos!" />
+                    </div>
+                    <div class="form-group">
+                        <label>Texto</label>
+                        <textarea rows="5" class="form-control" name="body" id="dlg-send-body" placeholder="Texto del correo...">¡Hola!
+Tienes algunos artículos en tu carrito esperando a que vuelvas a por ellos!
+Si te siguen interesando puedes entrar en tu cuenta y terminar el pedido.
+¡Gracias!</textarea>
+                    </div>
+                    <input type="hidden" id="dlg-send-cli">
+                </form>
+            </div>
+            <div class="modal-footer p-2">
+                <button type="button" class="btn btn-secondary mr-3" data-dismiss="modal">
+                    <i class="mdi mdi-close mr-2"></i>Cerrar
+                </button>
+                <button type="button" class="btn btn-success btn-send" id="btn-dlg-send">
+                    <i class="mdi mdi-send mr-2"></i>Enviar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+{% block javascripts %}
+<script>
+    $(function () {
+        function grabaPedido() {
+            let parent = $(this).parent();
+            T.modalYesNo('¿Deseas convertir el carrito en un pedido?', 'Confirmación', function () {
+                T.loading('Grabando pedido...');
+                let cli = parent.data('cli'),
+                    session = parent.data('session'),
+                    postData = { 'cliente': cli, 'verif': T.primeNumber(cli) };
+                $.post('{{url("gestion-pedido-grabar")}}', postData, function (resp) {
+                    T.loadingHide();
+                    $('#carrito-' + session).remove();
+                    T.modalOk(resp.msg, 'Pasar carrito a pedido');
+                });
+            });
+        }
+
+        function borraCarrito(cli) {
+            let parent = $(this).parent();
+            T.modalYesNo('¿Deseas borrar el carrito?', 'Confirmación', function () {
+                let cli = parent.data('cli'),
+                    session = parent.data('session'),
+                    postData = {
+                        'session_id': session,
+                        'cliente': cli,
+                        'verif': T.primeNumber(cli)
+                    };
+                T.loading('Borrando carrito...');
+                $.post('{{url("gestion-carrito-borra")}}', postData, function (resp) {
+                    T.loadingHide();
+                    $('#carrito-' + session).remove();
+                    T.modalOk(resp, 'Borrar carrito');
+                });
+            });
+        }
+
+        function emailShow() {
+            let parent = $(this).parent();
+            $('#dlg-send-cli').val(parent.data('cli'));
+            $('#dlg-send-email').val(parent.data('email'));
+            $('#modal-email').modal('show');
+        }
+
+        function emailEnvia() {
+            if ($('#form-dlg-send-email').valid()) {
+                let cli = $('#dlg-send-cli').toInt(),
+                    postData = {
+                        'cliente': cli,
+                        'verif': T.primeNumber(cli),
+                        'email': $('#dlg-send-email').val(),
+                        'subject': $('#dlg-send-subject').val(),
+                        'body': $('#dlg-send-body').html().replace(/\n/g, '<br>')
+                    };
+                T.loading('Enviando email...');
+                $.post('{{url("gestion-carrito-email")}}', postData, function (resp) {
+                    T.loadingHide();
+                    $('#modal-email').modal('hide');
+                    T.modalOk(resp, 'Email recordatorio');
+                });
+            }
+        }
+
+        $('.btn-pedido').on('click', grabaPedido);
+        $('.btn-borrar').on('click', borraCarrito);
+        $('.btn-email').on('click', emailShow);
+
+        //-- Email
+        $('#modal-email').on('shown.bs.modal', () => $('#dlg-send-email').focus());
+        $('#form-dlg-send-email').validate({
+            rules: {
+                email: { required: true, email: true },
+                subject: 'required',
+                body: 'required',
+            },
+        });
+        $('#btn-dlg-send').on('click', emailEnvia);
+
+        // -- Collapsible
+        $('.collapsible').collapsible();
+
+    });
+</script>
+{% endblock %}

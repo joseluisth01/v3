@@ -1,0 +1,548 @@
+{% block body %}
+
+	{% if config.mostrarOpiniones %}
+		{% if app.request.attributes.get('_route') == 'home' %}
+			{% include 'main/opiniones.html.twig' with {'opiniones': opiniones} %}
+			<br><br>
+		{% endif %}
+	{% endif %}<br>
+
+	{% set landing = landing is defined ? landing : [] %}
+	{% if app.request.attributes.get('_route') == 'home' %}
+		<div class="divancho2" style="width:80%; margin:0 auto">
+			<h2 class="titulogeneral">Otros Productos Destacados de la Tienda</h2>
+			<div class="product-list-container">
+				{% for art in landing|slice(0, 10) %}
+					{% include 'articulo/art-minificha.html.twig' %}
+				{% endfor %}
+			</div>
+			{# <a href="" class="btnvermasarticulos mb-5">IR A LA TIENDA ONLINE</a> #}
+		</div><br><br>
+	{% endif %}
+	<br><br>
+
+	{% if config.mostrarMarcas and lista_marcas is defined %}
+		<h2 class="titulogeneral">Trabajamos con las Mejores Marcas</h2>
+		<!-- HTML Structure -->
+		<div id="carouselMarcas">
+			<div class="jcarousel-wrapper">
+				<div class="jcarousel">
+					<ul>
+						{% for mar in lista_marcas %}
+							<li>
+								<a href="{{ url('marca-grid', {webUrl: mar.url}) }}">
+									<img src="{{ asset(mar.url_imagen) }}" alt="{{ mar.nombre }}" width="200" style="max-height: 100px" class="img-fluid">
+								</a>
+							</li>
+						{% endfor %}
+					</ul>
+				</div>
+				<a href="#" class="jcarousel-control-prev">&lsaquo;</a>
+				<a href="#" class="jcarousel-control-next">&rsaquo;</a>
+			</div>
+		</div>
+
+		<!-- CSS -->
+		<style>
+			.jcarousel {
+				position: relative;
+				overflow: hidden;
+				width: 100%;
+			}
+
+			.jcarousel ul {
+				width: 10000em;
+				position: relative;
+				list-style: none;
+				margin: 0;
+				padding: 0;
+				display: flex;
+				gap: 90px;
+			}
+
+			.jcarousel li {
+				float: left;
+				display: flex;
+				align-items: center;
+			}
+
+			.jcarousel img {
+				display: block;
+				max-width: 100%;
+				height: auto !important;
+				object-fit:contain;
+			}
+
+			.jcarousel-wrapper {
+				position: relative;
+				margin: 20px auto;
+				width: 95%;
+				outline: 0 !important;
+				border: 0 !important;
+				box-shadow: 0 0 2px #ffffff !important;
+			}
+
+			.jcarousel-control-prev,
+			.jcarousel-control-next {
+				position: absolute;
+				top: 60%;
+				transform: translateY(-50%);
+				width: 30px;
+				height: 30px;
+				text-align: center;
+				background: #4E443C;
+				color: #fff;
+				text-decoration: none;
+				font-size: 24px;
+				border-radius: 30px;
+				box-shadow: 0 0 4px #F0EFE7;
+				cursor: pointer;
+				z-index: 10;
+			}
+
+			.jcarousel-control-prev {
+				left: -50px;
+			}
+
+			.jcarousel-control-next {
+				right: -15px;
+			}
+
+			.jcarousel-control-prev:hover,
+			.jcarousel-control-next:hover {
+				background: #746B5F;
+				color: #fff;
+				text-decoration: none;
+			}
+		</style>
+
+		<!-- JavaScript -->
+		<script>
+			$(function () {
+var $carousel = $('.jcarousel');
+
+$carousel.jcarousel({wrap: 'circular'});
+
+$('.jcarousel-control-prev').click(function (e) {
+e.preventDefault();
+$carousel.jcarousel('scroll', '-=1');
+});
+
+$('.jcarousel-control-next').click(function (e) {
+e.preventDefault();
+$carousel.jcarousel('scroll', '+=1');
+});
+
+// Autoplay
+setInterval(function () {
+$carousel.jcarousel('scroll', '+=1');
+}, 5000);
+});
+		</script>
+	{% endif %}
+	{% if config.slider %}
+		<script src="{{ asset('vendor/revealjs/reveal.js') }}"></script>
+		{# https: // stackoverflow.com/questions/19522587/add-remove-slides-from-reveal-js-dynamically #}
+		<script>
+			(function () {
+Reveal.initialize({
+embedded: true,
+controlsLayout: 'edges',
+autoSlide: 5000,
+loop: true,
+transitionSpeed: 'slow',
+autoSlideStoppable: false,
+height: {{ config.sliderHeight }}
+});{% if bannerImg is defined %}const MAX_MOBILE_PX = 765;
+const slides = $('#reveal-slides');
+let actualWidth = $(window).width(),
+actualDesk = actualWidth >= MAX_MOBILE_PX;
+
+if (actualWidth >= MAX_MOBILE_PX) {
+slides.html($('#reveal-desktop').html());
+} else {
+slides.html($('#reveal-mobile').html());
+}
+
+$(window).on('resize', function () {
+let desk = $(window).width() >= MAX_MOBILE_PX;
+if (actualDesk != desk) {
+let ident = desk ? '#reveal-desktop' : '#reveal-mobile';
+actualWidth = $(window).width();
+actualDesk = actualWidth >= MAX_MOBILE_PX;
+slides.empty();
+slides.html($(ident).html())
+Reveal.slide(0);
+Reveal.sync();
+}
+}).trigger('resize');
+{% else %}
+$('#reveal-slides').html($('#reveal-desktop').html());{% endif %}
+})();
+		</script>
+	{% endif %}
+{% endblock %}
+<br><br>
+
+{% if config.data.mostrar_newsletter %}
+	{% include 'main/newsletter.html.twig' %}
+{% endif %}<br>
+
+{% if config.data.kit_digital %}
+	<div class="divsubvencion">
+		<div class="logosalineados">
+			<div class="logo1">
+				<img src="{{ asset("images/kit_digital/kitdigital5.webp") }}" alt="1">
+			</div>
+			<div class="logo1">
+				<img src="{{ asset("images/kit_digital/kitdigital4.webp") }}">
+			</div>
+			<div class="logo1">
+				<img src="{{ asset("images/kit_digital/kitdigital3.webp") }}">
+			</div>
+			<div class="logo1">
+				<img src="{{ asset("images/kit_digital/kitdigital2.webp") }}">
+			</div>
+			<div class="logo1">
+				<img src="{{ asset("images/kit_digital/kitdigital1.webp") }}">
+			</div>
+		</div>
+		<div class="logotexto">
+			<p>La empresa
+				{{ config.data.razon_social }}
+				ha sido beneficiaria del Programa de Ayudas destinadas a la digitalización de pequeñas empresas, y personas en situación de autoempleo, en el marco de la Agenda España Digital 2025, el Plan de Digitalización PYMEs 2021-2025 y el Plan de Recuperación, Transformación y Resillencia de España «Financiado por la Unión Europea» Next Generation EU (Programa Kit Digital)</p>
+		</div>
+	</div>
+	<style>
+		.divsubvencion {
+			width: 80%;
+			margin: 3% auto 0;
+		}
+		.logosalineados {
+			display: flex;
+			align-items: center;
+			justify-content: space-between
+		}
+		.logo1 img {
+			object-fit: contain;
+			margin: 0 auto;
+		}
+		.logo1 {
+			width: 20%;
+			text-align: center;
+		}
+		.logotexto p {
+			font-size: 15px;
+			text-align: center;
+			margin-top: 15px;
+			margin-top: 2% !important;
+			margin-bottom: 70px !important;
+			font-family: 'Champagne';
+			color: black;
+		}
+
+
+		@media screen and(max-width: 769px) {
+			.divsubvencion {
+				width: 80%;
+				margin: 0 auto;
+			}
+			.logosalineados {
+				flex-direction: column !important;
+			}
+			.logo1 {
+				width: 50%;
+				margin: 20px auto 0;
+			}
+		}
+
+		@media screen and(max-width: 425px) {
+			.logo1 {
+				width: 70%;
+				margin: 0 !important;
+			}
+		}
+	</style>
+{% endif %}
+{% if config.data.mostrar_footer %}
+	<style>
+		.pre-footer ul.list-inline > li.list-inline-item > a > i.mdi.mdi-youtube.mdi-36px::before {
+			font-size: 32px;
+		}
+	</style>
+
+	<div class="pre-footer">
+		<div
+			class="container-fluid">
+			{# 			<div class="row mb-2 border-secondary border-bottom">
+																																						<div class="col-12 col-md-4 col-lg-4">
+																																							<a href="#foot-info-emp" class="title collapsed" data-toggle="collapse" aria-expanded="false" aria-controls="foot-info-emp">
+																																								<div class="title text-center">
+																																									Acerca de Nosotros
+																																									<i class="mdi mdi-chevron-up"></i>
+																																									<i class="mdi mdi-chevron-down"></i>
+																																								</div>
+																																							</a>
+																																							<p class="text-justify collapse" id="foot-info-emp">{{ config.data.footertxt}}</p>
+																																						</div>
+																																		
+																																						<div class="col-12 col-md-4 col-lg-4">
+																																							{% if cms is defined %}
+																																								<a href="#foot-info-cms" class="title collapsed" data-toggle="collapse" aria-expanded="false" aria-controls="foot-info-cms">
+																																									<div class="title text-center">
+																																										Información
+																																										<i class="mdi mdi-chevron-up"></i>
+																																										<i class="mdi mdi-chevron-down"></i>
+																																									</div>
+																																								</a>
+																																								<ul class="list-unstyled collapse" id="foot-info-cms">
+																																									{% for item in cms %}
+																																										<li>
+																																											<i class="mdi mdi-chevron-right mdi-18px"></i>
+																																											<a href="{{ url('textos', { item: item.web_url})}}">{{item.nombre}}</a>
+																																										</li>
+																																									{% endfor %}
+																																								</ul>
+																																							{% endif %}
+																																						</div>
+																																		
+																																						<div class="col-12 col-md-4 col-lg-4">
+																																							<a href="#foot-info-contacto" class="title collapsed" data-toggle="collapse" aria-expanded="false" aria-controls="foot-info-contacto">
+																																								<div class="title text-center">
+																																									Contacto
+																																									<i class="mdi mdi-chevron-up"></i>
+																																									<i class="mdi mdi-chevron-down"></i>
+																																								</div>
+																																							</a>
+																																							<address class="collapse" id="foot-info-contacto">
+																																								{% if config.data.google_maps is not empty %}
+																																									<a href="{{ config.data.google_maps }}" target="_blank" rel="noreferrer">
+																																										<img class="img-fluid w-100" src="{{ asset('images/gmaps.jpg') }}" alt="{{ config.empresa.direccion }}">
+																																									</a>
+																																								{% endif %}
+																																								<address itemprop="address" itemscope="" itemtype="http://schema.org/Address">
+																																									<span class="d-block" itemprop="streetAddress">{{config.empresa.direccion}}</span>
+																																									<div>
+																																										<span itemprop="postalCode">{{config.empresa.cpostal}}</span>
+																																										-
+																																										<span itemprop="addressLocality">{{config.empresa.localidad}}</span>,
+																																										<span itemprop="addressRegion">{{config.empresa.provincia}}</span>
+																																									</div>
+																																								</address>
+																																								<div>
+																																									<strong>Teléfono:</strong>
+																																									<a href="tel:{{ config.empresa.telefonoUri }}" class="ml-2">
+																																										<span itemprop="telephone">{{ config.empresa.telefono }}</span>
+																																									</a>
+																																								</div>
+																																								<div>
+																																									<strong>Email:</strong>
+																																									<a href="mailto:{{ config.empresa.email }}" class="ml-2">
+																																										<span itemprop="email">{{ config.empresa.email }}</span>
+																																									</a>
+																																								</div>
+																																								<p>{{ config.empresa.horario }}</p>
+																																							</address>
+																																						</div>
+																																					</div> #}
+
+
+			<div class="row mr-3">{# 				<div class="col">
+																																																																									{% if config.redsysActivo %}
+																																																																										{% include 'footer/footer-tarjetas.html.twig' %}
+																																																																									{% endif %}
+																																																																								</div> #}
+				{# -- Iconos redes sociales -- #}
+				{# -- Suscripción -- #}
+				{# 				{% if config.data.mostrar_newsletter %}
+																																																																									<div class="col-12 col-md-8">
+																																																																										<div class="pre-footer-subscribe-box">
+																																																																											<div class="input-group">
+																																																																												<div class="col">
+																																																																													<input type="text" placeholder="Nombre" class="form-control" id="newsletter_nombre">
+																																																																												</div>
+																																																																												<div class="col">
+																																																																													<input type="text" placeholder="Correo" class="form-control" id="newsletter_email">
+																																																																												</div>
+																																																																												<div class="col-auto px-0">
+																																																																													<button class="btn btn-primary" data-toggle="modal" id="btn-suscripcion">Suscribete</button>
+																																																																												</div>
+																																																																											</div>
+																																																																										</div>
+																																																																									</div>
+																																																																								{% endif %} #}
+			</div>
+		</div>
+
+		<div style="width:80%; margin:0 auto; padding-top:50px; padding-bottom:50px;">
+			<div class="d-flex justify-content-between align-items-center w-100 divfooter">
+
+				<div style="width:30%" class="footerdatos1">
+					<div class="footersocial">
+						{% if config.data.red_facebook is not empty %}
+							<a href="https://www.facebook.com/{{ config.data.red_facebook }}" target="_blank" rel="noreferrer" title="Facebook">
+								<i class="mdi mdi-facebook mdi-24px" style="color:#3b5998;"></i>
+							</a>
+						{% endif %}
+						{% if config.data.red_twitter is not empty %}
+							<a href="https://twitter.com/{{ config.data.red_twitter }}" target="_blank" rel="noreferrer" title="Twitter">
+								<i class="mdi mdi-twitter mdi-24px" style="color:#1da1f2;"></i>
+							</a>
+						{% endif %}
+						{% if config.data.red_linkedin is not empty %}
+							<a href="https://linkedin.com/{{ config.data.red_linkedin }}" target="_blank" rel="noreferrer" title="Linkedin">
+								<i class="mdi mdi-linkedin mdi-24px" style="color:#1985bc"></i>
+							</a>
+						{% endif %}
+						{% if config.data.red_skype is not empty %}
+							<a href="skype:{{ config.data.red_skype }}?call" title="Skype">
+								<i class="mdi mdi-skype mdi-24px"></i>
+							</a>
+						{% endif %}
+						{% if config.data.red_instagram is not empty %}
+							<a href="https://instagram.com/{{ config.data.red_instagram }}" target="_blank" rel="noreferrer" title="Instagram">
+								<i class="mdi mdi-instagram mdi-24px" style="color:#f0566a;"></i>
+							</a>
+						{% endif %}
+						{% if config.data.red_youtube is not empty %}
+							<a href="https://youtube.com/{{ config.data.red_youtube }}" target="_blank" rel="noreferrer" title="YouTube" style="margin-top:-2px">
+								<i class="mdi mdi-youtube mdi-36px" style="color:#ff0000;"></i>
+							</a>
+						{% endif %}
+					</div>
+
+					{% if config.empresa.telefono %}
+						<div class="col-auto">
+							<a href="tel:{{ config.empresa.telefonoUri }}" class="mr-4">
+								<i class="mdi mdi-phone mdi-18px mr-1"></i>
+								{{ config.empresa.telefono }}</a>
+						</div>
+					{% endif %}
+					{% if config.empresa.whatsapp %}
+						<div class="col-auto">
+							<a href="https://wa.me/34{{ config.empresa.whatsapp }}" target="_blank" rel="noreferrer">
+								<i class="mdi mdi-whatsapp mdi-18px mr-1"></i>
+								{{ config.empresa.whatsapp }}</a>
+						</div>
+					{% endif %}
+					{% if config.empresa.email %}
+						<div class="col-auto">
+							<a href="mailto:{{ config.empresa.email }}" class="mr-4">
+								<i class="mdi mdi-email mdi-18px mr-1"></i>
+								{{ config.empresa.email }}</a>
+						</div>
+					{% endif %}
+				</div>
+				<div style="width:40%; text-align:center" class="divlogofooter">
+					<a href="{{ url('home') }}">
+						<img src="{{ asset(config.logo) }}" title="{{ config.nombreWeb }}" alt="{{ config.nombreWeb }}">
+					</a>
+				</div>
+				<div style="width:30%" class="footerdatos2">
+					{% if config.empresa.horario %}
+						<div class="col-auto">
+							{{ config.empresa.horario }}
+							<i class="mdi mdi-clock mdi-18px mr-1"></i>
+						</div>
+					{% endif %}
+					{% if config.data.direccion %}
+						<div class="col-auto">
+							{{config.empresa.direccion}}
+							{{config.empresa.cpostal}}
+							{{config.empresa.localidad}}
+							{{config.empresa.provincia}}
+							<i class="mdi mdi-map-marker mdi-18px"></i>
+						</div>
+
+					{% endif %}
+				</div>
+			</div>
+
+			<div class="footer_textoslegales">
+				<a href="{{ path('textos-condiciones-compra') }}">Términos y Condiciones de Compra</a>
+				<p>|</p>
+				<a href="{{ path('textos', { item: 'avisos_legales' }) }}">Aviso Legal</a>
+				<p>|</p>
+				<a href="{{ path('textos-privacidad') }}">Política de Privacidad</a>
+				<p>|</p>
+				<a href="{{ path('textos-cookies') }}">Política de Cookies</a>
+				<p>|</p>
+				<a href="{{ path('textos', { item: 'condiciones-envio' }) }}">Condiciones de Envío</a>
+			</div>
+
+			<div class="text-center">
+				<p class="copyrighttexto">Copyright 2024 | Diseñado por
+					<a class="enlacesfooter" href="https://tictac-comunicacion.es/">TIC TAC COMUNICACIÓN</a>
+					y Desarrollado por
+					<a class="enlacesfooter" href="https://www.viii.es/">COMPONENTES DE CONTROL</a>
+				</p>
+			</div>
+		</div>
+
+	</div>
+{% else %}
+	<div class="pre-footer py-2 row mx-0 align-items-center">
+		<div class="col-12 col-md-auto text-center">
+			<a href="{{ url('info') }}" style="text-decoration:underline;color:#fff">
+				&copy;
+				{{ config.empresa.nombre }}&nbsp;&nbsp;{{ 'now'|date('Y') }}
+			</a>
+		</div>
+		<div class="col">
+			{% if config.redsysActivo %}
+				{% include 'footer/footer-tarjetas.html.twig' %}
+			{% endif %}
+		</div>
+		<div class="col social-links pr-md-5">
+			<a href="https://wa.me/34{{ config.empresa.whatsapp }}" target="_blank" rel="noreferrer" title="Contactar por WhatsApp">
+				<i class="mdi mdi-whatsapp mdi-24px" style="color:#25d366"></i>
+			</a>
+			{% if config.data.red_facebook is not empty %}
+				<a href="https://www.facebook.com/{{ config.data.red_facebook }}" target="_blank" rel="noreferrer" title="Facebook">
+					<i class="mdi mdi-facebook mdi-24px" style="color:#3b5998;"></i>
+				</a>
+			{% endif %}
+			{% if config.data.red_twitter is not empty %}
+				<a href="https://twitter.com/{{ config.data.red_twitter }}" target="_blank" rel="noreferrer" title="Twitter">
+					<i class="mdi mdi-twitter mdi-24px" style="color:#1da1f2;"></i>
+				</a>
+			{% endif %}
+			{% if config.data.red_linkedin is not empty %}
+				<a href="https://linkedin.com/{{ config.data.red_linkedin }}" target="_blank" rel="noreferrer" title="Linkedin">
+					<i class="mdi mdi-linkedin mdi-24px" style="color:#1985bc"></i>
+				</a>
+			{% endif %}
+			{% if config.data.red_skype is not empty %}
+				<a href="skype:{{ config.data.red_skype }}?call" title="Skype">
+					<i class="mdi mdi-skype mdi-24px"></i>
+				</a>
+			{% endif %}
+			{% if config.data.red_instagram is not empty %}
+				<a href="https://instagram.com/{{ config.data.red_instagram }}" target="_blank" rel="noreferrer" title="Instagram">
+					<i class="mdi mdi-instagram mdi-24px" style="color:#f0566a;"></i>
+				</a>
+			{% endif %}
+			{% if config.data.red_youtube is not empty %}
+				<a href="https://youtube.com/{{ config.data.red_youtube }}" target="_blank" rel="noreferrer" title="YouTube" style="margin-top:-2px">
+					<i class="mdi mdi-youtube mdi-36px" style="color:#ff0000;"></i>
+				</a>
+			{% endif %}
+		</div>
+	</div>
+{% endif %}
+<script type="application/ld+json">
+	{
+																																	      "@context": "http://schema.org",
+																																	      "@type": "Address",
+																																	      "streetAddress": "{{ config.empresa.direccion }}",
+																																	      "postalCode" : "{{config.empresa.cpostal}}",
+																																	      "addressLocality" : "{{config.empresa.localidad}}",
+																																	      "addressRegion" : "{{config.empresa.provincia}}",
+																																	      "telephone": "{{ config.empresa.telefono }}",
+																																	      "email": "{{ config.empresa.email }}"
+																																	      }
+</script>
+{% if config.data.mostrar_newsletter %}
+	{% include 'footer/footer-newsletter.html.twig' %}
+{% endif %}
+{% include 'footer/footer-cookies.html.twig' %}

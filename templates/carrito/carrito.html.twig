@@ -1,0 +1,162 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+	<main class="container-fluid bg-white maincarrito" style="min-height: 58.2vh;">
+		<div class="containercarrito">
+			<div class="container">
+				<div class="row">
+					<div class="col-12 col-md-6">
+						<h1 class="font-weight-normal">
+							<i class="mdi mdi-cart mr-2"></i>Carrito</h1>
+					</div>
+					{% if app.user %}
+						<div class="col-12 col-md-6 text-center text-lg-right">
+							<h6 class="">{{ app.user.getClientName }}</h6>
+						</div>
+					{% endif %}
+				</div>
+			</div>
+			{% if lineas is empty %}
+				<div class="text-center mt-3 mb-5">
+					<h1 class="px-3 py-5 my-3">No tiene artículos en el carrito</h1>
+					<a href="{{ url('home') }}" class="btn btn-primary px-3 mb-5">
+						<i class="iconblanco mdi mdi-undo-variant mr-3"></i>Volver
+					</a>
+				</div>
+			{% else %}
+				<div class="row cart-table border-bottom border-dark font-weight-bold pb-2">
+					<div class="col-auto col-lg-1 d-none d-lg-table-cell" style="width:75px !important;"></div>
+					<div class="col">Descripción</div>
+					<div class="col-auto col-lg-2">Cantidad</div>
+					<div class="col col-lg-1 d-none d-lg-table-cell">Precio</div>
+					<div class="col col-lg-1 d-none d-lg-table-cell">Total</div>
+					<div class="col col-lg-1 d-none d-lg-table-cell"></div>
+				</div>
+				{% for lin in lineas %}
+					<div class="row border-bottom py-2">
+						<div class="col-auto col-lg-1 d-none d-lg-table-cell" style="width:75px !important;">
+							<a href="{{ url('articulo', {weburl: lin.url}) }}">
+								<img height="75" src="{{ asset(lin.imagen) }}" alt="{{ lin.nombre }}">
+							</a>
+						</div>
+						<div class="col">
+							{{ lin.referencia }}
+							<a href="{{ url('articulo', {weburl: lin.url}) }}">
+								<h6 class="mb-0">{{ lin.nombre }}</h6>
+							</a>
+							{% if lin.talla is not empty %}
+								<b>Talla:
+								</b>
+								{{ lin.talla }}&nbsp;&nbsp;&nbsp;<b>Color:
+								</b>
+								{{ lin.color }}
+							{% endif %}
+							{% if lin.web_alerta is not empty %}
+								<div class="text-danger">{{ lin.web_alerta }}</div>
+							{% endif %}
+						</div>
+						<div class="col-auto col-lg-2 d-flex flex-column">
+							<div class="product-quantity">
+								<input type="text" value="{{ lin.unidades }}" class="product-quantity form-control input-sm" data-id="{{ lin.id }}" data-actual="{{lin.actual}}" data-ctso="{{lin.control_stock}}" id="input-{{ lin.id }}">
+							</div>
+							<div class="d-lg-none">
+								<div class="d-lg-none mt-3">Precio:
+									{{ lin.precio | price }}</div>
+								<div class="d-lg-none mt-3">Total:
+									{{ (lin.unidades * lin.precio) | price }}</div>
+								<div class="d-lg-none mt-3">
+									<button class="btn btn-primary btn-sm btn-delete" data-id="{{ lin.id }}">
+										<i class="mdi mdi-trash-can-outline"></i>
+									</button>
+								</div>
+							</div>
+						</div>
+						<div class="col col-lg-1 d-none d-lg-table-cell">
+							{{ lin.precio | price }}
+						</div>
+						<div class="col col-lg-1 d-none d-lg-table-cell">
+							{{ (lin.unidades * lin.precio) | price }}
+						</div>
+						<div class="col col-lg-1 d-none d-lg-table-cell">
+							<button class="btn btn-primary btn-sm btn-delete" data-id="{{ lin.id }}">
+								<i class="iconblanco mdi mdi-trash-can-outline"></i>
+							</button>
+						</div>
+					</div>
+				{% endfor %}
+				<div class="row mx-0">
+					<div class="col-md-6"></div>
+					<div class="col-md-6 px-0 text-right">
+						<div class="custom-control custom-checkbox">
+							<input type="checkbox" class="custom-control-input" id="recoger_en_tienda" name="recoger_en_tienda" {{ recoger_en_tienda ? 'checked' : '' }}>
+							<label class="custom-control-label pt-1" for="recoger_en_tienda">Quiero recoger en tienda</label>
+						</div>
+						<table class="table table-borderless font-weight-bold text-right cart-total">
+							<tbody>
+								<tr>
+									<td>Base Imponible</td>
+									<td class="font-weight-normal">{{ total.base | price }}</td>
+								</tr>
+
+								{% for item in total.iva %}
+									<tr>
+										<td>IVA
+											{{ item.iva|number_format(2, ',', '.') }}%</td>
+										<td class="font-weight-normal">{{ item.importe | price }}</td>
+									</tr>
+								{% endfor %}
+								<tr>
+									<td>Total artículos</td>
+									<td class="font-weight-normal">{{ total.total | price }}</td>
+								</tr>
+								<tr>
+									<td>Portes</td>
+									<td class="border-top border-dark font-weight-normal">{{ portes.euros_mas_iva | price }}</td>
+								</tr>
+								<tr>
+									<td>Total Pedido</td>
+									<td>{{ total.total_con_portes | price }}</td>
+								</tr>
+							</tbody>
+						</table>
+						{% if portes.gratis > 0 and portes.falta > 0 %}
+							<div class="text-right">
+								{% if total.portes > 0 and portes.falta == 1 %}
+									Le falta
+									{{ portes.falta | price }}
+									para que su envío sea gratuito.
+								{% else %}
+									Le faltan
+									{{ portes.falta | price }}
+									para que su envío sea gratuito.
+								{% endif %}
+							</div>
+						{% endif %}
+					</div>
+				</div>
+				<div class="mt-4 mb-2 d-flex justify-content-between flex-column flex-sm-row">
+					<button class="btn btn-danger mx-3 mx-sm-0 mb-3 mb-sm-0" id="btn-delete-cart">
+						Borrar pedido<i class="iconblanco mdi mdi-trash-can-outline ml-3"></i>
+					</button>
+					<button class="btn btn-success mx-3 mx-sm-0 " id="btn-end-cart">
+						Finalizar pedido<i class="iconblanco mdi mdi-check ml-3"></i>
+					</button>
+				</div>
+			{% endif %}
+		</div>
+
+	</main>
+	{% include 'carrito/carrito-fin-modal.html.twig' %}
+{% endblock %}
+{% block javascripts %}
+	<script>
+		let cartCfg = {
+uId: {{ user.getId }},
+cId: {{ user.getClient }},
+rSys: {{ config.data.redsys_activar ? 'true' : 'false' }},
+pSelect: {{ config.portesSelect ? 'true' : 'false' }},
+ret: {{ recoger_en_tienda ? 'true' : 'false' }}
+};
+	</script>
+	<script src="{{ asset('js/carrito.js') }}"></script>
+{% endblock %}

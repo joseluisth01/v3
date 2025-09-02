@@ -1,0 +1,57 @@
+<style>
+  h4{
+    text-align:center;
+    margin-top:20px;
+    margin-bottom:20px;
+    text-transform:uppercase;
+  }
+</style>
+
+<h4>Configuración REDSYS</h4>
+<div class="form-group row">
+    <div class="col">
+        <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" name="redsys_activar" id="redsys_activar" {{ config.data.redsys_activar ? 'checked' : '' }}>
+            <label class="custom-control-label" for="redsys_activar">Activar TPV Virtual</label>
+        </div>
+    </div>
+</div>
+<div id="pasarela-redsys">
+    <div class="form-group row">
+        <div class="col">
+            <label for="redsys_url">URL TPV Virtual</label>
+            <input type="text" class="form-control" name="redsys_url" id="redsys_url" value="{{config.data.redsys_url}}">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col">
+            <label for="Ds_Merchant_MerchantName">Nombre del comercio</label>
+            <input type="text" class="form-control" name="Ds_Merchant_MerchantName" id="Ds_Merchant_MerchantName" value="{{config.data.Ds_Merchant_MerchantName}}">
+        </div>
+        <div class="col">
+            <label for="Ds_Merchant_MerchantCode">Número del comercio (FUC)</label>
+            <input type="text" class="form-control" name="Ds_Merchant_MerchantCode" id="Ds_Merchant_MerchantCode" value="{{config.data.Ds_Merchant_MerchantCode}}">
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col">
+            <label for="Ds_Merchant_Terminal">Número de terminal</label>
+            <input type="text" class="form-control text-right" name="Ds_Merchant_Terminal" id="Ds_Merchant_Terminal" value="{{config.data.Ds_Merchant_Terminal}}">
+        </div>
+        <div class="col">
+            <label for="Ds_Merchant_Currency">Moneda del terminal</label>
+            <input type="text" class="form-control text-right" name="Ds_Merchant_Currency" id="Ds_Merchant_Currency" value="{{config.data.Ds_Merchant_Currency}}">
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col">
+            <label for="redsys_clave_encriptacion">Clave de encriptación</label>
+            <input type="text" class="form-control" name="redsys_clave_encriptacion" id="redsys_clave_encriptacion" value="{{config.data.redsys_clave_encriptacion}}">
+        </div>
+        <div class="col">
+            <label for="redsys_tipo_cifrado">Tipo de cifrado</label>
+            <input type="text" class="form-control" name="redsys_tipo_cifrado" id="redsys_tipo_cifrado" value="{{config.data.redsys_tipo_cifrado}}">
+        </div>
+    </div>
+</div>

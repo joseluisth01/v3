@@ -1,0 +1,102 @@
+<div class="modal fade" id="modal-no-login" tabindex="-1" role="dialog" aria-labelledby="no-login-title" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="no-login-title">Usuario no identificado</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h6>Debe iniciar sesión o registrarse para grabar el pedido</h6>
+            </div>
+            <div class="modal-footer d-flex justify-content-around">
+                <button type="button" class="btn btn-danger mr-2" data-dismiss="modal"><i class="iconblanco mdi mdi-close mr-2"></i>Cancelar</button>
+                <a href="{{ url('app_login') }}" class="btn btn-primary"><i class="iconblanco mdi mdi-check mr-2"></i>Iniciar sesión</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modal-no-client" tabindex="-1" role="dialog" aria-labelledby="no-login-title" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="no-login-title">Cliente no seleccionado</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h6>Debe seleccionar un cliente para grabar el pedido</h6>
+            </div>
+            <div class="modal-footer d-flex justify-content-around">
+                <button type="button" class="btn btn-primary mr-2" data-dismiss="modal"><i class="iconblanco mdi mdi-close mr-2"></i>Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade fullscreen-modal" id="modal-end-cart" tabindex="-1" role="dialog" aria-labelledby="end-cart-title" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="end-cart-title">Grabación pedido</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-row">
+                    <label for="observaciones">Comentarios acerca de este pedido</label>
+                    <textarea name="observaciones" id="observaciones" rows="3" class="form-control"></textarea>
+                </div>
+                <div class="form-row mt-2">
+                    <label for="portes">Gastos de envío</label>
+                </div>
+                <div class="form-row">
+                    {% if portes.gratis > 0 and portes.gratis < total.total or recoger_en_tienda %}
+                        <input type="text" class="col-4 form-control text-right" value="{{ 0|price }}" readonly>
+                    {% elseif config.data.portes_select %}
+                        <select name="portes" id="portes" class="form-control">
+                            <option value="0">Recogida en tienda: Gratis</option>
+                            <option value="1" selected>Envío: {{ portes.euros_mas_iva | price }}</option>
+                        </select>
+                    {% else %}
+                        <input type="text" class="col-4 form-control text-right" value="{{ portes.euros_mas_iva|price }}" readonly>
+                    {% endif %}
+                </div>
+                <div class="form-check form-check-inline mt-3">
+                    <input class="form-check-input" type="checkbox" id="check_condiciones">
+                    <label class="form-check-label" for="check_condiciones">
+                        Acepto los
+                        <a target="_blank" href="{{ url('textos-condiciones-compra') }}" style="text-decoration: underline">términos y condiciones de compra</a>
+                    </label>
+                </div>
+            </div>
+            <div class="modal-footer d-flex justify-content-around">
+                <button type="button" class="btn btn-danger mr-2" data-dismiss="modal"><i class="mdi mdi-close mr-2"></i>Cancelar</button>
+                <button type="button" id="btn-end-cart-ok" class="btn btn-success"><i class="mdi mdi-check mr-2"></i>Grabar pedido</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        // Solución más agresiva para cerrar modales
+        $('[data-dismiss="modal"]').on('click', function() {
+            $('.modal').modal('hide');
+            $('body').removeClass('modal-open');
+            $('.modal-backdrop').remove();
+        });
+        
+        // Lo mismo para los botones específicos
+        $('#modal-no-login .btn-danger, #modal-no-client .btn-primary, #modal-end-cart .btn-danger').on('click', function() {
+            $('.modal').modal('hide');
+            $('body').removeClass('modal-open');
+            $('.modal-backdrop').remove();
+        });
+        
+        $('#modal-end-cart').on('shown.bs.modal', () => $('#observaciones', '#modal-end-cart').trigger('focus'));
+    });
+</script>
+

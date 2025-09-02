@@ -1,0 +1,178 @@
+{% extends 'gestion/base.html.twig' %}
+{% block stylesheets %}
+  <style>
+    #add-art span.badge {
+      font-size: 1rem;
+    }
+    #add-art .product-quantity,
+    #add-art .product-quantity .input-group {
+      margin-right: 5px;
+    }
+    table.table-ref-pn-cba {
+      width: auto;
+      font-size: 1rem;
+    }
+    table.table-ref-pn-cba > tbody > tr {
+      border: 0;
+    }
+    table.table-ref-pn-cba > tbody > tr > td {
+      padding: 0;
+    }
+    table.table-ref-pn-cba>tbody>tr>td:last-child {
+      font-weight: bold;
+      padding-left: 5px;
+    }
+    div.u-venta,
+    div.canon {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      padding: 5px;
+      font-size: 0.90em;
+      background-color: lightgrey;
+    }
+    div.canon {
+      justify-content: space-around;
+    }
+    div.u-venta > div > span,
+    div.canon > div > span {
+      margin-left: 0.5rem;
+      font-weight: bold;
+    }
+  </style>
+{% endblock %}
+{% block body %}
+  <main id="add-art" class="p-1 bg-white" data-ref={{ referencia }} data-alm="{{ almacen }}">
+    <h3 class="modal-title border border-dark text-center mb-2" id="art-add-title">Añadir artículo</h3>
+    <div class="row">
+      <div class="col-auto">
+        <img width="150" class="img-fluid img-thumbnail" :src="articuloImagen" :alt="art.imagen_txt">
+      </div>
+      <div class="col">
+        <div class="d-flex flex-column flex-md-row justify-content-between mb-2">
+          <div class="font-weight-bold">${art.referencia}</div>
+          <div v-if="articuloControlStock">
+            <span class="font-weight-bold mr-1">Stock:</span>
+            <span class="px-2 badge" :class="stockClass">${stockArticulo} Uds</span>
+          </div>
+          <div v-else class="text-danger border border-danger px-4">
+            Sin control de stock
+          </div>
+        </div>
+        <div>${art.nombre}</div>
+        <div class="price-availability-block border-0">
+          <div class="price">
+            <strong>${precioArticuloTxt}</strong>
+            + IVA &nbsp; &nbsp; &nbsp; (${precioIvaTxt})
+          </div>
+        </div>
+        <div class="d-flex flex-column flex-md-row justify-content-between">
+          <div class="mb-2">
+            <div v-if="art.part_number != ''">
+              <span>Part&nbsp;Number:</span>
+              <span class="font-weight-bold">${art.part_number}</span>
+            </div>
+            <div v-if="art.codbarras != ''">
+              <span>Cod.&nbsp;Barras:</span>
+              <span class="font-weight-bold">${art.codbarras}</span>
+            </div>
+          </div>
+          <a v-if="articuloUrl != ''" class="btn btn-primary btn-sm" target="_blank" rel="noreferrer" :href="articuloUrl">
+            Ver&nbsp;en&nbsp;la&nbsp;web<i class="mdi mdi-open-in-new ml-3"></i>
+          </a>
+          <div v-else class="btn btn-secondary btn-sm">No está disponible en la web</div>
+        </div>
+      </div>
+    </div>
+    <div class="mt-2" v-if="uVenta.fecha != ''">Última venta</div>
+    <div class="u-venta" v-if="uVenta.fecha != ''">
+      <div class="px-1">
+        Fecha:<span>${ uVenta.fecha}</span>
+      </div>
+      <div class="px-1">
+        Unidades:<span>${ uVenta.unidades}</span>
+      </div>
+      <div class="px-1">
+        Precio:<span>${ uVenta.precio}</span>
+      </div>
+      <div class="px-1">
+        Descuento:<span>${ uVenta.dto}</span>
+      </div>
+    </div>
+    <div class="row mt-2">
+      <div class="col-12 col-md-6">
+        <div class="row" v-show="listaTallas.length > 0">
+          <div class="col-auto pt-1">
+            <label for="talla">Talla</label>
+          </div>
+          <div class="col">
+            <select id="talla" class="form-control form-control-sm" v-model="talla" @change="calculaPrecio">
+              <option v-for="talla in listaTallas" :key="talla.codigo" :value="talla.codigo">${talla.nombre}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="row" v-show="listaColores.length > 0">
+          <div class="col-auto pt-1">
+            <label for="color">Color</label>
+          </div>
+          <div class="col">
+            <select id="color" class="form-control form-control-sm" v-model="color" @change="calculaPrecio">
+              <option v-for="color in listaColores" :key="color.codigo" :value="color.codigo">${color.nombre}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mt-2 row justify-content-between">
+      <div class="col-12 col-md-4">
+        <div v-show="precioTC == 0">
+          <label for="tarifa" class="mb-0">Tarifa</label>
+          <select id="tarifa" class="form-control" v-model="tarifa" @change="calculaPrecio">
+            <option v-for="tar in listaTarifas" :key="tar.codigo" :value="tar.codigo">
+              ${tar.precio_txt}&nbsp;&nbsp;&nbsp;&nbsp;(${tar.nombre})
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="col-6 col-sm-4 col-md-2">
+        <label for="descuento" class="mb-0">% Dto</label>
+        <input type="text" class="form-control text-right" id="descuento" v-model="descuento" @input="calculaPrecio">
+      </div>
+      <div class="col-6 col-sm-4 col-md-2">
+        <label for="precio" class="mb-0">Precio</label>
+        <input type="text" class="form-control text-right" id="precio" v-model="precio" @input="calculaDescuento">
+      </div>
+      <div class="col-12 col-sm-4 col-md-2">
+        <label for="product-quantity" class="mb-0">Unidades</label>
+        <div class="product-quantity">
+          <input id="product-quantity" type="text" v-model="unidades" class="form-control text-right mr-4">
+        </div>
+      </div>
+    </div>
+    <div class="mt-2 canon" v-if="art.lpi != 0">
+      <div>
+        Precio+Canon:
+        <span>${precioCanonTxt}</span>
+      </div>
+      <div>
+        Precio+Canon+IVA:
+        <span>${precioCanonIvaTxt}</span>
+      </div>
+    </div>
+    <div class="mt-3 d-flex justify-content-end">
+      <div>
+        <button type="button" class="btn btn-primary add2cart mr-2" @click="grabaNuevaLinea">
+          <i class="mdi mdi-content-save mr-2"></i>Grabar línea
+        </button>
+        <button type="button" class="btn btn-danger" @click="close">
+          <i class="mdi mdi-close mr-2"></i>Cancelar
+        </button>
+      </div>
+    </div>
+  </main>
+{% endblock %}
+{% block javascripts %}
+  <script src="{{ asset('js/articulo-add.js') }}"></script>
+{% endblock %}

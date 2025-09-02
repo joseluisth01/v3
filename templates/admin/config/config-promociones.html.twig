@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Configuración Promociones{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+
+    <h2 class="mb-4 text-center quienes-somos-title">Configuración Página "Promociones"</h2>
+
+    <!-- Formulario de búsqueda -->
+    <form method="POST" action="{{ path('config-promociones') }}">
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" name="search" placeholder="Buscar artículos por nombre" required>
+            <button type="submit" class="btn btn-primary">Buscar</button>
+        </div>
+    </form>
+
+    <!-- Resultados de búsqueda -->
+    {% if articulos is not empty %}
+        <h4>Resultados de la búsqueda:</h4>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Referencia</th>
+                    <th>Nombre</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for articulo in articulos %}
+                    <tr>
+                        <td>{{ articulo.referencia }}</td>
+                        <td>{{ articulo.nombre }}</td>
+                        <td>
+                            <form method="POST" action="{{ path('config-promociones') }}">
+                                <input type="hidden" name="referencia" value="{{ articulo.referencia }}">
+                                <input type="hidden" name="nombre" value="{{ articulo.nombre }}">
+                                <button type="submit" class="btn btn-success btn-sm">Añadir a Promociones</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No se encontraron artículos.</p>
+    {% endif %}
+
+    <hr class="my-4">
+
+    <!-- Lista de artículos en promociones -->
+    <h4>Artículos en Promociones:</h4>
+    {% if promociones is not empty %}
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Referencia</th>
+                    <th>Nombre</th>
+                    <th>Fecha de Inclusión</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for promo in promociones %}
+                    <tr>
+                        <td>{{ promo.referencia }}</td>
+                        <td>{{ promo.nombre }}</td>
+                        <td>{{ promo.fecha_creacion|date('d/m/Y') }}</td>
+                        <td>
+                            <form method="POST" action="{{ path('config-promociones') }}">
+                                <input type="hidden" name="delete_id" value="{{ promo.id }}">
+                                <button type="submit" class="btn btn-danger btn-sm btn-danger-gestion-opiniones" onclick="return confirm('¿Estás seguro de eliminar este artículo de las promociones?')">Eliminar</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No hay artículos en promociones.</p>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,47 @@
+<div class="formulario_map_wrapper position-relative mt-0 mt-md-5 mb-5">
+	<div class="formulario_map_container d-flex justify-content-center align-items-center">
+		<div class="formulario_map_content">
+			<div class="formulario_map_form_wrapper">
+				<div class="formulario_map_form_content">
+					<h2 class="formulario_map_title">¿En qué Podemos Ayudarte?</h2>
+					<p class="formulario_map_description">
+						Si tienes cualquier duda o necesitas asesoramiento, llámanos por teléfono o 
+						rellena los siguientes campos, nos pondremos en contacto a la mayor brevedad posible:
+					</p>
+					<form class="formulario_map_form">
+						<div class="formulario_map_form_group">
+							<input type="text" placeholder="Nombre" class="formulario_map_input" required>
+						</div>
+						<div class="formulario_map_form_group formulario_map_form_group_row">
+							<input type="text" placeholder="Teléfono" class="formulario_map_input" required>
+							<input type="email" placeholder="Email" class="formulario_map_input" required>
+						</div>
+						<div class="formulario_map_form_group">
+							<textarea placeholder="Mensaje" class="formulario_map_textarea" rows="4" required></textarea>
+						</div>
+						<div class="politicasform d-flex justify-content-around align-items-center flex-column flex-md-row">
+							<div class="formulario_map_form_group formulario_map_checkbox_group d-flex align-items-center">
+								<input type="checkbox" id="formulario_map_privacidad" class="formulario_map_checkbox" required>
+								<label for="formulario_map_privacidad" class="formulario_map_checkbox_label">Acepto la <a style="color:white" href="{{ path('textos-privacidad') }}">Política de Privacidad</a></label>
+							</div>
+							<button type="submit" class="formulario_map_btn" id="formulario_map_submit" disabled>ENVIAR AHORA</button>
+						</div>
+					</form>
+				</div>
+			</div>
+			<iframe class="formulario_map_iframe" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3141.7212827041863!2d-4.779764964787397!3d37.86751204897616!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd6d21e21d0bb123%3A0x5fc2d9f68d12ea29!2sCalzados%20Maximo%2020.%E2%9C%85%20Tienda%20de%20ropa%20y%20Zapater%C3%ADa%20en%20C%C3%B3rdoba.!5e1!3m2!1ses!2ses!4v1730882542567!5m2!1ses!2ses" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+		</div>
+	</div>
+</div>
+<script>
+// Seleccionar el checkbox y el botón
+const checkbox = document.getElementById('formulario_map_privacidad');
+const submitButton = document.getElementById('formulario_map_submit');
+
+// Escuchar el evento 'change' del checkbox
+checkbox.addEventListener('change', function () {
+	// Si el checkbox está marcado, habilitar el botón
+	submitButton.disabled = !checkbox.checked;
+});
+
+</script>

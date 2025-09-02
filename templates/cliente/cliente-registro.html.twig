@@ -1,0 +1,122 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<h1 class="font-weight-normal container py-1">Registro nuevo cliente</h1>
+<main class="container-fluid bg-white">
+    {% if msgError is defined %}
+    <h4 class="alert alert-danger text-center" role="alert">{{ msgError | raw }}</h4>
+    {% endif %}
+    <form action="{{ url('cliente-registro-grabar') }}" method="POST" class="row justify-content-center mb-3" id="form-registro">
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('client-new') }}">
+        {% if config.validarCIF %}
+        <input type="hidden" id="_cn_token" value="166819">
+        {% endif %}
+        <div class="col col-md-10 col-lg-8 col-xl-6">
+            <div class="row my-2">
+                <label class="col-auto py-1">Tipo de persona</label>
+                <div class="col d-flex">
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="tipo-f" name="tipofiscal" class="custom-control-input" value="F" checked>
+                        <label class="custom-control-label py-1" for="tipo-f">Física</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline ml-3">
+                        <input type="radio" id="tipo-j" name="tipofiscal" class="custom-control-input" value="J">
+                        <label class="custom-control-label py-1" for="tipo-j">Jurídica</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <input type="text" class="form-control" name="nombre" id="nombre" autofocus>
+            </div>
+            <div class="row" id="row-apellidos">
+                <div class="form-group col-md-6">
+                    <label for="apellido1">Apellido1</label>
+                    <input type="text" class="form-control" name="apellido1" id="apellido1">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="apellido2">Apellido2</label>
+                    <input type="text" class="form-control" name="apellido2" id="apellido2">
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label for="cif" id="label-cif">NIF</label>
+                    <input type="text" class="form-control" name="cif" id="cif">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="direccion">Dirección</label>
+                <input type="text" class="form-control" name="direccion" id="direccion">
+            </div>
+
+            <div class="form-group">
+                <label for="localidad">Localidad</label>
+                <input type="text" class="form-control" name="localidad" id="localidad">
+            </div>
+            <div class="row">
+                <div class="form-group col-4">
+                    <label for="cpostal">C.Postal</label>
+                    <input type="text" class="form-control" name="cpostal" id="cpostal">
+                </div>
+                <div class="col">
+                    <label for="provincia">Provincia</label>
+                    <select class="form-control" name="provincia" id="provincia">
+                        <option value="0">&nbsp;</option>
+                        {% for pro in provincias %}
+                        <option value="{{pro.codigo}}">{{pro.nombre}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email" name="email">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="telefono">Teléfono</label>
+                    <input type="text" class="form-control" id="telefono" name="telefono">
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label for="clave">Clave</label>
+                    <input type="password" class="form-control" id="clave" name="clave">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="clave2">Repita la clave</label>
+                    <input type="password" class="form-control" id="clave2" name="clave2">
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" name="politica_privacidad" id="politica_privacidad">
+                        <label class="custom-control-label pt-1" for="politica_privacidad">
+                            He leído y acepto la <a href="{{ url('textos-privacidad') }}">política de privacidad</a>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group mt-2">
+                <p>Le enviaremos un email para que confirme su registro</p>
+            </div>
+            <div class="row my-3 justify-content-around">
+                <div class="col-6 col-md-4">
+                    <button type="submit" class="btn btn-success btn-block pb-2">
+                        <i class="mdi mdi-content-save-outline mdi-24px mr-3"></i>Registrar
+                    </button>
+                </div>
+                <div class="col-6 col-md-4 m-1 m-sm-0">
+                    <button type="button" class="btn btn-danger btn-block pb-2" onclick="javascript:history.back()">
+                        <i class="mdi mdi-undo-variant mdi-24px mr-3"></i>Volver
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</main>
+{% endblock %}
+{% block javascripts %}
+<script src="{{ asset('js/cliente-registro.js') }}"></script>
+{% endblock %}

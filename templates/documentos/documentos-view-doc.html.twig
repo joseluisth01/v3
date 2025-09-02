@@ -1,0 +1,139 @@
+<div class="row mb-3">
+    <div class="col-md-6">
+        <div class="font-weight-bolder">{{ cab.cli_nombre }}</div>
+        <div>{{ cab.cli_direccion }}</div>
+        <div>{{ cab.cli_localidad }} - {{ cab.cli_cpostal }} - {{ cab.cli_provincia }}</div>
+    </div>
+    {% if cab.cli_fin_nombre is not empty %}
+    <div class="col-md-6">
+        <div class="font-weight-bolder">{{ cab.cli_fin_nombre }}</div>
+        <div>{{ cab.cli_fin_direccion }}</div>
+        <div>{{ cab.cli_fin_localidad }} - {{ cab.cli_fin_cpostal }} - {{ cab.cli_fin_provincia }}</div>
+    </div>
+    {% endif %}
+</div>
+<div class="row cabecera mb-3 text-nowrap">
+    <div class="col-12 col-md mt-1 mt-md-0">
+        <b>Fecha:</b> {{ cab.fecha|date('d-m-Y') }}
+    </div>
+    <div class="col-12 col-md mt-1 mt-md-0">
+        <b>{{ cab.nombreDoc}} Nº:</b> {{ cab.serie }}-{{ cab.numero }}
+    </div>
+    <div class="col-12 col-md mt-1 mt-md-0">
+        <b>Transporte:</b> {{ cab.portes|price }}
+    </div>
+    <div class="col-12 col-md mt-1 mt-md-0 text-lg-center">
+        <b class="d-none d-md-inline">Forma de pago:</b>
+        <b class="d-md-none">F. Pago:</b>
+        {{ cab.fpago }}
+    </div>
+    {% if cab.pedido_cobro_ident is not empty %}
+    <div class="col-12 col-md mt-1 mt-md-0 text-lg-center">
+        <b>ID Pago:</b> {{ cab.pedido_cobro_ident }}
+    </div>
+    {% endif %}
+</div>
+<div class="row cart-table border-bottom border-dark font-weight-bold pb-2">
+    <div class="col-2 d-none d-lg-table-cell">Referencia</div>
+    <div class="col">
+        <span class="d-lg-none">Líneas de detalle</span>
+        <span class="d-none d-lg-inline">Descripción</span>
+    </div>
+    <div class="col-2 d-none d-lg-table-cell text-right">Unidades</div>
+    <div class="col-2 d-none d-lg-table-cell text-right">Precio</div>
+    <div class="col-2 d-none d-lg-table-cell text-right">Total</div>
+</div>
+{% for lin in lineas %}
+<div class="row pt-2">
+    <div class="col-2 d-none d-lg-table-cell">
+        {{ lin.referencia }}
+    </div>
+    {% if lin.linea_cabecera != 0 %}
+    <div class="col"><i><b>{{ lin.descripcion }}</b></i></div>
+    {% else %}
+    <div class="col">
+        {{ lin.descripcion }}
+    </div>
+    <div class="col-auto col-lg-2">
+        <span class="d-none d-lg-inline text-right">{{ lin.unidades|number_format(0, ',', '.') }}</span>
+        <div class="d-lg-none">
+            <table>
+                <tr>
+                    <td>Unidades:</td>
+                    <td class="text-right">{{ lin.unidades|number_format(0, ',', '.') }}</td>
+                </tr>
+                <tr>
+                    <td>Precio:</td>
+                    <td class="text-right">{{ ( lin.unidades != 0 ? (lin.importe/lin.unidades) : lin.precio)|price }}</td>
+                </tr>
+                <tr>
+                    <td>Total:</td>
+                    <td class="text-right">{{ lin.importe|price }}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="col-2 d-none d-lg-table-cell text-right">{{( lin.unidades != 0 ? (lin.importe/lin.unidades) : lin.precio)|price }}</div>
+    <div class="col-2 d-none d-lg-table-cell text-right">{{ lin.importe|price }}</div>
+    {% endif %}
+</div>
+{% if lin.numeros_serie is not empty %}
+<div class="row observaciones">
+    <div class="col col-lg-4 offset-lg-2"><i>Nº Serie: {{ lin.numeros_serie }}</i></div>
+</div>
+{% endif %}
+{% if lin.observaciones is not empty %}
+<div class="row observaciones">
+    <div class="col col-lg-5 offset-lg-2"><small>{{ lin.observaciones | raw }}</small></div>
+</div>
+{% endif %}
+{% if not loop.last %}
+<hr>
+{% endif %}
+{% endfor %}
+<div class="row">
+    <div class="col-md-6"></div>
+    <div class="col-md-6 px-0 text-right">
+        <table class="table table-borderless font-weight-bold text-right border-top border-dark totales">
+            <tbody>
+                <tr>
+                    <td>Base Imponible:</td>
+                    <td>{{ (cab.baseimpo1+cab.baseimpo2+cab.baseimpo3)|price }}</td>
+                </tr>
+                <tr>
+                    <td>Gastos de envío:</td>
+                    <td>{{ cab.portes|price }}</td>
+                </tr>
+                {% if cab.iva1 != 0 %}
+                <tr>
+                    <td>IVA {{ cab.piva1|number_format(2, ',', '.') }}%</td>
+                    <td>{{(cab.iva1+cab.rec1)|price }}</td>
+                </tr>
+                {% endif %}
+                {% if cab.iva2 != 0 %}
+                <tr>
+                    <td>IVA {{ cab.piva2|number_format(2, ',', '.') }}%</td>
+                    <td>{{ (cab.iva2+cab.rec2)|price }}</td>
+                </tr>
+                {% endif %}
+                {% if cab.iva3 != 0 %}
+                <tr>
+                    <td>IVA {{ cab.piva3|number_format(2, ',', '.') }}%</td>
+                    <td>{{ (cab.iva3+cab.rec3)|price }}</td>
+                </tr>
+                {% endif %}
+                <tr>
+                    <td>Total</td>
+                    <td>{{ cab.total|price }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{% set obs = cab.tipodoc == 2 ? cab.observaciones_pedido : cab.observaciones %}
+{% if obs is not empty %}
+<div class="border border-dark p-2">
+    <div class="font-weight-bold">Observaciones:</div>
+    <div>{{ obs }}</div>
+</div>
+{% endif %}

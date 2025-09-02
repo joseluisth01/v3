@@ -1,0 +1,157 @@
+{# https://github.com/grubersjoe/slide-menu #}
+<header class="d-mobile">
+  <div class="content theme-bg">
+    <button class="btn slide-menu__control" data-target="mobile-menu" data-action="toggle" aria-label="Menú">
+      <i class="mdi mdi-menu mdi-24px"></i>
+    </button>
+    <a href="{{url('home')}}">
+      <img src="{{ asset(logoMobile(config.logo)) }}" title="{{ config.nombreWeb}}" alt="{{config.nombreWeb}}">
+    </a>
+    <div>
+      <a href="{{ url('cart-view') }}" class="btn" id="carrito" aria-label="Ir al carrito">
+        <i class="mdi mdi-cart mdi-24px"></i>
+      </a>
+      {% if app.user is empty %}
+        <a href="{{ url('app_login') }}" class="btn ml-3" aria-label="Login">
+          <i class="mdi mdi-account mdi-24px"></i>
+        </a>
+      {% endif %}
+    </div>
+  </div>
+  <div class="search">
+    <form class="input-group" action="{{url('search')}}" method="GET" accept-charset="utf-8">
+      <input type="text" class="form-control no-box-shadow text-dark" name="q" placeholder="Buscar..." value="{{textSearch ?? ''}}">
+      <div class="input-group-append">
+        <button class="btn btn-light text-dark btn-outline-secondary no-box-shadow" type="submit">Buscar</button>
+      </div>
+    </form>
+  </div>
+</header>
+<nav class="slide-menu theme-bg" id="mobile-menu">
+  <div class="controls">
+    <a href="{{url('home')}}" class="btn slide-menu__control logo">
+      <img src="{{ asset(logoMobile(config.logo)) }}" title="{{ config.nombreWeb}}" alt="{{config.nombreWeb}}" style="max-width:100%;max-height:100%;">
+    </a>
+    <button type="button" class="btn slide-menu__control" data-action="close">Cerrar</button>
+  </div>
+  <ul>
+    <li>
+      <a href="{{ url('home') }}">
+        <i class="mdi mdi-home mr-2"></i>Inicio</a>
+    </li>
+    {% if categorias is defined %}
+      <li>
+        <a href="#">PRODUCTOS</a>
+        <ul>
+          {% for cat in categorias %}
+            <li>
+              <a href="#">{{ cat.nombre }}
+                ({{ cat.num_art }})</a>
+              <ul>
+                {% for fam in cat.fam %}
+                  <li>
+                    <a href="{{ url('familia', {param: fam.url}) }}">{{ fam.nombre }}
+                      ({{fam.num_art}})</a>
+                    {% if fam.sub is not empty %}
+                      <ul>
+                        {% for sub in fam.sub %}
+                          {% if sub.nombre is not empty %}
+                            <li>
+                              <a href="{{ url('subfamilia', {param: sub.url}) }}">{{ sub.nombre }}</a>
+                            </li>
+                          {% endif %}
+                        {% endfor %}
+                      </ul>
+                    {% endif %}
+                  </li>
+                {% endfor %}
+              </ul>
+            </li>
+          {% endfor %}
+        </ul>
+      </li>
+    {% elseif familias is defined %}
+      <li>
+        <a href="#">PRODUCTOS</a>
+        <ul>
+          {% for fam in familias %}
+            <li>
+              <a href="{{ url('familia', {param: fam.url}) }}">{{ fam.nombre }}
+                ({{ fam.num_art }})</a>
+              {% if fam.sub is not empty %}
+                <ul>
+                  {% for sub in fam.sub %}
+                    <li>
+                      <a href="{{ url('subfamilia', {param: sub.url}) }}">{{ sub.nombre }}</a>
+                    </li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+      </li>
+    {% endif %}
+    {% if config.data.blog_url is not empty %}
+      <li>
+        <a href="{{ config.data.blog_url }}" target="_blank" rel="noreferrer">
+          <i class="mdi mdi-post-outline mr-2"></i>BLOG</a>
+      </li>
+    {% endif %}
+    {% if config.data.sat_url is not empty %}
+      <li>
+        <a href="{{ config.data.sat_url }}" target="_blank" rel="noreferrer">
+          <i class="mdi mdi-tools mr-2"></i>SAT</a>
+      </li>
+    {% endif %}
+    {% if app.user %}
+      {% if app.user.isClient is empty %}
+        <li>
+          <a href="{{url('cart-view')}}">
+            <i class="mdi mdi-cart mr-1"></i>CARRITO ACTUAL</a>
+        </li>
+        <li>
+          <a href="{{ url('gestion') }}">
+            <i class="mdi mdi-text-box-multiple-outline mr-1"></i>VENTAS</a>
+        </li>
+        <li>
+          <a href="{{ url('gestion-carritos-lista') }}">
+            <i class="mdi mdi-cart-arrow-right mr-1"></i>CARRITOS ACTIVOS</a>
+        </li>
+      {% else %}
+        <li>
+          <a href="{{url('cart-view')}}">
+            <i class="mdi mdi-cart mr-1"></i>CARRITO</a>
+        </li>
+      {% endif %}
+      {% if app.user.getClient != 0 %}
+        <li>
+          <a href="{{url('documentos',{'tipo': 2})}}">
+            <i class="mdi mdi-clipboard-outline mr-1"></i>PEDIDOS</a>
+        </li>
+        <li>
+          <a href="{{url('documentos',{'tipo': 4})}}">
+            <i class="mdi mdi-clipboard-text-outline mr-1"></i>ALBARANES</a>
+        </li>
+        <li>
+          <a href="{{url('documentos',{'tipo': 8})}}">
+            <i class="mdi mdi-clipboard-check-outline mr-1"></i>FACTURAS</a>
+        </li>
+        <li>
+          <a href="{{url('cliente-top')}}">
+            <i class="mdi mdi-chart-bar-stacked mr-1"></i>TOP COMPRAS</a>
+        </li>
+      {% endif %}
+      {% if app.user.isClient is empty %}
+        <li>
+          <a href="{{url('cliente-seleccion')}}">
+            <i class="mdi mdi-account-search mr-1"></i>SELECCIONAR CLIENTE</a>
+        </li>
+      {% endif %}
+      <li>
+        <a href="{{ url('app_logout') }}">
+          <i class="mdi mdi-logout mr-2"></i>CERRAR SESIÓN</a>
+      </li>
+    {% endif %}
+  </ul>
+</nav>

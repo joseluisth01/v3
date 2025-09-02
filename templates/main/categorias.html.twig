@@ -1,0 +1,29 @@
+<ul class="dropdown-menu submenu2" style="top:10px !important;">
+  {% for cat in categorias %}
+    <li class="has-submenu py-1 item-menu-cat" data-id="{{ loop.index }}">
+      {% set urlCat = cat.url == '' ? '#' : url('categoria-grid', {webUrl: cat.url}) %}
+      <p style=""><a href="{{ urlCat }}" class="dropdown-item d-flex align-items-center" style="height:35px;">
+        
+        <span>{{ cat.nombre }}</span>
+      </a></p>
+      <div class="menu-cat dropdown-menu wrapper-fam-items submenu3" id="wrapper-fam-items-{{ loop.index }}">
+        <div class="fam-items">
+          {% for fam in cat.fam %}
+            <div>
+              <a class="title" href="{{ url('familia-grid', {param: fam.url}) }}">{{ fam.nombre }}</a>
+              <ul class="mt-2">
+                {% for sub in fam.sub %}
+                  {% if sub.nombre is not empty %}
+                    <li class="service-box-v1">
+                      <a href="{{ url('subfamilia', {param: sub.url}) }}">{{ sub.nombre }}</a>
+                    </li>
+                  {% endif %}
+                {% endfor %}
+              </ul>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </li>
+  {% endfor %}
+</ul>

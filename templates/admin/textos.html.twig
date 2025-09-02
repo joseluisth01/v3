@@ -1,0 +1,197 @@
+{% extends 'admin/base.html.twig' %}
+{% block stylesheets %}
+  <style>
+    .collapsible-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .collapsible-body,
+    .collapsible-header:focus {
+      background-color: white;
+    }
+  </style>
+{% endblock %}
+{% block body %}
+  <div class="d-flex justify-content-between mb-3">
+    <h4>CMS</h4>
+    <button type="button" class="btn btn-primary" id="btn-add">
+      <i class="mdi mdi-text-box-plus-outline mr-3"></i>Nuevo texto
+    </button>
+  </div>
+  <div id="target-new-item"></div>
+  {% for item in textos %}
+    <ul class="collapsible popout">
+      <li>
+        <div class="collapsible-header">
+          {{ item.nombre }}
+          <div>
+            {% if item.politica_privacidad %}
+              <div class="badge badge-dark mr-1">Política Privacidad</div>
+            {% elseif item.politica_cookies %}
+              <div class="badge badge-dark mr-1">Política Cookies</div>
+            {% elseif item.condiciones_compra %}
+              <div class="badge badge-dark mr-1">Condiciones Compra</div>
+            {% endif %}
+
+            {% if item.mostrar %}
+              <div class="badge badge-success">Habilitado</div>
+            {% else %}
+              <div class="badge badge-danger">Deshabilitado</div>
+            {% endif %}
+          </div>
+        </div>
+        <div class="collapsible-body">
+          <form action="{{ url('admin-textos-save') }}" method="POST">
+            <div class="form-group">
+              <label for="nombre-{{ item.codigo }}">Título</label>
+              <input type="text" class="form-control" name="nombre" id="nombre-{{ item.codigo }}" value="{{ item.nombre }}" required>
+            </div>
+            <div class="form-group">
+              <label for="url-{{ item.codigo }}">URL amigable</label>
+              <input type="text" class="form-control" name="web_url" id="url-{{ item.codigo }}" value="{{ item.web_url }}" required>
+            </div>
+            <div class="form-group row">
+              <div class="col">
+                <div class="custom-control custom-switch">
+                  <input type="checkbox" class="custom-control-input" name="politica_privacidad" id="politica_privacidad-{{ item.codigo }}" {{ item.politica_privacidad ? 'checked' : '' }}>
+                  <label class="custom-control-label" for="politica_privacidad-{{ item.codigo }}">Política de Privacidad</label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col">
+                <div class="custom-control custom-switch">
+                  <input type="checkbox" class="custom-control-input" name="politica_cookies" id="politica_cookies-{{ item.codigo }}" {{ item.politica_cookies ? 'checked' : '' }}>
+                  <label class="custom-control-label" for="politica_cookies-{{ item.codigo }}">Política de Cookies</label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col">
+                <div class="custom-control custom-switch">
+                  <input type="checkbox" class="custom-control-input" name="condiciones_compra" id="condiciones_compra-{{ item.codigo }}" {{ item.condiciones_compra ? 'checked' : '' }}>
+                  <label class="custom-control-label" for="condiciones_compra-{{ item.codigo }}">Condiciones de compra</label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="texto-{{ item.codigo }}">Texto</label>
+              <textarea name="texto" id="texto-{{ item.codigo }}" class="form-control summernote">
+                {{ item.texto }}
+              </textarea>
+            </div>
+            <input type="hidden" name="codigo" value="{{ item.codigo }}">
+            <div class="d-flex justify-content-end">
+              <button type="submit" class="btn btn-success">
+                <i class="mdi mdi-content-save mr-3"></i>Guardar
+              </button>
+              {% if item.mostrar %}
+                <button type="button" class="btn btn-warning mx-3 18px btn-change" data-id="{{ item.codigo }}">
+                  <i class="mdi mdi-checkbox-marked-outline mr-3"></i>Desactivar
+                </button>
+              {% else %}
+                <button type="button" class="btn btn-primary mx-3 18px btn-change" data-id="{{ item.codigo }}">
+                  <i class="mdi mdi-checkbox-marked-outline mr-3"></i>Activar
+                </button>
+              {% endif %}
+              <button type="button" class="btn btn-danger btn-delete" data-id="{{ item.codigo }}">
+                <i class="mdi mdi-text-box-remove mr-3"></i>Eliminar
+              </button>
+            </div>
+          </form>
+        </div>
+      </li>
+    </ul>
+  {% endfor %}
+  <template id="template-new-item">
+    <ul class="collapsible popout" id="new-item">
+      <li>
+        <div class="collapsible-header">[-Nuevo texto-]</div>
+        <div class="collapsible-body">
+          <form action="{{ path('admin-textos-save') }}" method="POST">
+            <div class="form-group">
+              <label for="nombre-0">Título</label>
+              <input type="text" class="form-control" name="nombre" id="nombre-0" value="" required>
+            </div>
+            <div class="form-group">
+              <label for="url-0">URL amigable</label>
+              <input type="text" class="form-control" name="web_url" id="url-0" value="" required>
+            </div>
+            <div class="form-group row">
+              <div class="col">
+                <div class="custom-control custom-switch">
+                  <input type="checkbox" class="custom-control-input" name="politica_privacidad" id="politica_privacidad-0">
+                  <label class="custom-control-label" for="politica_privacidad-0">Política de Privacidad</label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col">
+                <div class="custom-control custom-switch">
+                  <input type="checkbox" class="custom-control-input" name="politica_cookies" id="politica_cookies-0">
+                  <label class="custom-control-label" for="politica_cookies-0">Política de Cookies</label>
+                </div>
+              </div>
+            </div>
+            <input type="hidden" name="codigo" value="0">
+            <div class="d-flex justify-content-end">
+              <button type="submit" class="btn btn-success mr-3">
+                <i class="mdi mdi-content-save mr-3"></i>Guardar</button>
+              <button type="button" class="btn btn-danger btn-delete" data-id="0">
+                <i class="mdi mdi-text-box-remove mr-3"></i>Eliminar</button>
+            </div>
+          </form>
+        </div>
+      </li>
+    </ul>
+  </template>
+{% endblock %}
+{% block javascripts %}
+  <script>
+    $( function() {
+      $( '.collapsible' ).collapsible();
+      $( '.summernote' ).summernote( { lang: 'es-ES' } );
+
+      $( document ).on( 'submit', 'form', function() {
+        T.loading();
+        return true;
+      } );
+
+      $( '.btn-change' ).on( 'click', function() {
+        let id = $( this ).data( 'id' ),
+          postData = {
+            'id': id,
+            'verif': T.primeNumber( id )
+          };
+        T.loading();
+        $.post( T.path( 'admin/textos-change' ), postData, () => location.reload() );
+      } );
+
+      $( document ).on( 'click', '.btn-delete', function() {
+        let id = $( this ).data( 'id' );
+        if ( id === 0 ) {
+          $( '#new-item' ).remove();
+          $( '#btn-add' ).prop( 'disabled', false );
+          return;
+        }
+
+        T.modalYesNo( '¿ Desea borrar el texto ?', 'Textos CMS', function() {
+          T.loading();
+          let postData = {
+            'id': id,
+            'verif': T.primeNumber( id )
+          };
+          $.post( T.path( 'admin/textos-delete' ), postData, () => location.reload() );
+        } );
+      } );
+
+      $( '#btn-add' ).on( 'click', function() {
+        $( '#target-new-item' ).html( $( '#template-new-item' ).html() );
+        $( '#new-item' ).collapsible().collapsible( 'open' );
+        $( '#btn-add' ).prop( 'disabled', true );
+      } )
+    } );
+  </script>
+{% endblock %}

@@ -1,0 +1,75 @@
+{% extends 'admin/base.html.twig' %}
+{% block stylesheets %}
+<style>
+    svg { width: 100% !important }
+</style>
+{% endblock %}
+{% block body %}
+<div class="row clearfix">
+    <div class="col-lg-3 col-sm-6 col-xs-12">
+        <div class="info-box pink text-white waves-effect waves-light">
+            <div class="icon">
+                <i class="mdi mdi-cart"></i>
+            </div>
+            <div class="content">
+                <div class="text">CARRITOS ABANDONADOS</div>
+                <div class="number count-to" data-from="0" data-to="{{carritos}}" data-speed="15" data-fresh-interval="20"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-sm-6 col-xs-12">
+        <div class="info-box cyan text-white waves-effect waves-light">
+            <div class="icon">
+                <i class="mdi mdi-clipboard-text"></i>
+            </div>
+            <div class="content">
+                <div class="text">PEDIDOS PENDIENTES</div>
+                <div class="number count-to" data-from="0" data-to="{{pedidos}}" data-speed="1000" data-fresh-interval="20"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-sm-6 col-xs-12">
+        <div class="info-box light-green text-white waves-effect waves-light">
+            <div class="icon">
+                <i class="mdi mdi-clipboard-check"></i>
+            </div>
+            <div class="content">
+                <div class="text">ALBARANES PENDIENTES</div>
+                <div class="number count-to" data-from="0" data-to="{{albaranes}}" data-speed="1000" data-fresh-interval="20"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-sm-6 col-xs-12">
+        <div class="info-box orange text-white waves-effect waves-light">
+            <div class="icon">
+                <i class="mdi mdi-account-multiple"></i>
+            </div>
+            <div class="content">
+                <div class="text">CLIENTES</div>
+                <div class="number count-to" data-from="0" data-to="{{clientes}}" data-speed="1000" data-fresh-interval="20"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card">
+    <div class="card-content">
+        <div class="card-title">Facturación {{month}} {{year}}</div>
+        <div id="month-chart" style="height: 250px"></div>
+    </div>
+</div>
+<div class="card">
+    <div class="card-content">
+        <div class="card-title">Facturación año {{year}}</div>
+        <div id="year-chart" style="height: 250px"></div>
+    </div>
+</div>
+<div class="card">
+    <div class="card-content">
+        <div class="card-title">COMPARATIVA IMPORTE MENSUAL (últimos 3 años)</div>
+        <div id="comp-chart" style="height: 250px"></div>
+    </div>
+</div>
+{% endblock %}
+{% block javascripts %}
+<script src="{{ asset('js/admin/dashboard.js') }}"></script>
+{% endblock %}

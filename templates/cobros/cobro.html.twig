@@ -1,0 +1,45 @@
+<form action="{{ urlRedsys }}" name="form-cobro" id="form-cobro" method="POST" onsubmit="$('#cobro-modal').modal('toggle');">
+    <div class="modal-header">
+        <h4 class="modal-title" id="redsys-title"><i class="mdi mdi-credit-card-outline mr-2"></i>Pago con tarjeta de crédito</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    </div>
+    <div class="modal-body px-4">
+        <h4>COBRO {{ documento }}</h4>
+        <p class="text-danger pt-2">Pulse Aceptar para iniciar el proceso de pago</p>
+        <div class="row">
+            <div class="col-auto">
+                <p class="pt-1">Método de pago</p>
+            </div>
+            <div class="col">
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" id="radioT" name="fp" class="custom-control-input radio-fp" checked>
+                    <label class="custom-control-label pt-1" for="radioT">Tarjeta</label>
+                </div>
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" id="radioB" name="fp" class="custom-control-input radio-fp">
+                    <label class="custom-control-label pt-1" for="radioB">Bizum</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-success"><span class="mdi mdi-check mr-2"></span>Aceptar</button>
+        <button type="button" class="btn btn-secondary" id="btn-cobro-cancel" data-dismiss="modal"><span class="mdi mdi-close mr-2"></span>Cerrar</button>
+    </div>
+    <input type="hidden" name="Ds_SignatureVersion" value="{{ version }}" />
+    <input type="hidden" name="Ds_MerchantParameters" value="{{ paramsTarjeta }}" />
+    <input type="hidden" name="Ds_Signature" value="{{ signatureTarjeta }}" />
+</form>
+<input type="hidden" id="pt" value="{{ paramsTarjeta }}">
+<input type="hidden" id="pb" value="{{ paramsBizum }}">
+<input type="hidden" id="st" value="{{ signatureTarjeta }}">
+<input type="hidden" id="sb" value="{{ signatureBizum }}">
+<script>
+    $('input.radio-fp').on('change', function () {
+        if ($(this).prop('checked')) {
+            let tarjeta = $('#radioT').prop('checked');
+            $('input[name=Ds_MerchantParameters]').val($(tarjeta ? '#pt' : '#pb').val());
+            $('input[name=Ds_Signature]').val($(tarjeta ? '#st' : '#sb').val());
+        }
+    });
+</script>

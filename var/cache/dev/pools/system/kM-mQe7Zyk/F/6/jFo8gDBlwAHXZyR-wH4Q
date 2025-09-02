@@ -1,0 +1,22 @@
+<?php //App%255CController%255CGestionController%2523addArt
+
+return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
+    $o = [
+        clone (\Symfony\Component\VarExporter\Internal\Registry::$prototypes['Symfony\\Component\\Routing\\Annotation\\Route'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Symfony\\Component\\Routing\\Annotation\\Route')),
+    ],
+    null,
+    [
+        'Symfony\\Component\\Routing\\Annotation\\Route' => [
+            'path' => [
+                '/add-art/{referencia}/{almacen}',
+            ],
+            'name' => [
+                '-add-art',
+            ],
+        ],
+    ],
+    [
+        $o[0],
+    ],
+    []
+); }];

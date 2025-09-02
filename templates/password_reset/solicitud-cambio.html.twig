@@ -1,0 +1,31 @@
+{% extends 'password_reset/base.html.twig' %}
+{% block body %}
+  {% if mensaje %}
+    <div class="text-center alert alert-danger mt-3 mx-5">{{ mensaje | raw }}</div>
+  {% endif %}
+  <div class="login-form my-5">
+    <div class="row justify-content-center">
+      <div class="col-auto ml-5">
+        <div class="text-center">
+          <a href="{{url('home')}}"><img src="{{ asset(config.logo) }}" width="250" title="{{ config.nombreWeb}}" alt="{{config.nombreWeb}}"></a>
+        </div>
+        <div class="h2 text-center my-3 font-weight-bold">Cambio de contraseña</div>
+        <div class="card">
+          <div class="card-body">
+            <div class="mb-4">Introduzca su dirección de correo electrónico y le enviaremos un enlace para restablecer la contraseña.</div>
+            <form method="post">
+              <div class=" form-group">
+                <input type="email" value="{{ email }}" name="email" id="email" class="form-control" placeholder="Correo electrónico" required autofocus>
+              </div>
+              <div class="text-center mt-3">
+                <button class="btn btn-primary px-3 my-0" type="submit">Enviar enlace por correo</button>
+              </div>
+              <input type="hidden" name="token" value="{{ csrf_token('reset-password') }}">
+              <input type="hidden" name="_current_sess_id" value={{ app.session.getId }}>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

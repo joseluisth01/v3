@@ -1,0 +1,230 @@
+<h4 style="text-align:center !important">CONFIGURACIONES PRINCIPALES</h4><br>
+<div class="form-group row">
+	<div class="col col-md-4">
+		<label for="estilo">Color principal (Código hexadecimal)</label>
+		<input type="text" class="form-control" name="estilo" id="estilo" value="{{ config.data.estilo }}" placeholder="#04569B">
+	</div>
+	<div class="col col-md-4">
+		<label for="color_secundario">Color secundario (Código hexadecimal)</label>
+		<input type="text" class="form-control" name="color_secundario" id="color_secundario" value="{{ config.data.color_secundario|default('#FF5733') }}" placeholder="#FF5733">
+	</div>
+	<div class="col col-md-4">
+		<label for="color_secundario">Color tercero (Código hexadecimal)</label>
+		<input type="text" class="form-control" name="color_tercero" id="color_tercero" value="{{ config.data.color_tercero|default('#E99712') }}" placeholder="#E99712">
+	</div>
+	<div class="col">
+		<label for="imagen_logo">Logo de la empresa</label>
+		<select class="custom-select" name="imagen_logo" id="imagen_logo">
+			{% for img in imagenes %}
+				<option value="{{ img.codigo }}" {{ img.codigo==config.data.imagen_logo ? 'selected' : '' }}>{{ img.nombre }}</option>
+			{% endfor %}
+		</select>
+	</div>
+</div><br>
+
+<h4>SLIDER PRINCIPAL</h4>
+<div class="form-group row">
+	<div class="col-12 col-md-4">
+		<div class="custom-control custom-switch">
+			<input type="checkbox" class="custom-control-input" name="slider" id="slider" {{ config.data.slider ? 'checked' : '' }}>
+			<label class="custom-control-label" for="slider">Mostrar slider</label>
+		</div>
+	</div>
+	<div class="col col-md-auto row mt-4 mt-md-0">
+		<label class="col-auto" for="slider_height">Altura slider</label>
+		<input type="text" class="col-3 col-sm-2 form-control text-right" style="margin-top:-.5rem" name="slider_height" id="slider_height" value="{{ config.data.slider_height }}">
+		<div class="col-auto">(px)</div>
+	</div>
+</div>
+<div class="form-group row">
+	<div class="col">
+		<div class="custom-control custom-switch">
+			<input type="checkbox" class="custom-control-input" name="slider_size_auto" id="slider_size_auto" {{ config.data.slider_size_auto ? 'checked' : '' }}>
+			<label class="custom-control-label" for="slider_size_auto">Ajuste automático imágenes slider</label>
+		</div>
+	</div>
+</div>
+<div class="form-group row">
+    <div class="col">
+        <label for="slider_text_color">Color de las letras del slider (Código hexadecimal)</label>
+        <input type="text" class="form-control" name="slider_text_color" id="slider_text_color" value="{{ config.data.slider_text_color|default('#FFFFFF') }}" placeholder="#FFFFFF">
+    </div>
+</div>
+<div class="form-group row">
+	<div class="col">
+		<div class="custom-control custom-switch">
+			<input type="checkbox" class="custom-control-input" name="slider_banner" id="slider_banner" {{ config.data.slider_banner ? 'checked' : '' }}>
+			<label class="custom-control-label" for="slider_banner">Slider utiliza configuración V3 Banner</label>
+		</div>
+	</div>
+</div><br>
+
+<h4>FOOTER</h4>
+<div class="form-group row">
+	<div class="col">
+		<div class="custom-control custom-switch">
+			<input type="checkbox" class="custom-control-input" name="mostrar_footer" id="mostrar_footer" {{ config.data.mostrar_footer ? 'checked' : '' }}>
+			<label class="custom-control-label" for="mostrar_footer">Mostrar pie de página</label>
+		</div>
+	</div>
+</div><br>
+
+<h4>FORMULARIO DE CONTACTO</h4>
+<div class="form-group row">
+    <div class="col">
+        <div class="custom-control custom-switch" style="display:flex; align-items:center">
+            <input type="checkbox" class="custom-control-input" name="" id="" disabled>
+            <label class="custom-control-label" for="">Mostrar formulario de contacto</label>
+            <div class="tooltip-container">
+                <i class="fas fa-info-circle info-icon"></i>
+                <div class="tooltip-content">
+                    <img src="{{ asset('images/marcas/formulariopro.png') }}" alt="Versión PRO del formulario" style="width: 100%; height: auto;">
+                </div>
+            </div>
+            <p class="paquetepro" style="margin-left: 10px;">(Uso exclusivo del paquete PRO)</p>
+        </div>
+    </div>
+</div>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<div class="form-group row">
+	<div class="col">
+		<div class="custom-control custom-switch" style="display:flex;">
+			<input type="checkbox" class="custom-control-input" name="" id="" disabled>
+			<label class="custom-control-label" for="">Mostrar ubicación exacta de Google Maps</label>
+			<p class="paquetepro">(Uso exclusivo del paquete PRO)</p>
+		</div><br>
+		<input type="text" class="form-control inputbloq" name="estilo" id="estilo" value="" placeholder="Introducir URL de Google Maps" disabled>
+	</div>
+</div>
+<br>
+
+<h4>NEWSLETTER</h4>
+<div class="form-group row">
+	<div class="col">
+		<div class="custom-control custom-switch">
+			<input type="checkbox" class="custom-control-input" name="mostrar_newsletter" id="mostrar_newsletter" {{ config.data.mostrar_newsletter ? 'checked' : '' }}>
+			<label class="custom-control-label" for="mostrar_newsletter">Mostrar suscripción a Newsletter</label>
+		</div>
+	</div>
+</div><br>
+
+<h4>BANNER MARCAS CON LAS QUE TRABAJAMOS</h4>
+<div class="form-group row">
+	<div class="col">
+		<div class="custom-control custom-switch" style="display:flex; align-items:center">
+			<input type="checkbox" class="custom-control-input" name="mostrar_marcas" id="mostrar_marcas" {{ config.data.mostrar_marcas ? 'checked' : '' }}>
+			<label class="custom-control-label" for="mostrar_marcas">Mostrar marcas en página principal</label>
+			
+		</div>
+	</div>
+</div><br>
+
+<h4>BANNER GARANTÍAS</h4>
+<div class="form-group row">
+    <div class="col">
+        <div class="custom-control custom-switch" style="display:flex;">
+            <input type="checkbox" class="custom-control-input" name="" id="" disabled>
+            <label class="custom-control-label" for="">Mostrar banner de garantías</label>
+			<div class="tooltip-container">
+                <i class="fas fa-info-circle info-icon"></i>
+                <div class="tooltip-contentgarantias">
+                    <img src="{{ asset('images/marcas/bannergarantias.png') }}" alt="Versión PRO del formulario" style="width: 100%; height: auto;">
+                </div>
+            </div>
+			<p class="paquetepro">(Uso exclusivo del paquete PRO)</p>
+        </div>
+    </div>
+</div><br>
+
+<h4>BANNER DE CONTACTO LATERAL</h4>
+<div class="form-group row">
+    <div class="col">
+        <div class="custom-control custom-switch" style="display:flex;">
+            <input type="checkbox" class="custom-control-input" name="" id="" disabled>
+            <label class="custom-control-label" for="">Mostrar banner de contacto</label>
+			<div class="tooltip-container">
+                <i class="fas fa-info-circle info-icon"></i>
+                <div class="tooltip-contentbannerlateral">
+                    <img src="{{ asset('images/marcas/bannerlateral.png') }}" alt="Versión PRO del formulario" style="width: 100%; height: auto;">
+                </div>
+            </div>
+			<p class="paquetepro">(Uso exclusivo del paquete PRO)</p>
+        </div>
+		
+    </div>
+</div><br>
+
+
+<h4>BANNER OPINIONES</h4>
+<div class="form-group row">
+	<div class="col">
+		<div class="custom-control custom-switch" style="display:flex; align-items:center">
+			<input type="checkbox" class="custom-control-input" name="mostrar_opiniones" id="mostrar_opiniones" {{ config.data.mostrar_opiniones ? 'checked' : '' }}>
+			<label class="custom-control-label" for="mostrar_opiniones">Mostrar opiniones</label>
+			<a style="margin-left:20px" href="{{ path('adminmanage-opinions') }}">Gestionar Opiniones</a><br>
+		</div>
+	</div>
+</div>
+
+<div class="form-group row">
+	<div class="col">
+		<div class="custom-control custom-switch" style="display:flex;">
+			<input type="checkbox" class="custom-control-input" name="" id="" disabled>
+			<label class="custom-control-label" for="">Conectar banner de opiniones con ficha de google actualizada</label>
+			<p class="paquetepro">(Uso exclusivo del paquete PRO)</p>
+		</div><br>
+		<input type="text" class="form-control inputbloq" name="estilo" id="estilo" value="" placeholder="Introducir nombre exacto del negocio o el ID de la ficha de negocio" disabled>
+	</div>
+</div>
+
+<br><br>
+<h4>KIT DIGITAL</h4>
+<div class="form-group row">
+  <div class="col">
+    <div class="custom-control custom-switch">
+      <input type="checkbox" class="custom-control-input" name="kit_digital" id="kit_digital" {{ config.data.kit_digital ? 'checked' : '' }}>
+      <label class="custom-control-label" for="kit_digital">Mostrar logotipos kit digital</label>
+    </div>
+  </div>
+</div>
+<br>
+<h4>PÁGINA QUIÉNES SOMOS</h4>
+<div class="form-group row">
+  <div class="col">
+    <div class="custom-control custom-switch" style="display:flex; align-items:center">
+      <input type="checkbox" class="custom-control-input" name="quienessomosboolean" id="quienessomosboolean" {{ config.data.quienessomosboolean ? 'checked' : '' }}>
+      <label class="custom-control-label" for="quienessomosboolean">Mostrar página "Quienes Somos"</label>
+	  <a style="margin-left:20px" href="{{ path('adminconfig-quienes-somos') }}">Gestionar Contenido</a><br>
+    </div>
+  </div>
+</div>
+
+<br>
+<h4>PÁGINA RECURSOS</h4>
+<div class="form-group row">
+  <div class="col">
+    <div class="custom-control custom-switch" style="display:flex; align-items:center">
+      <input type="checkbox" class="custom-control-input" name="recursosboolean" id="recursosboolean" {{ config.data.recursosboolean ? 'checked' : '' }}>
+      <label class="custom-control-label" for="recursosboolean">Mostrar página "Recursos"</label>
+	  <a style="margin-left:20px" href="{{ path('config-recursos') }}">Gestionar Contenido</a><br>
+    </div>
+  </div>
+</div><br>
+
+<h4>PÁGINA PROMOCIONES</h4>
+<div class="form-group row">
+  <div class="col">
+    <div class="custom-control custom-switch" style="display:flex; align-items:center">
+      <input type="checkbox" class="custom-control-input" name="promocionesboolean" id="promocionesboolean" {{ config.data.promocionesboolean ? 'checked' : '' }}>
+      <label class="custom-control-label" for="promocionesboolean">Mostrar página "Promociones"</label>
+	  <a style="margin-left:20px" href="{{ path('config-promociones') }}">Gestionar Contenido</a><br>
+    </div>
+  </div>
+</div><br>
+
+
+
+
+
+
+

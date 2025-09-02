@@ -1,0 +1,47 @@
+<div class="text-center px-5" id="app-images">
+    <h1 class="mt-2 text-center display-4">Actualización caché imágenes</h1>
+    <div class="lead mt-5 text-danger">
+        Este proceso es lento y puede crear una sobrecarga en el servidor
+    </div>
+    <div class="mb-5">
+        Si recarga la página o cierra el navegador el proceso se detendrá
+    </div>
+
+    <button type="button" v-show="!enProceso" class="btn btn-primary" @click="start">
+        <div class="lead">
+            <i class="mdi mdi-play mr-3"></i>Iniciar proceso
+        </div>
+    </button>
+    <div v-show="finalizado" class="lead mt-5 py-2 bg-success text-white">
+        Revisión de imágenes finalizada
+    </div>
+    <div v-show="enProceso">
+        <div class="text-center lead">
+            <i class="mdi mdi-loading mdi-spin mdi-24px mr-3"></i>Comprobando imágenes...
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Total</th>
+                    <th>Actual</th>
+                    <th>%</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Artículos</td>
+                    <td>${totalArt}</td>
+                    <td width="100">${artActual}</td>
+                    <td width="100">${porcentArt} %</td>
+                </tr>
+                <tr>
+                    <td>Cod. Barras</td>
+                    <td>${totalCB}</td>
+                    <td width="100">${cbActual}</td>
+                    <td width="100">${porcentCB} %</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

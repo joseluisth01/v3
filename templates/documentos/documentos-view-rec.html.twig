@@ -1,0 +1,57 @@
+<div class="row mb-3">
+    <div class="col-md-6">
+        <div class="font-weight-bolder">{{ cab.cli_nombre }}</div>
+        <div>{{ cab.cli_direccion }}</div>
+        <div>{{ cab.cli_localidad }} - {{ cab.cli_cpostal }} - {{ cab.cli_provincia }}</div>
+    </div>
+    {% if cab.cli_fin_nombre is not empty %}
+    <div class="col-md-6">
+        <div class="font-weight-bolder">{{ cab.cli_fin_nombre }}</div>
+        <div>{{ cab.cli_fin_direccion }}</div>
+        <div>{{ cab.cli_fin_localidad }} - {{ cab.cli_fin_cpostal }} - {{ cab.cli_fin_provincia }}</div>
+    </div>
+    {% endif %}
+</div>
+<div class="row cabecera mb-3">
+    <div class="col-auto">
+        <b>Fecha:</b> {{ cab.fecha|date('d-m-Y') }}
+    </div>
+    <div class="col-auto">
+        <b>{{ cab.nombreDoc}} número:</b> {{ cab.serie }}-{{ cab.numero }}
+    </div>
+    <div class="col-auto">
+        <b>Forma de pago:</b> {{ cab.fpago }}
+    </div>
+</div>
+<table class="table table-bordered table-striped nowrap">
+    <thead class="border-bottom">
+        <th>Fecha</th>
+        <th>Fecha Pago</th>
+        <th class="text-right">Importe</th>
+        <th></th>
+    </thead>
+    <tbody>
+        {% for vto in vencimientos %}
+        <tr>
+            <td>{{ vto.fecha }}</td>
+            <td>{{ vto.fechacobro }}</td>
+            <td class="text-right">{{ vto.importe}}</td>
+            <td class="text-center">
+                {% if vto.fechacobro is empty %}
+                <button type="button" class="btn btn-primary btn-pago" data-id="{{ vto.id }}">
+                    <i class="mdi mdi-credit-card-outline mr-3"></i>Pagar
+                </button>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% block javascripts %}
+<script>
+    $('button.btn-pago').on('click', function () {
+        let id = $(this).data('id');
+        T.modal({ url: T.path('vencimiento/cobro', id), id: 'cobro-modal' });
+    });
+</script>
+{% endblock %}

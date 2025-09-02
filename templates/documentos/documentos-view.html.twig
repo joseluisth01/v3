@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+  <main class="container-fluid">
+    <h1 class="font-weight-normal">Consulta de
+      {{ cab.nombreDoc }}</h1>
+    <div class="row justify-content-around my-2 text-nowrap mx-0">
+      <div class="col-12 col-md-auto mb-2 mb-md-0">
+        <a href="{{ url('documentos-print', {id: cab.id}) }}" class="btn btn-block btn-primary px-3">
+          <i class="mdi mdi-file-pdf-outline mr-3"></i>Descargar PDF
+        </a>
+      </div>
+      {% if llamadas %}
+        <div class="col-12 col-md-auto mb-2 mb-md-0">
+          <a href="{{ url('documentos-llamadas', {factura: cab.id}) }}" class="btn btn-block btn-primary px-3">
+            <i class="mdi mdi-file-phone-outline mr-3"></i>Consultar llamadas
+          </a>
+        </div>
+      {% endif %}
+      {% if cab.tipodoc == 2 and not cobrado and config.redsysActivo %}
+        <div class="col-12 col-md-auto mb-2 mb-md-0">
+          <button type="button" id="btn-cobro" class="btn btn-block btn-primary px-3">
+            <i class="mdi mdi-credit-card-outline mr-3"></i>Realizar pago
+          </button>
+        </div>
+      {% endif %}
+      <div class="col-12 col-md-auto mb-2 mb-md-0">
+        <a href="{{ url('documentos', {tipo: cab.tipodoc}) }}" class="btn btn-block btn-primary px-3">
+          <i class="mdi mdi-undo-variant mr-3"></i>Volver
+        </a>
+      </div>
+    </div>
+    <div class="document-view my-2 p-3">
+      {% if cab.tipodoc == 8 %}
+        <ul class="nav nav-pills">
+          <li class="nav-item" role="presentation">
+            <a class="nav-link font-weight-bold {{ esCobro ? '' : 'active'}}" id="documento-tab" data-toggle="tab" href="#tab-documento" role="tab" aria-controls="home" aria-selected="true">Factura</a>
+          </li>
+          <li class="nav-item" role="presentation">
+            <a class="nav-link font-weight-bold {{ esCobro ? 'active' : ''}}" id="vencimientos-tab" data-toggle="tab" href="#tab-vencimientos" role="tab" aria-controls="profile" aria-selected="false">Recibos</a>
+          </li>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane show {{ esCobro ? '' : 'active'}} p-3" id="tab-documento" role="tabpanel" aria-labelledby="home-tab">
+            {%include 'documentos/documentos-view-doc.html.twig' %}
+          </div>
+          <div class="tab-pane p-3 {{ esCobro ? 'active' : ''}}" id="tab-vencimientos" role="tabpanel" aria-labelledby="profile-tab">
+            {%include 'documentos/documentos-view-rec.html.twig' %}
+          </div>
+        </div>
+      </div>
+    {%else %}
+      {%include 'documentos/documentos-view-doc.html.twig' %}
+    {% endif %}
+  </div>
+</main>{% endblock %}{% block javascripts %}
+{% if cab.tipodoc == 2 and cab.pedido_cobro_ident is empty and config.redsysActivo %}
+  <script>
+    $(function () {
+      $('#btn-cobro').on('click', function () {
+        T.modal({
+          url: T.path('documentos/cobro', {{ cab.id }}),
+          id: 'cobro-modal'
+        });
+      });
+    });
+  </script>
+{% endif %}{% endblock %}

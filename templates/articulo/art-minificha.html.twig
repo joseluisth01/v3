@@ -1,0 +1,50 @@
+<div class="product-item" itemscope itemtype="https://schema.org/Product">
+	<a href="{{ url('articulo', {weburl: art.url}) }}" class="text-dark">
+		<div class="pi-img-wrapper">
+			<img itemprop="image" class="px-2 img-fluid" src="{{ asset(art.imagen) }}" alt="{{ art.imagen_txt }}">
+		</div>
+		{% if h1Items is defined and h1Items is not empty %}
+			<p class="nombrearticulo" itemprop="name" class="h6 mb-0">{{art.nombre}}</p>
+		{% else %}
+			<p class="nombrearticulo" itemprop="name" class="h6 mb-0">{{art.nombre}}</p>
+		{% endif %}
+	</a>
+	{% if art.dto_fam > 0 and art.precio_iva != 0 %}
+		<div class="d-md-flex justify-content-between align-items-center" >
+			<div class="text-secondary text-right">
+				<s>{{ art.precio_iva_sin_dto | price }}</s>
+			</div>
+			<div class="text-dark font-weight-bold text-right descuento">{{ art.dto_fam }}%&nbsp;DTO.</div>
+			<div class="pi-price font-lg text-right preciofinal2">{{ art.precio_iva | price }}</div>
+		</div>
+	{% else %}
+		<div class="d-flex justify-content-end">
+			<div class="pi-price font-lg">
+				{{ art.precio_iva | pricenz }}
+			</div>
+		</div>
+	{% endif %}
+	<div class=" mt-1" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+		<div class="px-0 pi-price d-flex justify-content-between align-items-center">
+			{% if art.stock_remoto and config.stockUnificar %}
+				<small itemprop="availability" href="https://schema.org/InStock" class="text-white bg-success p-1">{{ config.stockRemoto }}</small>
+			{% else %}
+				<span class="text-nowrap d-flex justify-content-center align-items-center ml-1">
+					{{ batteryStock(art.stock, art.virtual, art.control_stock, config)|raw }}
+				</span>
+				<div class="product-quantity mr-1 d-none d-md-block">
+					<input type="text" class="form-control input-sm" value="1" aria-label="Unidades" readonly data-ref="{{art.referencia|toHex}}">
+				</div>
+			{% endif %}
+		</div>
+		<div class="px-0">
+			<div class="ml-2 d-flex justify-content-end align-items-center">
+				{% if config.bloqueoVentaSinStock and art.control_stock and getStock(art.stock, art.virtual) <= 0 %}
+					<button style="width:100%" type="button" class="btn-default  btnanadircarritodisabled mt-3" disabled>AÑADIR AL CARRITO</button>
+				{% else %}
+					<button style="width:100%" type="button" class="btn-default  add-item-cart btnanadircarrito mt-3" data-url="{{art.url}}" data-tc="{{art.tallas_colores}}" data-ref="{{art.referencia|toHex}}">AÑADIR AL CARRITO</button>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+</div>

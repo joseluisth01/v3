@@ -1,0 +1,97 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+  <link rel="stylesheet" href="{{ asset('vendor/fileinput/fileinput.min.css') }}">
+  <style>
+    #form-recogida label {
+      font-weight: bold;
+    }
+
+    #form-recogida label.required:after {
+      content: "*";
+      font-size: 1.2em;
+      color: red;
+      padding-left: 0.3em;
+    }
+  </style>
+{% endblock %}
+{% block body %}
+  <main class="container-fluid bg-white">
+    {% if msgError is defined %}
+      <h4 class="alert alert-danger text-center" role="alert">{{ msgError | raw }}</h4>
+    {% endif %}
+    <section style="margin-top:60px; text-align:center; margin-bottom:20px;">
+      {{ cabecera | raw }}
+    </section>
+    <section>
+      <form action="{{ url('recogida-save') }}" enctype="multipart/form-data" method="post" id="form-recogida" class="container mb-2">
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('send-article') }}">
+        <div class="form-group">
+          <label for="nombre" class="required">Nombre y Apellidos</label>
+          <input type="text" name="nombre" id="nombre" class="form-control" placeholder="Nombre" required aria-required="true">
+        </div>
+        <div class="form-group">
+          <label for="telefono" class="required">Número de Teléfono</label>
+          <input type="tel" name="telefono" id="telefono" class="form-control" placeholder="Poner número teléfono" required aria-required="true" pattern="[0-9()#&amp;+*-=.]+" title="Solo se aceptan números y caracteres de teléfono (#,-,*,etc).">
+        </div>
+        <div class="form-group">
+          <label for="direccion" class="required">Dirección Calle</label>
+          <input type="text" name="direccion" id="direccion" class="form-control" placeholder="Calle" required aria-required="true">
+        </div>
+        <div class="form-group">
+          <label for="localidad" class="required">Localidad</label>
+          <input type="text" name="localidad" id="localidad" class="form-control" placeholder="Localidad" required aria-required="true">
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <div class="col col-md-4">
+              <label for="cpostal" class="required">Código Postal</label>
+              <input type="text" name="cpostal" id="cpostal" class="form-control" placeholder="Código postal" required aria-required="true" maxlength="20">
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="email" class="required">Email</label>
+          <input type="email" name="email" id="email" class="form-control" placeholder="Email (necesario por favor)" required aria-required="true">
+        </div>
+        <div class="form-group">
+          <label for="dispositivo" class="required">Dispositivo</label>
+          <input type="text" name="dispositivo" id="dispositivo" class="form-control" placeholder="Dispositivo o Articulo que solicitas su recogida" required aria-required="true">
+        </div>
+        <div class="form-group">
+          <label for="numserie">Número de Serie</label>
+          <input type="text" name="numserie" id="numserie" class="form-control" placeholder="Si lo proporcionas, mejor ">
+        </div>
+        <div class="form-group">
+          <label for="desbloqueo">Código Desbloqueo</label>
+          <input type="text" name="desbloqueo" id="desbloqueo" class="form-control" placeholder="Código Desbloqueo o secuencia patrón (solo para comprobar correcto funcionamiento posterior)">
+        </div>
+        <div class="form-group">
+          <label for="averia" class="required">Avería</label>
+          <textarea name="averia" id="averia" rows="5" class="form-control" placeholder="Cuéntanos la avería de tu dispositivo" required aria-required="true"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="imagen">Si necesitas enviarnos alguna imagen descriptiva, hazlo aquí</label>
+          <input type="file" name="imagenes[]" id="imagen" class="form-control" multiple>
+        </div>
+        <div class="d-flex justify-content-center py-3">
+          <button type="submit" class="btn btn-success w-50" style="margin-bottom:80px; margin-top:20px; border-radius:5px !important; display:flex; align-items:center; justify-content:center;">
+            <span class="mdi mdi-send mdi-24px mr-2"></span>Enviar
+          </button>
+        </div>
+      </form>
+    </section>
+    <section>
+      {{ pie | raw }}
+    </section>
+  </main>
+{% endblock %}
+{% block javascripts %}
+  <script src="{{ asset('vendor/fileinput/fileinput.min.js') }}"></script>
+  <script src="{{ asset('vendor/fileinput/theme.js') }}"></script>
+  <script src="{{ asset('vendor/fileinput/locales/es.js') }}"></script>
+  <script>
+    $.fn.fileinput.defaults.language = 'es';
+    $.fn.fileinput.defaults.maxFileSize = T.maxFileSizeUpload;
+  </script>
+  <script src="{{ asset('js/recogida.js') }}"></script>
+{% endblock %}

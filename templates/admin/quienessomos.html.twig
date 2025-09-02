@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Quiénes Somos -
+	{{ config.title }}
+{% endblock %}
+
+{% block body %}
+	<main>
+		<section class="quienes-somos-containerr">
+			<h1 class="quienes-somos-title">{{ titulo }}</h1>
+			<br>
+			<div class="quienes-somos-text">
+    {{ texto|raw }}
+</div><br><br>
+			{% if imagen %}
+				<div class="quienes-somos-image">
+					<img src="{{ asset(imagen) }}" alt="Imagen Quiénes Somos" style="max-width: 100%; height: auto; border-radius: 8px;">
+				</div>
+			{% endif %}
+
+		</section>
+	</main>
+{% endblock %}

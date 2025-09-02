@@ -1,0 +1,118 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+	{% if config.slider %}
+		<link rel="stylesheet" href="{{ asset('vendor/revealjs/reveal.css') }}">
+		<link rel="stylesheet" href="{{ asset('vendor/revealjs/theme/white.css') }}">
+		{% if config.sliderSizeAuto %}
+			<style>
+				div.slide-background > div.slide-background-content {
+					background-size: contain;
+				}
+			</style>
+		{% endif %}
+		<style>
+			@media(max-width: 767px) {
+				div.slide-background > div.slide-background-content {
+					background-size: 100% 100%;
+				}
+			}
+		</style>
+	{% endif %}
+	{% if config.mostrarMarcas %}
+		<link rel="stylesheet" href="{{ asset('vendor/jquery-carousel/jcarousel.responsive.css') }}">
+	{% endif %}
+{% endblock %}
+{% block body %}
+	{% if config.slider %}
+		{% include 'main/slider.html.twig' %}
+	{% endif %}
+	<main class="principal">
+		{% if h1Items is defined and h1Items is not empty %}
+			<div class="d-none">{{ h1Items | raw }}</div>
+		{% endif %}
+		<aside class="sidebar d-none d-md-block">
+			{% include 'main/art-alta-rotacion.html.twig' %}
+		</aside>
+
+
+
+	</main>
+	{#   {% if config.mostrarMarcas %}
+					    <div class="container">
+					      <div class="jcarousel-wrapper">
+					        <div class="jcarousel">
+					          <ul>
+					            {% for mar in lista_marcas %}
+					              <li>
+					                <a href="{{ url('marca-grid', {webUrl: mar.url}) }}">
+					                  <img src="{{ asset(mar.url_imagen) }}" alt="{{ mar.nombre }}" width="200" style="max-height: 100px" class="img-fluid">
+					                </a>
+					              </li>
+					              {% endfor%}
+					            </ul>
+					          </div>
+					          <a href="#" class="jcarousel-control-prev">&lsaquo;</a>
+					          <a href="#" class="jcarousel-control-next">&rsaquo;</a>
+					        </div>
+					      </div>
+					    {% endif %} #}
+{% endblock %}
+{% block javascripts %}
+	{% if config.mostrarMarcas %}
+		<script src="{{ asset('vendor/jquery-carousel/jquery.jcarousel.min.js') }}"></script>
+		<script>
+			$(function () {
+let jcarousel = $('.jcarousel');
+jcarousel.jcarousel({wrap: 'circular'});
+
+$('.jcarousel-control-prev').jcarouselControl({target: '-=1'});
+
+$('.jcarousel-control-next').jcarouselControl({target: '+=1'});
+
+let btnNext = $('.jcarousel-control-next');
+setInterval(() => btnNext.jcarouselControl({target: '+=1'}), 5000);
+});
+		</script>
+	{% endif %}
+	{% if config.slider %}
+		<script src="{{ asset('vendor/revealjs/reveal.js') }}"></script>
+		{# https: // stackoverflow.com/questions/19522587/add-remove-slides-from-reveal-js-dynamically #}
+		<script>
+			(function () {
+Reveal.initialize({
+embedded: true,
+controlsLayout: 'edges',
+autoSlide: 5000,
+loop: true,
+transitionSpeed: 'slow',
+autoSlideStoppable: false,
+height: {{ config.sliderHeight }}
+});{% if bannerImg is defined %}const MAX_MOBILE_PX = 765;
+const slides = $('#reveal-slides');
+let actualWidth = $(window).width(),
+actualDesk = actualWidth >= MAX_MOBILE_PX;
+
+if (actualWidth >= MAX_MOBILE_PX) {
+slides.html($('#reveal-desktop').html());
+} else {
+slides.html($('#reveal-mobile').html());
+}
+
+$(window).on('resize', function () {
+let desk = $(window).width() >= MAX_MOBILE_PX;
+if (actualDesk != desk) {
+let ident = desk ? '#reveal-desktop' : '#reveal-mobile';
+actualWidth = $(window).width();
+actualDesk = actualWidth >= MAX_MOBILE_PX;
+slides.empty();
+slides.html($(ident).html())
+Reveal.slide(0);
+Reveal.sync();
+}
+}).trigger('resize');
+{% else %}
+$('#reveal-slides').html($('#reveal-desktop').html());{% endif %}
+})();
+		</script>
+	{% endif %}
+{% endblock %}

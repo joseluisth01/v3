@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<div class="container text-center py-5">
+    <h1 class="font-weight-normal py-1 text-danger">Error confirmación nuevo cliente</h1>
+    <h3 class="mt-5">El cliente no existe o ya ha sido registrado</h3>
+    <div class="mt-5">
+        <a href="{{ url('app_login') }}" class="btn btn-primary px-3 pb-2 my-0">
+            <i class="mdi mdi-login-variant mdi-24px mr-3"></i>Entrar
+        </a>
+    </div>
+</div>
+{% endblock %}

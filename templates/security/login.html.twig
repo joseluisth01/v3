@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+  <main style="min-height: 60vh; margin-top:80px !important">
+    <div class="h1 font-weight-normal ">Bienvenido, por favor, identifíquese</div>
+    <div class="" style="border-bottom: 1px solid #aaa;"></div>
+    <div class="login-form my-5">
+      <div class="row justify-content-space-between mx-0 rowrow" style="justify-content: space-between;">
+        <div class="col-auto" style="width:50%">
+          {%  if config.altaClientesWeb %}
+            <div class="h2 font-weight-bold">Clientes Registrados</div>
+          {% endif %}
+          <div class="card">
+            <div class="card-body">
+              <form method="post">
+                {% if error %}
+                  <div class="alert alert-danger">Usuario o clave incorrectos</div>
+                {% endif %}
+                {% if app.user %}
+                  <div class="mb-3">
+                    <p>Está conectado como
+                      <span class="font-weight-bold">{{ app.user.username }}</span>
+                    </p>
+                    <a class="btn btn-dark" href="{{ path('app_logout') }}">
+                      <i class="mdi mdi-logout mr-2"></i>Desconectar
+                    </a>
+                  </div>
+                {% endif %}
+                <div class="input-group form-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">
+                      <i class="mdi mdi-account"></i>
+                    </span>
+                  </div>
+                  <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control" placeholder="{{ placeholderLogin() }}" required autofocus>
+
+                </div>
+                <div class="input-group form-group mb-0">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">
+                      <i class="mdi mdi-key"></i>
+                    </span>
+                  </div>
+                  <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Contraseña" required>
+                </div>
+                <div class="text-right mb-4">
+                  <a href="{{url('password-reset')}}">Ha olvidado su contraseña?</a>
+                </div>
+                <div class="text-center">
+                  <button class="btn btn-primary px-3 pb-2 my-0" type="submit">
+                    <i class="mdi mdi-login-variant mdi-24px mr-3"></i>Entrar
+                  </button>
+                </div>
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                <input type="hidden" name="_current_sess_id" value={{ app.session.getId }}>
+              </form>
+            </div>
+          </div>
+        </div>
+        {% if config.altaClientesWeb %}
+          <div class="col-auto mt-5 mt-lg-0 px-1 " style="width:50%">
+            <div class="h2 font-weight-bold">Clientes Nuevos</div>
+            <p class="lead">Si es la primera vez que compra en nuestra tienda, regístrese.</p>
+            <a href="{{ url('cliente-registro') }}" class="btn btn-dark px-3 pb-2" type="button" id="registrar">
+              <i class="mdi mdi-file-document-edit-outline mdi-24px mr-3"></i>Registrarme ahora
+            </a>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </main>
+{% endblock %}

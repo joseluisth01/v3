@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+{% block title %}V3 Web - Tools
+{% endblock %}
+{% block body %}
+<div class="card">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-auto mt-2">Tablas</div>
+            <div class="col-auto">
+                <select name="table" id="table" class="form-control no-box-shadow" autofocus>
+                    {%for tabla in tablas %}
+                    <option value="{{ tabla }}">{{ tabla }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-auto">
+                <button type="button" id="btn-procesar" class="btn btn-primary">Procesar<i class="mdi mdi-arrow-right-drop-circle-outline ml-3"></i>
+                </button>
+            </div>
+        </div>    </div>
+    <div class="card-body">
+        <textarea class="form-control text-monospace" name="content" id="content" rows="20" style="font-size:.9rem"></textarea>
+    </div>
+</div>
+{% endblock %}
+{% block javascripts %}
+<script>
+    $(function () {
+        let tableField = $('#table'),
+            textField = $('#content');
+        $('#btn-procesar').on('click', function () {
+            let tableName = tableField.val();
+            $.get('tools/get-php/' + tableName, function (data) {
+                textField.val(data);
+                tableField.focus();
+            });
+        });
+    });
+</script>
+{% endblock %}

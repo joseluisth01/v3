@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+  <main>
+    {% include 'tools/pagination.html.twig' %}
+    {% if articulos is empty %}
+      <div class="d-flex justify-content-center align-items-center py-5 my-5">
+        <h1>No hay artículos que coincidan con su búsqueda</h1>
+      </div>
+    {% else %}
+      <div class="d-flex flex-wrap flex-md-nowrap justify-content-center">
+        {% include 'tools/atributos.html.twig' %}
+        <div class="w-100">
+          <div class="product-list-container">
+            {% for art in articulos %}
+              {% include 'articulo/art-minificha.html.twig' %}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    {% endif %}
+    {% include 'tools/pagination.html.twig' %}
+  </main>
+{% endblock %}

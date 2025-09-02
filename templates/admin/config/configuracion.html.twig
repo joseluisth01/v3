@@ -1,0 +1,53 @@
+{% extends 'admin/base.html.twig' %}
+{% block body %}
+<div class="card hoverable" style="position:sticky; top:70px;">
+    <form action="{{path('admin-save')}}" enctype="multipart/form-data" method="POST">
+        <div style="position:sticky; top:70px; z-index:99; background-color: #fff; padding-bottom:2px; border-bottom: 1px solid #ddd">
+            <div class="card-content d-flex justify-content-between py-2">
+                <span class="card-title">Configuración</span>
+                <button type="submit" class="btn btn-success">
+                    <i class="mdi mdi-content-save mr-3"></i>Grabar
+                </button>
+            </div><br>
+            <div class="card-tabs">
+                <ul class="tabs tabs-fixed-width">
+                    <li class="tab"><a class="active" href="#tab-general">General</a></li>
+                    <li class="tab"><a href="#tab-web">PÁGINA WEB</a></li>
+                    <li class="tab"><a href="#tab-empresa">Empresa</a></li>
+                    <li class="tab"><a href="#tab-redes">Redes Sociales</a></li>
+                    <li class="tab"><a href="#tab-email">Email</a></li>
+                    <li class="tab"><a href="#tab-redsys">REDSYS</a></li>
+                    <li class="tab"><a href="#tab-imagenes">IMÁGENES</a></li>
+                    <li class="tab"><a href="#tab-admin">SUPER ADMIN</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="card-content grey lighten-4">
+            <div id="tab-general">
+                {% include 'admin/config/config-general.html.twig' %}
+            </div>
+            <div id="tab-web">
+                {% include 'admin/config/config-web.html.twig' %}
+            </div>
+            <div id="tab-empresa">
+                {% include 'admin/config/config-empresa.html.twig' %}
+            </div>
+            <div id="tab-redes">
+                {% include 'admin/config/config-redes.html.twig' %}
+            </div>
+            <div id="tab-email">
+                {% include 'admin/config/config-email.html.twig' %}
+            </div>
+            <div id="tab-redsys">
+                {% include 'admin/config/config-redsys.html.twig' %}
+            </div>
+            <div id="tab-imagenes">
+                {% include 'admin/config/config-imagenes.html.twig' %}
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}
+{% block javascripts %}
+<script src="{{ asset('js/admin/configuracion.js') }}"></script>
+{% endblock %}

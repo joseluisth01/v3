@@ -1,0 +1,51 @@
+.cookies {
+    background: rgba(0, 0, 0, 0.6);
+    transition: background-color 250ms linear;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    left: 0;
+    position: fixed;
+    height: 100%;
+    top: 0;
+    width: 100%;
+    z-index: 999999;
+    & > .wrap {
+        display: block;
+        max-width: 375px;
+        width: 100%;
+        z-index: 1000000;
+        & > .box {
+            background: #fff;
+            border-radius: 4px !important;
+            color: #555;
+            font-size: 14px;
+            padding: 15px 0;
+
+            & > .content {
+                background: inherit;
+                display: block;
+                float: none;
+                padding-left: 20px;
+                padding-right: 20px;
+                margin-left: auto;
+                margin-right: auto;
+                min-height: auto;
+                position: inherit;
+                max-height: 100vh;
+                overflow: auto !important;
+                width: auto !important;
+            }
+            & > .title {
+                font-size: 1.625em;
+                line-height: 1.125em;
+                word-break: break-all;
+            }
+
+            & > .legal {
+                font-size: 0.75em;
+                text-align: center;
+            }
+        }
+    }
+}

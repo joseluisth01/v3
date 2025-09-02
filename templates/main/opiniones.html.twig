@@ -1,0 +1,228 @@
+{% set opiniones = opiniones|default([]) %}
+{% if opiniones is empty %}
+    {% set opiniones = [
+        {
+            'nombre': 'Usuario Demo 1',
+            'tiempo': 'hace 2 días',
+            'rating': 5,
+            'texto': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+            'avatar': 'A'
+        },
+        {
+            'nombre': 'Usuario Demo 2',
+            'tiempo': 'hace 1 semana',
+            'rating': 5,
+            'texto': 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+            'avatar': 'B'
+        },
+        {
+            'nombre': 'Usuario Demo 3',
+            'tiempo': 'hace 2 semanas',
+            'rating': 5,
+            'texto': 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
+            'avatar': 'C'
+        },
+        {
+            'nombre': 'Usuario Demo 4',
+            'tiempo': 'hace 3 semanas',
+            'rating': 5,
+            'texto': 'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+            'avatar': 'D'
+        },
+        {
+            'nombre': 'Usuario Demo 5',
+            'tiempo': 'hace 1 mes',
+            'rating': 5,
+            'texto': 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.',
+            'avatar': 'E'
+        },
+        {
+            'nombre': 'Usuario Demo 6',
+            'tiempo': 'hace 1 mes',
+            'rating': 5,
+            'texto': 'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur.',
+            'avatar': 'F'
+        }
+    ] %}
+{% endif %}
+
+<div class="opiniones-slider">
+    <div class="containeropiniones">
+        <div class="slider-wrapper">
+            {% for opinion in opiniones %}
+                <div class="opinion">
+                    <div class="headeropinion d-flex full-height">
+                        <div class="opinion-avatar">
+                            <span>{{ opinion.avatar }}</span>
+                        </div>
+                        <div class="datosopinion">
+                            <h4 class="nombreopinion">{{ opinion.nombre }}</h4>
+                            <p class="opinion-time">{{ opinion.tiempo }}</p>
+                            <p class="opinion-rating">
+                                {% for i in 1..opinion.rating %}
+                                    ⭐
+                                {% endfor %}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="opinion-content">
+                        <p class="opinion-text">{{ opinion.texto }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <button class="slider-button prev">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" width="40" height="40">
+            <path d="M24.5,0.932L10,15.532L24.5,30.132L28.8,25.732L16.2,15.532L28.8,5.332Z"></path>
+        </svg>
+    </button>
+    <button class="slider-button next">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" width="40" height="40">
+            <path d="M15.5,0.932L30,15.532L15.5,30.132L11.2,25.732L23.8,15.532L11.2,5.332Z"></path>
+        </svg>
+    </button>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    let currentIndex = 0;
+    let intervalId;
+    const sliderWrapper = document.querySelector('.slider-wrapper');
+    const originalItems = document.querySelectorAll('.opinion');
+    const prevButton = document.querySelector('.slider-button.prev');
+    const nextButton = document.querySelector('.slider-button.next');
+    
+    // Clonar todos los elementos originales
+    originalItems.forEach(item => {
+        const clone = item.cloneNode(true);
+        sliderWrapper.appendChild(clone);
+    });
+
+    const totalItems = originalItems.length;
+
+    function calculateSlideWidth() {
+        // Calcular ancho dinámicamente, especialmente para móvil
+        const firstItem = originalItems[0];
+        const wrapperStyles = getComputedStyle(sliderWrapper);
+        const gap = parseInt(wrapperStyles.gap || '0');
+        return firstItem.offsetWidth + gap;
+    }
+
+    function updateSliderPosition(useTransition = true) {
+        const slideWidth = calculateSlideWidth();
+        
+        if (!useTransition) {
+            sliderWrapper.style.transition = 'none';
+        } else {
+            sliderWrapper.style.transition = 'transform 0.5s ease';
+        }
+        
+        const offset = currentIndex * slideWidth;
+        sliderWrapper.style.transform = `translateX(-${offset}px)`;
+
+        // Si llegamos al final del conjunto original
+        if (currentIndex >= totalItems) {
+            setTimeout(() => {
+                // Resetear al inicio sin transición
+                sliderWrapper.style.transition = 'none';
+                currentIndex = 0;
+                sliderWrapper.style.transform = `translateX(0)`;
+                setTimeout(() => {
+                    sliderWrapper.style.transition = 'transform 0.5s ease';
+                }, 10);
+            }, 500);
+        }
+    }
+
+    function nextSlide() {
+        currentIndex++;
+        if (currentIndex > totalItems) {
+            currentIndex = 0;
+        }
+        updateSliderPosition();
+    }
+
+    function prevSlide() {
+        currentIndex--;
+        if (currentIndex < 0) {
+            currentIndex = totalItems - 1;
+            sliderWrapper.style.transition = 'none';
+            sliderWrapper.style.transform = `translateX(-${currentIndex * calculateSlideWidth()}px)`;
+            requestAnimationFrame(() => {
+                sliderWrapper.style.transition = 'transform 0.5s ease';
+                updateSliderPosition();
+            });
+        } else {
+            updateSliderPosition();
+        }
+    }
+
+    function startAutoSlide() {
+        stopAutoSlide();
+        intervalId = setInterval(nextSlide, 3000);
+    }
+
+    function stopAutoSlide() {
+        if (intervalId) {
+            clearInterval(intervalId);
+        }
+    }
+
+    // Soporte táctil para móviles
+    let startX = 0;
+    let endX = 0;
+
+    sliderWrapper.addEventListener('touchstart', (e) => {
+        startX = e.touches[0].clientX;
+        stopAutoSlide();
+    });
+
+    sliderWrapper.addEventListener('touchmove', (e) => {
+        endX = e.touches[0].clientX;
+    });
+
+    sliderWrapper.addEventListener('touchend', () => {
+        const diffX = startX - endX;
+        if (Math.abs(diffX) > 50) { // Umbral de deslizamiento
+            if (diffX > 0) {
+                nextSlide();
+            } else {
+                prevSlide();
+            }
+        }
+        startAutoSlide();
+    });
+
+    // Inicialización y eventos
+    if (totalItems > 0) {
+        // Posición inicial
+        updateSliderPosition(false);
+        
+        // Auto-slide
+        startAutoSlide();
+
+        // Eventos de botones
+        prevButton?.addEventListener('click', () => {
+            stopAutoSlide();
+            prevSlide();
+            startAutoSlide();
+        });
+
+        nextButton?.addEventListener('click', () => {
+            stopAutoSlide();
+            nextSlide();
+            startAutoSlide();
+        });
+
+        // Pausar en hover
+        sliderWrapper.addEventListener('mouseenter', stopAutoSlide);
+        sliderWrapper.addEventListener('mouseleave', startAutoSlide);
+
+        // Ajustar en resize
+        window.addEventListener('resize', () => {
+            updateSliderPosition(false);
+        });
+    }
+});
+</script>

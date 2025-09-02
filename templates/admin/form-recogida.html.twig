@@ -1,0 +1,32 @@
+{% extends 'admin/base.html.twig' %}
+{% block body %}
+  <form action="{{path('admin-form-rec-save')}}" method="POST">
+    <div class="card-content d-flex justify-content-between py-2">
+      <h4>FORMULARIO DE RECOGIDA DE DISPOSITIVOS</h4>
+      <button type="submit" class="btn btn-success">
+        <i class="mdi mdi-content-save mr-3"></i>Grabar
+      </button>
+    </div>
+    <div class="card-content">
+      <div class="form-group">
+        <label for="texto-cabecera">Cabecera</label>
+        <textarea name="cabecera" id="texto-cabecera" class="form-control summernote">
+          {{ cabecera }}
+        </textarea>
+      </div>
+      <div class="form-group">
+        <label for="texto-pie">Pie</label>
+        <textarea name="pie" id="texto-pie" class="form-control summernote">
+          {{ pie }}
+        </textarea>
+      </div>
+    </div>
+  </form>
+{% endblock %}
+{% block javascripts %}
+  <script>
+    $( function() {
+      $( '.summernote' ).summernote( { lang: 'es-ES', minHeight: 150 } );
+    } );
+  </script>
+{% endblock %}

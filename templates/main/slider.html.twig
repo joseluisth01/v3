@@ -1,0 +1,113 @@
+<div class="reveal-viewport" style="height: {{ config.sliderHeight }}px;">
+	<div class="reveal">
+		<div class="slides" id="reveal-slides"></div>
+	</div>
+</div>
+
+<template id="reveal-desktop">
+    {% set listaImg = bannerImg is defined ? bannerImg['desktop'] : sliderImg %}
+    {% for image in listaImg %}
+        <section data-background-image="{{asset(image.path)}}" class="d-flex align-items-stretch justify-content-center h-100">
+            {% if image.url != '' and image.url_type != '' %}
+                {% if image.url_type == 'A' %}
+                    {% set urlBanner = url('articulo', {weburl: image.url}) %}
+                {% elseif image.url_type == 'M' %}
+                    {% set urlBanner = url('marca-grid', {webUrl: image.url}) %}
+                {% else %}
+                    {% set urlBanner = url('familia-grid', {param: image.url}) %}
+                {% endif %}
+                <div class="d-block w-100 d-flex flex-column justify-content-center">
+                    <p class="tituloslider titulosliderprincipal">{{image.text}}</p>
+                    <div class="d-flex justify-content-center gap-3">
+                        <a href="{{ urlBanner }}" class="btnsliderprincipal">VER PRODUCTO</a>
+                        <button type="button" class="btnsliderprincipal" onclick="openCatalogMenu()">VER CATÁLOGO</button>
+                    </div>
+                </div>
+            {% else %}
+                <div class="d-flex flex-column justify-content-center">
+                    <p class="tituloslider titulosliderprincipal">{{image.text}}</p>
+                    <div class="d-flex justify-content-center">
+                        <button type="button" class="btnsliderprincipal" onclick="openCatalogMenu()">VER CATÁLOGO</button>
+                    </div>
+                </div>
+            {% endif %}
+        </section>
+    {% endfor %}
+</template>
+<style>
+.tituloslider {
+    color: {{ config.data.slider_text_color|default('#FFFFFF') }} !important;
+}
+</style>
+
+{% if bannerImg is defined %}
+    <template id="reveal-mobile">
+        {% for image in bannerImg['mobile'] %}
+            <section data-background-image="{{asset(image.path)}}" class="d-flex align-items-stretch justify-content-center">
+                <div class="d-flex flex-column justify-content-center">
+                    <p class="titulosliderprincipal">{{image.text}}</p>
+                    <div class="d-flex justify-content-center">
+                        <button type="button" class="btnsliderprincipal" onclick="openCatalogMenu()">VER CATÁLOGO</button>
+                    </div>
+                </div>
+            </section>
+        {% endfor %}
+    </template>
+{% endif %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Función para abrir el catálogo
+    window.openCatalogMenu = function() {
+        // Buscar el enlace del catálogo en el header
+        const catalogLink = document.querySelector('.enlacenavheader[data-toggle="dropdown"]');
+        
+        if (catalogLink) {
+            // Detener cualquier evento de reveal.js
+            event.stopPropagation();
+            
+            // Simular click en el enlace del catálogo
+            catalogLink.click();
+            
+            // Agregar clase show al submenu2
+            const submenu = document.querySelector('.submenu2');
+            if (submenu) {
+                submenu.classList.add('show');
+                submenu.style.display = 'block';
+                
+                // Agregar evento click al documento para cerrar el menú
+                setTimeout(() => {
+                    document.addEventListener('click', closeCatalogMenu);
+                }, 100);
+            }
+        }
+    };
+
+    // Función para cerrar el catálogo
+    function closeCatalogMenu(event) {
+        const submenu = document.querySelector('.submenu2');
+        const catalogButton = event.target.closest('.btnsliderprincipal');
+        
+        if (submenu && !submenu.contains(event.target) && 
+            !catalogButton && 
+            !event.target.classList.contains('enlacenavheader')) {
+            
+            submenu.classList.remove('show');
+            submenu.style.display = 'none';
+            submenu.style.marginTop = '0';
+            
+            document.removeEventListener('click', closeCatalogMenu);
+        }
+    }
+
+    // Agregar listeners a todos los botones del catálogo
+    document.querySelectorAll('.btnsliderprincipal').forEach(button => {
+        button.addEventListener('click', function(e) {
+            if (this.textContent.trim() === 'VER CATÁLOGO') {
+                e.preventDefault();
+                e.stopPropagation();
+                openCatalogMenu();
+            }
+        });
+    });
+});
+</script>

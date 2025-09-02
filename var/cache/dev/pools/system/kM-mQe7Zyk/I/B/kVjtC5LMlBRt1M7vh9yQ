@@ -1,0 +1,28 @@
+<?php //App%255CController%255CDocumentosController%2523viewLlamadas
+
+return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
+    $o = [
+        clone (\Symfony\Component\VarExporter\Internal\Registry::$prototypes['Symfony\\Component\\Routing\\Annotation\\Route'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Symfony\\Component\\Routing\\Annotation\\Route')),
+    ],
+    null,
+    [
+        'Symfony\\Component\\Routing\\Annotation\\Route' => [
+            'path' => [
+                '/llamadas/{factura<\\d+>}/{contrato<\\d+>?0}/{facturables<\\d+>?1}',
+            ],
+            'name' => [
+                '-llamadas',
+            ],
+            'requirements' => [
+                [
+                    'contrato' => '\\d+',
+                    'facturables' => '\\d+',
+                ],
+            ],
+        ],
+    ],
+    [
+        $o[0],
+    ],
+    []
+); }];

@@ -1,0 +1,29 @@
+<div class="modal fade" id="modal-suscripcion" tabindex="-1" role="dialog" aria-labelledby="modal-suscripcion-title" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modal-suscripcion-title">Suscripción</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body text-justify">
+        En aplicación de la LSSI,
+        {{ config.empresa.nombre }}, con CIF {{ config.empresa.cif }} no enviará
+        comunicaciones publicitarias o promocionales por correo electrónico u otro medio de comunicación electrónica equivalente que
+        previamente no hubieran sido solicitadas o expresamente autorizadas por los destinatarios de las mismas.
+        <br>
+        En el caso de usuarios con los que exista una relación contractual previa, {{ config.empresa.nombre }} sí está
+        autorizado al envío de comunicaciones comerciales referentes a productos o servicios de {{ config.empresa.nombre }}
+        que sean similares a los que inicialmente fueron objeto de contratación con el cliente.
+        <br>
+        En todo caso, el usuario, tras acreditar su identidad, podrá solicitar que no se le haga llegar más información comercial a
+        través de los canales de Atención al Cliente.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary mr-2" data-dismiss="modal"><i class="mdi mdi-close mr-2"></i>Rechazar</button>
+        <button type="button" class="btn btn-primary" id="btn-suscripcion-ok"><i class="mdi mdi-check mr-2"></i>Aceptar</button>
+      </div>
+    </div>
+  </div>
+</div>

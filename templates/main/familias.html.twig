@@ -1,0 +1,21 @@
+<ul class="dropdown-menu">
+  <li class="menu-cat" id="fam-menu-container">
+    <div class="fam-items">
+      {% for fam in familias %}
+        <div>
+          <a class="title" href="{{ url('familia-grid', {param: fam.url}) }}">{{ fam.nombre }}
+            ({{ fam.num_art }})</a>
+          <ul class="list-unstyled mt-2">
+            {% for sub in fam.sub %}
+              {% if sub.nombre is not empty %}
+                <li class="service-box-v1">
+                  <a href="{{ url('subfamilia', {param: sub.url}) }}">{{ sub.nombre }}</a>
+                </li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        </div>
+      {% endfor %}
+    </div>
+  </li>
+</ul>

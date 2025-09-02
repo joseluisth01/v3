@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ asset('vendor/datatables/datatables.min.css') }}">
+<link rel="stylesheet" href="{{ asset('vendor/datepicker/bootstrap-datepicker3.min.css') }}">
+<script src="{{ asset('vendor/datatables/datatables.min.js') }}"></script>
+<script src="{{ asset('vendor/datepicker/bootstrap-datepicker.min.js') }}"></script>
+<script src="{{ asset('vendor/datepicker/bootstrap-datepicker.es.min.js') }}"></script>
+{% endblock %}
+{% block body %}
+<div style="width:80%; margin:0 auto; padding-top:40px;">
+    <div class="row justify-content-between">
+        <h1 class="col mb-0 font-weight-normal" id="title">
+            <i class="mdi {{ iconTitle }} mr-2"></i>{{ title }}
+        </h1>
+        <h1 class="col mb-0 font-weight-normal text-nowrap">{{app.user.getClientName}}</h1>
+    </div>
+</div>
+<main class="container-fluid bg-white documentopedidos" style="width:80%; margin:0 auto; padding-top:40px;">
+    <form class="form-horizontal mt-2 mb-3" id="form-tabla-docs">
+        <div class="form-group row">
+            <div class="col-md-6">
+                <input type="text" class="form-control no-box-shadow" id="documento" value="{{ search.documento ?? '' }}" autofocus placeholder="Número {{ nombreDoc }}">
+            </div>
+            <div class="col-md-6 mt-3 mt-md-0 d-flex">
+                <div class="input-group date mr-5">
+                    <div class="input-group-prepend input-group-addon">
+                        <i class="input-group-text mdi mdi-calendar-month"></i>
+                    </div>
+                    <input type="text" class="form-control no-box-shadow" id="fecha_desde" value="{{ search.fecha_desde ?? '' }}" placeholder="Inicio">
+                </div>
+                <div class="input-group date">
+                    <div class="input-group-prepend input-group-addon">
+                        <i class="input-group-text mdi mdi-calendar-month"></i>
+                    </div>
+                    <input type="text" class="form-control no-box-shadow" id="fecha_hasta" value="{{ search.fecha_hasta ?? '' }}" placeholder="Fin">
+                </div>
+            </div>
+        </div>
+        <div class="form-group d-flex justify-content-around">
+            <button type="button" id="btn-pedidos" class="btn btn-doc {{ search.tipo_doc == 'P' ? 'btn-success': 'btn-dark' }}"><i style="color:white !important" class="mdi mdi-clipboard mr-3"></i>Pedidos</button>
+            <button type="button" id="btn-albaranes" class="btn btn-doc {{ search.tipo_doc == 'A' ? 'btn-success': 'btn-dark' }}"><i style="color:white !important" class="mdi mdi-clipboard-text mr-3"></i>Albaranes</button>
+            <button type="button" id="btn-facturas" class="btn btn-doc {{ search.tipo_doc == 'F' ? 'btn-success': 'btn-dark' }}"><i style="color:white !important" class="mdi mdi-clipboard-check mr-3"></i>Facturas</button>
+        </div>
+        <div class="form-row justify-content-center mt-4 pl-0">
+            <div class="col-12 col-sm-6">
+                <button type="button" id="btn-search" class="btn btn-primary btn-block"><i style="color:white !important" class="mdi mdi-magnify mr-3"></i>Buscar</button>
+            </div>
+            <div class="col-12 col-sm-6">
+                <button type="button" id="btn-clear" class="btn btn-secondary btn-block"><i class="mdi mdi-close-circle-outline mr-3"></i>Limpiar filtros</button>
+            </div>
+        </div><br>
+        <input type="hidden" id="tipo_doc" value="{{ search.tipo_doc }}">
+        <input type="hidden" id="redsys" value="{{ config.data.redsys_activar }}">
+    </form><br><br>
+    <div class="" style="max-width: 100vw;">
+        <table id="tabla-docs" class="table table-bordered table-striped nowrap w-100">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Fecha</th>
+                    <th>Serie</th>
+                    <th>Número</th>
+                    <th>Importe</th>
+                    <th>IVA</th>
+                    <th>Recargo</th>
+                    <th>Total</th>
+                    <th>Estado</th>
+                    <th>Cobro</th>
+                    <th><span class="d-lg-none">Consultar</span></th>
+                    <th><span class="d-lg-none">Descargar</span></th>
+                    <th></th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</main>
+<div class="d-none" id="dt_search">{{ dtSearch ?? '{}'}}</div>
+
+{% endblock %}
+{% block javascripts %}
+<script src="{{ asset('js/documentos-tabla.js') }}"></script>
+{% endblock %}

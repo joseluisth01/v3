@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Recursos - {{ config.title }}{% endblock %}
+
+{% block body %}
+    <main>
+        <section class="mt-5">
+            <h1 class="quienes-somos-title">Recursos</h1>
+            <br><br>
+            {% if recursos is empty %}
+                <p class="text-center">No hay recursos disponibles.</p>
+            {% else %}
+                <div class="gridrecursos">
+                    {% for recurso in recursos %}
+                        <div class="mb-4">
+                            <a href="{{ asset(recurso.archivo) }}" target="_blank">
+                                <img src="{{ asset(recurso.imagen) }}" 
+                                     class="img-fluid imgrecurso" 
+                                     alt="Recurso {% if son_recursos_default %}por defecto {% endif %}#{{ recurso.id }}"
+                                     onerror="this.src='{{ asset('images/default/no-image.webp') }}'">
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </section>
+    </main>
+{% endblock %}

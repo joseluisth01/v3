@@ -1,0 +1,102 @@
+{# art-alta-rotacion.html.twig modificado #}
+<div class="sidebar-products">
+  <div class="title">Novedades y Artículos más Solicitados</div>
+  <div class="repetidornovedades">
+    {% for art in altarotacion|slice(0, 4) %}
+      {% if art.dto_fam > 0 and art.precio_iva != 0 %}
+        <div class="item">
+          <a class="text-dark" href="{{ url('articulo', { weburl: art.url }) }}">
+            <div class="imgproductosnovedades">
+              <img src="{{ asset(art.imagen) }}" alt="{{ art.imagen_txt }}">
+            </div>
+            <div class="divcaracproductos">
+              <div class="name">{{ art.nombre }}</div>
+              <div class="divsmall small text-dark">
+                <s>{{ art.precio_iva_sin_dto | price }}</s>
+                <div class="text-dark font-weight-bold small descuento">{{ art.dto_fam }}%&nbsp;DTO</div>
+                <p class="preciofinal">{{ art.precio_iva | price }}</p>
+              </div>
+
+              <!-- Disponibilidad -->
+              <div class="d-flex align-items-center justify-content-center full-height flex-row mb-2">
+                {% if art.stock > 0 %}
+                  <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" width="20px" class="iconodisponible">
+                    <title>package-variant-closed-check</title>
+                    <path d="M12 2C11.8 2 11.6 2.1 11.4 2.2L3.5 6.6C3.2 6.8 3 7.1 3 7.5V16.5C3 16.9 3.2 17.2 3.5 17.4L11.4 21.8C11.6 21.9 11.8 22 12 22S12.4 21.9 12.6 21.8L13.5 21.3C13.2 20.7 13.1 20 13 19.3V12.6L19 9.2V13C19.7 13 20.4 13.1 21 13.3V7.5C21 7.1 20.8 6.8 20.5 6.6L12.6 2.2C12.4 2.1 12.2 2 12 2M12 4.2L18 7.5L16 8.6L10.1 5.2L12 4.2M8.1 6.3L14 9.8L12 10.9L6 7.5L8.1 6.3M5 9.2L11 12.6V19.3L5 15.9V9.2M21.3 15.8L17.7 19.4L16.1 17.8L15 19L17.8 22L22.6 17.2L21.3 15.8Z"/>
+                  </svg>
+                  <p class="disponible" style="margin-bottom:0px !important; margin-left:5px">Disponible</p>
+                {% else %}
+                  <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" width="20px" class="iconodisponible" style="fill: #dc3545;">
+                    <title>package-variant-closed-remove</title>
+                    <path d="M21.41 11.58L20 10.17L18.59 11.58L20 13L21.41 11.58M13 10.17L11.58 11.58L13 13L14.41 11.58L13 10.17M16.71 10.17L15.29 11.58L16.71 13L18.12 11.58L16.71 10.17M12 2C11.8 2 11.6 2.1 11.4 2.2L3.5 6.6C3.2 6.8 3 7.1 3 7.5V16.5C3 16.9 3.2 17.2 3.5 17.4L11.4 21.8C11.6 21.9 11.8 22 12 22S12.4 21.9 12.6 21.8L20.5 17.4C20.8 17.2 21 16.9 21 16.5V7.5C21 7.1 20.8 6.8 20.5 6.6L12.6 2.2C12.4 2.1 12.2 2 12 2M12 4.2L18 7.5L16 8.6L10.1 5.2L12 4.2M8.1 6.3L14 9.8L12 10.9L6 7.5L8.1 6.3M5 9.2L11 12.6V19.3L5 15.9V9.2M19 15.9L13 19.3V12.6L19 9.2V15.9Z"/>
+                  </svg>
+                  <p class="disponible" style="margin-bottom:0px !important; margin-left:5px; ">Sin stock</p>
+                {% endif %}
+              </div>
+
+              <!-- Contador de unidades y botón de añadir al carrito -->
+              <div class="d-flex justify-content-between align-items-center">
+                {% if art.tallas_colores is defined %}
+                  <a href="{{ url('articulo', { weburl: art.url }) }}" class="btnanadircarrito">
+                    {% if art.stock > 0 %}
+                      AÑADIR AL CARRITO
+                    {% else %}
+                      VER DETALLES
+                    {% endif %}
+                  </a>
+                {% else %}
+                  {% if art.stock > 0 %}
+                    <a href="#" class="btnanadircarrito add-item-cart" data-url="{{ art.url }}" data-ref="{{ art.referencia|toHex }}">AÑADIR AL CARRITO</a>
+                  {% else %}
+                    <a href="{{ url('articulo', { weburl: art.url }) }}" class="btnanadircarrito" style="background-color: #6c757d;">VER DETALLE</a>
+                  {% endif %}
+                {% endif %}
+              </div>
+            </div>
+          </a>
+        </div>
+      {% else %}
+        <div class="item">
+          <a class="text-dark" href="{{ url('articulo', { weburl: art.url }) }}">
+            <div class="imgproductosnovedades">
+              <img src="{{ asset(art.imagen) }}" alt="{{ art.nombre }}">
+            </div>
+            <div class="divcaracproductos">
+              <div class="name">{{ art.nombre }}</div>
+              <div class="preciofinal2">
+                {{ art.precio_iva | pricenz }}
+              </div>
+
+              <!-- Disponibilidad -->
+              <div class="d-flex align-items-center justify-content-center full-height flex-row mb-2">
+                {% if art.stock > 0 %}
+                  <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" width="20px" class="iconodisponible">
+                    <title>package-variant-closed-check</title>
+                    <path d="M12 2C11.8 2 11.6 2.1 11.4 2.2L3.5 6.6C3.2 6.8 3 7.1 3 7.5V16.5C3 16.9 3.2 17.2 3.5 17.4L11.4 21.8C11.6 21.9 11.8 22 12 22S12.4 21.9 12.6 21.8L13.5 21.3C13.2 20.7 13.1 20 13 19.3V12.6L19 9.2V13C19.7 13 20.4 13.1 21 13.3V7.5C21 7.1 20.8 6.8 20.5 6.6L12.6 2.2C12.4 2.1 12.2 2 12 2M12 4.2L18 7.5L16 8.6L10.1 5.2L12 4.2M8.1 6.3L14 9.8L12 10.9L6 7.5L8.1 6.3M5 9.2L11 12.6V19.3L5 15.9V9.2M21.3 15.8L17.7 19.4L16.1 17.8L15 19L17.8 22L22.6 17.2L21.3 15.8Z"/>
+                  </svg>
+                  <p class="disponible" style="margin-bottom:0px !important; margin-left:5px">Disponible</p>
+                {% else %}
+                  <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" width="20px" class="icononodisponible" style="color: #dc3545; fill:red">
+                    <title>package-variant-closed-remove</title>
+                    <path d="M21.41 11.58L20 10.17L18.59 11.58L20 13L21.41 11.58M13 10.17L11.58 11.58L13 13L14.41 11.58L13 10.17M16.71 10.17L15.29 11.58L16.71 13L18.12 11.58L16.71 10.17M12 2C11.8 2 11.6 2.1 11.4 2.2L3.5 6.6C3.2 6.8 3 7.1 3 7.5V16.5C3 16.9 3.2 17.2 3.5 17.4L11.4 21.8C11.6 21.9 11.8 22 12 22S12.4 21.9 12.6 21.8L20.5 17.4C20.8 17.2 21 16.9 21 16.5V7.5C21 7.1 20.8 6.8 20.5 6.6L12.6 2.2C12.4 2.1 12.2 2 12 2M12 4.2L18 7.5L16 8.6L10.1 5.2L12 4.2M8.1 6.3L14 9.8L12 10.9L6 7.5L8.1 6.3M5 9.2L11 12.6V19.3L5 15.9V9.2M19 15.9L13 19.3V12.6L19 9.2V15.9Z"/>
+                  </svg>
+                  <p class="disponible" style="margin-bottom:0px !important; margin-left:5px;">Sin stock</p>
+                {% endif %}
+              </div>
+
+              <!-- Contador de unidades y botón de añadir al carrito -->
+              <div class="d-flex justify-content-between align-items-center">
+                {% if art.stock > 0 %}
+                  <a href="#" class="btnanadircarrito add-item-cart" data-url="{{ art.url }}" data-ref="{{ art.referencia|toHex }}">AÑADIR AL CARRITO</a>
+                {% else %}
+                  <a href="{{ url('articulo', { weburl: art.url }) }}" class="btnanadircarrito" style="background-color: #6c757d;">VER DETALLES</a>
+                {% endif %}
+              </div>
+            </div>
+          </a>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+<a href="{{ path('promociones') }}" class="btnvermasarticulos">VER MÁS ARTÍCULOS</a>
+</div>
