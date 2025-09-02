@@ -64,34 +64,81 @@
 						<img src="{{ asset('images/carrito.svg') }}" width="40" height="40" alt="Carrito" title="Carrito">
 					</a>
 					<div class="nav-item dropdown">
-						<span data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button">
-							<img src="{{ asset('images/login.svg') }}" width="40" height="40" alt="Gestion" title="Gestion">
-						</span>
-						<ul class="dropdown-menu container w-auto mt-1">
-							<li>
-								{% if app.user.isAdmin %}
-									<a href="{{ url('admin') }}" class="dropdown-item py-2">
-										ADMINISTRACIÓN
-									</a>
-								{% endif %}
-							</li>
-							<li>
-								<a class="dropdown-item py-2" href="{{ url('gestion') }}">
-									GESTIÓN
-								</a>
-							</li>
-							<li>
-								<a class="dropdown-item py-2" href="{{ url('cliente-seleccion') }}">
-									SELECCIONAR CLIENTE
-								</a>
-							</li>
-							<li>
-								<a class="dropdown-item py-2" href="{{ url('app_logout') }}">
-									CERRAR SESIÓN
-								</a>
-							</li>
-						</ul>
-					</div>
+    <span data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button">
+        <img src="{{ asset('images/login.svg') }}" width="40" height="40" alt="Gestion" title="Gestion">
+    </span>
+    <ul class="dropdown-menu container w-auto mt-1">
+        {% if app.user.isClient is empty %}
+            {# Menú para administradores/gestores #}
+            {% if app.user.isAdmin %}
+                <li>
+                    <a href="{{ url('admin') }}" class="dropdown-item py-2">
+                        <i class="mdi mdi-cog mr-1"></i>ADMINISTRACIÓN
+                    </a>
+                </li>
+            {% endif %}
+            <li>
+                <a class="dropdown-item py-2" href="{{ url('gestion') }}">
+                    <i class="mdi mdi-text-box-multiple-outline mr-1"></i>GESTIÓN
+                </a>
+            </li>
+            <li>
+                <a class="dropdown-item py-2" href="{{ url('cliente-seleccion') }}">
+                    <i class="mdi mdi-account-search mr-1"></i>SELECCIONAR CLIENTE
+                </a>
+            </li>
+            <li>
+                <a href="{{ url('gestion-carritos-lista') }}" class="dropdown-item py-2">
+                    <i class="mdi mdi-cart-arrow-right mr-1"></i>CARRITOS ACTIVOS
+                </a>
+            </li>
+        {% else %}
+            {# Menú para clientes #}
+            {% if app.user.getClient != 0 %}
+                <li>
+                    <a href="{{ url('cliente-mis-datos') }}" class="dropdown-item py-2">
+                        <i class="mdi mdi-account-edit mr-1"></i>MIS DATOS
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url('documentos',{'tipo': 2}) }}" class="dropdown-item py-2">
+                        <i class="mdi mdi-clipboard-outline mr-1"></i>PEDIDOS
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url('documentos',{'tipo': 4}) }}" class="dropdown-item py-2">
+                        <i class="mdi mdi-clipboard-text-outline mr-1"></i>ALBARANES
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url('documentos',{'tipo': 8}) }}" class="dropdown-item py-2">
+                        <i class="mdi mdi-clipboard-check-outline mr-1"></i>FACTURAS
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url('cliente-top') }}" class="dropdown-item py-2">
+                        <i class="mdi mdi-chart-bar-stacked mr-1"></i>TOP COMPRAS
+                    </a>
+                </li>
+            {% endif %}
+            <li>
+                <a class="dropdown-item py-2" href="{{ url('gestion') }}">
+                    <i class="mdi mdi-text-box-multiple-outline mr-1"></i>GESTIÓN
+                </a>
+            </li>
+            <li>
+                <a class="dropdown-item py-2" href="{{ url('cliente-seleccion') }}">
+                    <i class="mdi mdi-account-search mr-1"></i>SELECCIONAR CLIENTE
+                </a>
+            </li>
+        {% endif %}
+        <li>
+            <a class="dropdown-item py-2" href="{{ url('app_logout') }}">
+                <i class="mdi mdi-logout mr-1"></i>CERRAR SESIÓN
+            </a>
+        </li>
+    </ul>
+</div>
 				{% endif %}
 			</div>
 		</div>

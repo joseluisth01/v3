@@ -16,6 +16,6 @@ if (!\class_exists(App_KernelDevDebugContainer::class, false)) {
 
 return new \ContainerOxrmmKI\App_KernelDevDebugContainer([
     'container.build_hash' => 'OxrmmKI',
-    'container.build_id' => '74682580',
-    'container.build_time' => 1742924218,
+    'container.build_id' => 'ba272735',
+    'container.build_time' => 1756807869,
 ], __DIR__.\DIRECTORY_SEPARATOR.'ContainerOxrmmKI');

@@ -184,56 +184,140 @@ class __TwigTemplate_ad728d72b5d4d451cc9ddddcc8ad8cf7 extends Template
             echo "\" width=\"40\" height=\"40\" alt=\"Carrito\" title=\"Carrito\">
 \t\t\t\t\t</a>
 \t\t\t\t\t<div class=\"nav-item dropdown\">
-\t\t\t\t\t\t<span data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\" role=\"button\">
-\t\t\t\t\t\t\t<img src=\"";
+    <span data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\" role=\"button\">
+        <img src=\"";
             // line 68
             echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("images/login.svg"), "html", null, true);
             echo "\" width=\"40\" height=\"40\" alt=\"Gestion\" title=\"Gestion\">
-\t\t\t\t\t\t</span>
-\t\t\t\t\t\t<ul class=\"dropdown-menu container w-auto mt-1\">
-\t\t\t\t\t\t\t<li>
-\t\t\t\t\t\t\t\t";
-            // line 72
-            if (twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, (isset($context["app"]) || array_key_exists("app", $context) ? $context["app"] : (function () { throw new RuntimeError('Variable "app" does not exist.', 72, $this->source); })()), "user", [], "any", false, false, false, 72), "isAdmin", [], "any", false, false, false, 72)) {
+    </span>
+    <ul class=\"dropdown-menu container w-auto mt-1\">
+        ";
+            // line 71
+            if (twig_test_empty(twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, (isset($context["app"]) || array_key_exists("app", $context) ? $context["app"] : (function () { throw new RuntimeError('Variable "app" does not exist.', 71, $this->source); })()), "user", [], "any", false, false, false, 71), "isClient", [], "any", false, false, false, 71))) {
+                // line 72
+                echo "            ";
                 // line 73
-                echo "\t\t\t\t\t\t\t\t\t<a href=\"";
-                echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getUrl("admin");
+                echo "            ";
+                if (twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, (isset($context["app"]) || array_key_exists("app", $context) ? $context["app"] : (function () { throw new RuntimeError('Variable "app" does not exist.', 73, $this->source); })()), "user", [], "any", false, false, false, 73), "isAdmin", [], "any", false, false, false, 73)) {
+                    // line 74
+                    echo "                <li>
+                    <a href=\"";
+                    // line 75
+                    echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getUrl("admin");
+                    echo "\" class=\"dropdown-item py-2\">
+                        <i class=\"mdi mdi-cog mr-1\"></i>ADMINISTRACIÓN
+                    </a>
+                </li>
+            ";
+                }
+                // line 80
+                echo "            <li>
+                <a class=\"dropdown-item py-2\" href=\"";
+                // line 81
+                echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getUrl("gestion");
+                echo "\">
+                    <i class=\"mdi mdi-text-box-multiple-outline mr-1\"></i>GESTIÓN
+                </a>
+            </li>
+            <li>
+                <a class=\"dropdown-item py-2\" href=\"";
+                // line 86
+                echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getUrl("cliente-seleccion");
+                echo "\">
+                    <i class=\"mdi mdi-account-search mr-1\"></i>SELECCIONAR CLIENTE
+                </a>
+            </li>
+            <li>
+                <a href=\"";
+                // line 91
+                echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getUrl("gestion-carritos-lista");
                 echo "\" class=\"dropdown-item py-2\">
-\t\t\t\t\t\t\t\t\t\tADMINISTRACIÓN
-\t\t\t\t\t\t\t\t\t</a>
-\t\t\t\t\t\t\t\t";
+                    <i class=\"mdi mdi-cart-arrow-right mr-1\"></i>CARRITOS ACTIVOS
+                </a>
+            </li>
+        ";
+            } else {
+                // line 96
+                echo "            ";
+                // line 97
+                echo "            ";
+                if ((twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, (isset($context["app"]) || array_key_exists("app", $context) ? $context["app"] : (function () { throw new RuntimeError('Variable "app" does not exist.', 97, $this->source); })()), "user", [], "any", false, false, false, 97), "getClient", [], "any", false, false, false, 97) != 0)) {
+                    // line 98
+                    echo "                <li>
+                    <a href=\"";
+                    // line 99
+                    echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getUrl("cliente-mis-datos");
+                    echo "\" class=\"dropdown-item py-2\">
+                        <i class=\"mdi mdi-account-edit mr-1\"></i>MIS DATOS
+                    </a>
+                </li>
+                <li>
+                    <a href=\"";
+                    // line 104
+                    echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getUrl("documentos", ["tipo" => 2]);
+                    echo "\" class=\"dropdown-item py-2\">
+                        <i class=\"mdi mdi-clipboard-outline mr-1\"></i>PEDIDOS
+                    </a>
+                </li>
+                <li>
+                    <a href=\"";
+                    // line 109
+                    echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getUrl("documentos", ["tipo" => 4]);
+                    echo "\" class=\"dropdown-item py-2\">
+                        <i class=\"mdi mdi-clipboard-text-outline mr-1\"></i>ALBARANES
+                    </a>
+                </li>
+                <li>
+                    <a href=\"";
+                    // line 114
+                    echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getUrl("documentos", ["tipo" => 8]);
+                    echo "\" class=\"dropdown-item py-2\">
+                        <i class=\"mdi mdi-clipboard-check-outline mr-1\"></i>FACTURAS
+                    </a>
+                </li>
+                <li>
+                    <a href=\"";
+                    // line 119
+                    echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getUrl("cliente-top");
+                    echo "\" class=\"dropdown-item py-2\">
+                        <i class=\"mdi mdi-chart-bar-stacked mr-1\"></i>TOP COMPRAS
+                    </a>
+                </li>
+            ";
+                }
+                // line 124
+                echo "            <li>
+                <a class=\"dropdown-item py-2\" href=\"";
+                // line 125
+                echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getUrl("gestion");
+                echo "\">
+                    <i class=\"mdi mdi-text-box-multiple-outline mr-1\"></i>GESTIÓN
+                </a>
+            </li>
+            <li>
+                <a class=\"dropdown-item py-2\" href=\"";
+                // line 130
+                echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getUrl("cliente-seleccion");
+                echo "\">
+                    <i class=\"mdi mdi-account-search mr-1\"></i>SELECCIONAR CLIENTE
+                </a>
+            </li>
+        ";
             }
-            // line 77
-            echo "\t\t\t\t\t\t\t</li>
-\t\t\t\t\t\t\t<li>
-\t\t\t\t\t\t\t\t<a class=\"dropdown-item py-2\" href=\"";
-            // line 79
-            echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getUrl("gestion");
-            echo "\">
-\t\t\t\t\t\t\t\t\tGESTIÓN
-\t\t\t\t\t\t\t\t</a>
-\t\t\t\t\t\t\t</li>
-\t\t\t\t\t\t\t<li>
-\t\t\t\t\t\t\t\t<a class=\"dropdown-item py-2\" href=\"";
-            // line 84
-            echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getUrl("cliente-seleccion");
-            echo "\">
-\t\t\t\t\t\t\t\t\tSELECCIONAR CLIENTE
-\t\t\t\t\t\t\t\t</a>
-\t\t\t\t\t\t\t</li>
-\t\t\t\t\t\t\t<li>
-\t\t\t\t\t\t\t\t<a class=\"dropdown-item py-2\" href=\"";
-            // line 89
+            // line 135
+            echo "        <li>
+            <a class=\"dropdown-item py-2\" href=\"";
+            // line 136
             echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getUrl("app_logout");
             echo "\">
-\t\t\t\t\t\t\t\t\tCERRAR SESIÓN
-\t\t\t\t\t\t\t\t</a>
-\t\t\t\t\t\t\t</li>
-\t\t\t\t\t\t</ul>
-\t\t\t\t\t</div>
+                <i class=\"mdi mdi-logout mr-1\"></i>CERRAR SESIÓN
+            </a>
+        </li>
+    </ul>
+</div>
 \t\t\t\t";
         }
-        // line 96
+        // line 143
         echo "\t\t\t</div>
 \t\t</div>
 
@@ -246,16 +330,16 @@ class __TwigTemplate_ad728d72b5d4d451cc9ddddcc8ad8cf7 extends Template
 \t</button>
 
 \t<form class=\"input-group\" action=\"";
-        // line 107
+        // line 154
         echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getUrl("search");
         echo "\" method=\"GET\" accept-charset=\"utf-8\">
 \t\t\t\t<input type=\"text\" class=\"inputsearchheader form-control no-box-shadow text-dark\" name=\"q\" placeholder=\"Buscar en la tienda...\" value=\"";
-        // line 108
-        (((array_key_exists("textSearch", $context) &&  !(null === (isset($context["textSearch"]) || array_key_exists("textSearch", $context) ? $context["textSearch"] : (function () { throw new RuntimeError('Variable "textSearch" does not exist.', 108, $this->source); })())))) ? (print (twig_escape_filter($this->env, (isset($context["textSearch"]) || array_key_exists("textSearch", $context) ? $context["textSearch"] : (function () { throw new RuntimeError('Variable "textSearch" does not exist.', 108, $this->source); })()), "html", null, true))) : (print ("")));
+        // line 155
+        (((array_key_exists("textSearch", $context) &&  !(null === (isset($context["textSearch"]) || array_key_exists("textSearch", $context) ? $context["textSearch"] : (function () { throw new RuntimeError('Variable "textSearch" does not exist.', 155, $this->source); })())))) ? (print (twig_escape_filter($this->env, (isset($context["textSearch"]) || array_key_exists("textSearch", $context) ? $context["textSearch"] : (function () { throw new RuntimeError('Variable "textSearch" does not exist.', 155, $this->source); })()), "html", null, true))) : (print ("")));
         echo "\">
 \t\t\t\t<div class=\"input-group-append\">
 \t\t\t\t\t<button type=\"submit\" class=\"botonbuscarheader btn btn-light text-dark btn-outline-secondary no-box-shadow\"><img src=\"";
-        // line 110
+        // line 157
         echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\AssetExtension']->getAssetUrl("images/buscador.svg"), "html", null, true);
         echo "\" width=\"20\" height=\"20\" alt=\"Buscar\" title=\"Buscar\"></button>
 \t\t\t\t</div>
@@ -267,82 +351,82 @@ class __TwigTemplate_ad728d72b5d4d451cc9ddddcc8ad8cf7 extends Template
 \t\t\t\t<i class=\"mdi mdi-format-list-text mr-2\"></i>CATÁLOGO
 \t\t\t</a>
 \t\t\t";
-        // line 119
+        // line 166
         if (array_key_exists("categorias", $context)) {
-            // line 120
+            // line 167
             echo "\t\t\t\t";
-            $this->loadTemplate("main/categorias.html.twig", "header/header.html.twig", 120)->display($context);
-            // line 121
+            $this->loadTemplate("main/categorias.html.twig", "header/header.html.twig", 167)->display($context);
+            // line 168
             echo "\t\t\t";
         } elseif (array_key_exists("familias", $context)) {
-            // line 122
+            // line 169
             echo "\t\t\t\t";
-            $this->loadTemplate("main/familias.html.twig", "header/header.html.twig", 122)->display($context);
-            // line 123
+            $this->loadTemplate("main/familias.html.twig", "header/header.html.twig", 169)->display($context);
+            // line 170
             echo "\t\t\t";
         }
-        // line 124
+        // line 171
         echo "\t\t</div>
 \t\t";
-        // line 125
-        if (twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, (isset($context["config"]) || array_key_exists("config", $context) ? $context["config"] : (function () { throw new RuntimeError('Variable "config" does not exist.', 125, $this->source); })()), "data", [], "any", false, false, false, 125), "promocionesboolean", [], "any", false, false, false, 125)) {
-            // line 126
+        // line 172
+        if (twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, (isset($context["config"]) || array_key_exists("config", $context) ? $context["config"] : (function () { throw new RuntimeError('Variable "config" does not exist.', 172, $this->source); })()), "data", [], "any", false, false, false, 172), "promocionesboolean", [], "any", false, false, false, 172)) {
+            // line 173
             echo "\t\t\t<span>
 \t\t\t\t<a href=\"";
-            // line 127
+            // line 174
             echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("promociones");
             echo "\" class=\"enlacenavheader\">PROMOCIONES</a>
 \t\t\t</span>
 \t\t";
         }
-        // line 130
+        // line 177
         echo "\t\t";
-        if (twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, (isset($context["config"]) || array_key_exists("config", $context) ? $context["config"] : (function () { throw new RuntimeError('Variable "config" does not exist.', 130, $this->source); })()), "data", [], "any", false, false, false, 130), "quienessomosboolean", [], "any", false, false, false, 130)) {
-            // line 131
+        if (twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, (isset($context["config"]) || array_key_exists("config", $context) ? $context["config"] : (function () { throw new RuntimeError('Variable "config" does not exist.', 177, $this->source); })()), "data", [], "any", false, false, false, 177), "quienessomosboolean", [], "any", false, false, false, 177)) {
+            // line 178
             echo "\t\t\t<span>
 \t\t\t\t<a href=\"";
-            // line 132
+            // line 179
             echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("quienessomos");
             echo "\" class=\"enlacenavheader\">QUIENES SOMOS</a>
 \t\t\t</span>
 \t\t";
         }
-        // line 135
+        // line 182
         echo "\t\t";
-        if (twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, (isset($context["config"]) || array_key_exists("config", $context) ? $context["config"] : (function () { throw new RuntimeError('Variable "config" does not exist.', 135, $this->source); })()), "data", [], "any", false, false, false, 135), "recursosboolean", [], "any", false, false, false, 135)) {
-            // line 136
+        if (twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, (isset($context["config"]) || array_key_exists("config", $context) ? $context["config"] : (function () { throw new RuntimeError('Variable "config" does not exist.', 182, $this->source); })()), "data", [], "any", false, false, false, 182), "recursosboolean", [], "any", false, false, false, 182)) {
+            // line 183
             echo "\t\t\t<span>
 \t\t\t\t<a href=\"";
-            // line 137
+            // line 184
             echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("recursos");
             echo "\" class=\"enlacenavheader\">RECURSOS</a>
 \t\t\t</span>
 \t\t";
         }
-        // line 140
+        // line 187
         echo "\t\t";
-        if ((array_key_exists("cms", $context) && twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, (isset($context["config"]) || array_key_exists("config", $context) ? $context["config"] : (function () { throw new RuntimeError('Variable "config" does not exist.', 140, $this->source); })()), "data", [], "any", false, false, false, 140), "mostrar_info_cms_nav", [], "any", false, false, false, 140))) {
-            // line 141
+        if ((array_key_exists("cms", $context) && twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, (isset($context["config"]) || array_key_exists("config", $context) ? $context["config"] : (function () { throw new RuntimeError('Variable "config" does not exist.', 187, $this->source); })()), "data", [], "any", false, false, false, 187), "mostrar_info_cms_nav", [], "any", false, false, false, 187))) {
+            // line 188
             echo "\t\t\t<div class=\"nav-item\">
 \t\t\t\t<span data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\" role=\"button\">
 \t\t\t\t\tINFORMACIÓN
 \t\t\t\t</span>
 \t\t\t\t<ul class=\"dropdown-menu container w-auto mt-1\">
 \t\t\t\t\t";
-            // line 146
+            // line 193
             $context['_parent'] = $context;
-            $context['_seq'] = twig_ensure_traversable((isset($context["cms"]) || array_key_exists("cms", $context) ? $context["cms"] : (function () { throw new RuntimeError('Variable "cms" does not exist.', 146, $this->source); })()));
+            $context['_seq'] = twig_ensure_traversable((isset($context["cms"]) || array_key_exists("cms", $context) ? $context["cms"] : (function () { throw new RuntimeError('Variable "cms" does not exist.', 193, $this->source); })()));
             foreach ($context['_seq'] as $context["_key"] => $context["item"]) {
-                // line 147
+                // line 194
                 echo "\t\t\t\t\t\t<li>
 \t\t\t\t\t\t\t<a class=\"dropdown-item py-3\" href=\"";
-                // line 148
-                echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getUrl("textos", ["item" => twig_get_attribute($this->env, $this->source, $context["item"], "web_url", [], "any", false, false, false, 148)]), "html", null, true);
+                // line 195
+                echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getUrl("textos", ["item" => twig_get_attribute($this->env, $this->source, $context["item"], "web_url", [], "any", false, false, false, 195)]), "html", null, true);
                 echo "\">
 \t\t\t\t\t\t\t\t<i class=\"mdi mdi-text-box-outline mr-1\"></i>
 \t\t\t\t\t\t\t\t";
-                // line 150
-                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["item"], "nombre", [], "any", false, false, false, 150), "html", null, true);
+                // line 197
+                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["item"], "nombre", [], "any", false, false, false, 197), "html", null, true);
                 echo "
 \t\t\t\t\t\t\t</a>
 \t\t\t\t\t\t</li>
@@ -351,13 +435,13 @@ class __TwigTemplate_ad728d72b5d4d451cc9ddddcc8ad8cf7 extends Template
             $_parent = $context['_parent'];
             unset($context['_seq'], $context['_iterated'], $context['_key'], $context['item'], $context['_parent'], $context['loop']);
             $context = array_intersect_key($context, $_parent) + $_parent;
-            // line 154
+            // line 201
             echo "\t\t\t\t\t";
-            if (twig_get_attribute($this->env, $this->source, (isset($context["config"]) || array_key_exists("config", $context) ? $context["config"] : (function () { throw new RuntimeError('Variable "config" does not exist.', 154, $this->source); })()), "formularioRecogida", [], "any", false, false, false, 154)) {
-                // line 155
+            if (twig_get_attribute($this->env, $this->source, (isset($context["config"]) || array_key_exists("config", $context) ? $context["config"] : (function () { throw new RuntimeError('Variable "config" does not exist.', 201, $this->source); })()), "formularioRecogida", [], "any", false, false, false, 201)) {
+                // line 202
                 echo "\t\t\t\t\t\t<li>
 \t\t\t\t\t\t\t<a class=\"dropdown-item py-3\" href=\"";
-                // line 156
+                // line 203
                 echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getUrl("recogida");
                 echo "\">
 \t\t\t\t\t\t\t\t<i class=\"mdi mdi-text-box-outline mr-1\"></i>
@@ -366,12 +450,12 @@ class __TwigTemplate_ad728d72b5d4d451cc9ddddcc8ad8cf7 extends Template
 \t\t\t\t\t\t</li>
 \t\t\t\t\t";
             }
-            // line 162
+            // line 209
             echo "\t\t\t\t</ul>
 \t\t\t</div>
 \t\t";
         }
-        // line 165
+        // line 212
         echo "\t</nav>
 \t<div id=\"dropdown-menu\" class=\"dropdown-menu d-none\">
 \t\t<div>
@@ -379,30 +463,30 @@ class __TwigTemplate_ad728d72b5d4d451cc9ddddcc8ad8cf7 extends Template
 \t\t\t\tCATÁLOGO
 \t\t\t</a>
 \t\t\t";
-        // line 171
+        // line 218
         if (array_key_exists("categorias", $context)) {
-            // line 172
+            // line 219
             echo "\t\t\t\t<ul class=\"dropdown-menu submenu2 mobile-menu\" style=\"display: none;\">
 \t\t\t\t\t";
-            // line 173
+            // line 220
             $context['_parent'] = $context;
-            $context['_seq'] = twig_ensure_traversable((isset($context["categorias"]) || array_key_exists("categorias", $context) ? $context["categorias"] : (function () { throw new RuntimeError('Variable "categorias" does not exist.', 173, $this->source); })()));
+            $context['_seq'] = twig_ensure_traversable((isset($context["categorias"]) || array_key_exists("categorias", $context) ? $context["categorias"] : (function () { throw new RuntimeError('Variable "categorias" does not exist.', 220, $this->source); })()));
             foreach ($context['_seq'] as $context["_key"] => $context["categoria"]) {
-                // line 174
+                // line 221
                 echo "\t\t\t\t\t\t";
-                $context["categoria_id"] = twig_get_attribute($this->env, $this->source, twig_split_filter($this->env, twig_get_attribute($this->env, $this->source, $context["categoria"], "url", [], "any", false, false, false, 174), "-"), 0, [], "array", false, false, false, 174);
-                // line 175
+                $context["categoria_id"] = twig_get_attribute($this->env, $this->source, twig_split_filter($this->env, twig_get_attribute($this->env, $this->source, $context["categoria"], "url", [], "any", false, false, false, 221), "-"), 0, [], "array", false, false, false, 221);
+                // line 222
                 echo "\t\t\t\t\t\t<li class=\"has-submenu py-1 item-menu-cat\" data-id=\"";
-                echo twig_escape_filter($this->env, (isset($context["categoria_id"]) || array_key_exists("categoria_id", $context) ? $context["categoria_id"] : (function () { throw new RuntimeError('Variable "categoria_id" does not exist.', 175, $this->source); })()), "html", null, true);
+                echo twig_escape_filter($this->env, (isset($context["categoria_id"]) || array_key_exists("categoria_id", $context) ? $context["categoria_id"] : (function () { throw new RuntimeError('Variable "categoria_id" does not exist.', 222, $this->source); })()), "html", null, true);
                 echo "\">
 \t\t\t\t\t\t\t<div class=\"d-flex align-items-center\">
 \t\t\t\t\t\t\t\t<a href=\"";
-                // line 177
-                echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getUrl("categoria-grid", ["webUrl" => twig_get_attribute($this->env, $this->source, $context["categoria"], "url", [], "any", false, false, false, 177)]), "html", null, true);
+                // line 224
+                echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getUrl("categoria-grid", ["webUrl" => twig_get_attribute($this->env, $this->source, $context["categoria"], "url", [], "any", false, false, false, 224)]), "html", null, true);
                 echo "\" class=\"dropdown-item flex-grow-1 d-flex align-items-center\" style=\"height: 35px;\">
 \t\t\t\t\t\t\t\t\t<span>";
-                // line 178
-                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["categoria"], "nombre", [], "any", false, false, false, 178), "html", null, true);
+                // line 225
+                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["categoria"], "nombre", [], "any", false, false, false, 225), "html", null, true);
                 echo "</span>
 \t\t\t\t\t\t\t\t</a>
 \t\t\t\t\t\t\t\t<button class=\"btn-toggle-submenu btn btn-sm mr-2\" type=\"button\" aria-expanded=\"false\">
@@ -410,36 +494,36 @@ class __TwigTemplate_ad728d72b5d4d451cc9ddddcc8ad8cf7 extends Template
 \t\t\t\t\t\t\t\t</button>
 \t\t\t\t\t\t\t</div>
 \t\t\t\t\t\t\t<div class=\"menu-cat dropdown-menu wrapper-fam-items submenu3\" id=\"wrapper-fam-items-";
-                // line 184
-                echo twig_escape_filter($this->env, (isset($context["categoria_id"]) || array_key_exists("categoria_id", $context) ? $context["categoria_id"] : (function () { throw new RuntimeError('Variable "categoria_id" does not exist.', 184, $this->source); })()), "html", null, true);
+                // line 231
+                echo twig_escape_filter($this->env, (isset($context["categoria_id"]) || array_key_exists("categoria_id", $context) ? $context["categoria_id"] : (function () { throw new RuntimeError('Variable "categoria_id" does not exist.', 231, $this->source); })()), "html", null, true);
                 echo "\" style=\"display: none;\">
 \t\t\t\t\t\t\t\t<div class=\"fam-items\">
 \t\t\t\t\t\t\t\t\t";
-                // line 186
+                // line 233
                 $context['_parent'] = $context;
-                $context['_seq'] = twig_ensure_traversable(twig_get_attribute($this->env, $this->source, $context["categoria"], "fam", [], "any", false, false, false, 186));
+                $context['_seq'] = twig_ensure_traversable(twig_get_attribute($this->env, $this->source, $context["categoria"], "fam", [], "any", false, false, false, 233));
                 foreach ($context['_seq'] as $context["_key"] => $context["familia"]) {
-                    // line 187
+                    // line 234
                     echo "\t\t\t\t\t\t\t\t\t\t<div>
 \t\t\t\t\t\t\t\t\t\t\t<a class=\"title\" href=\"";
-                    // line 188
-                    echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getUrl("familia-grid", ["param" => twig_get_attribute($this->env, $this->source, $context["familia"], "url", [], "any", false, false, false, 188)]), "html", null, true);
+                    // line 235
+                    echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getUrl("familia-grid", ["param" => twig_get_attribute($this->env, $this->source, $context["familia"], "url", [], "any", false, false, false, 235)]), "html", null, true);
                     echo "\">";
-                    echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["familia"], "nombre", [], "any", false, false, false, 188), "html", null, true);
+                    echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["familia"], "nombre", [], "any", false, false, false, 235), "html", null, true);
                     echo "</a>
 \t\t\t\t\t\t\t\t\t\t\t<ul class=\"mt-2\">
 \t\t\t\t\t\t\t\t\t\t\t\t";
-                    // line 190
+                    // line 237
                     $context['_parent'] = $context;
-                    $context['_seq'] = twig_ensure_traversable(twig_get_attribute($this->env, $this->source, $context["familia"], "sub", [], "any", false, false, false, 190));
+                    $context['_seq'] = twig_ensure_traversable(twig_get_attribute($this->env, $this->source, $context["familia"], "sub", [], "any", false, false, false, 237));
                     foreach ($context['_seq'] as $context["_key"] => $context["subfamilia"]) {
-                        // line 191
+                        // line 238
                         echo "\t\t\t\t\t\t\t\t\t\t\t\t\t<li class=\"service-box-v1\">
 \t\t\t\t\t\t\t\t\t\t\t\t\t\t<a href=\"";
-                        // line 192
-                        echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getUrl("subfamilia", ["param" => twig_get_attribute($this->env, $this->source, $context["subfamilia"], "url", [], "any", false, false, false, 192)]), "html", null, true);
+                        // line 239
+                        echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getUrl("subfamilia", ["param" => twig_get_attribute($this->env, $this->source, $context["subfamilia"], "url", [], "any", false, false, false, 239)]), "html", null, true);
                         echo "\">";
-                        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["subfamilia"], "nombre", [], "any", false, false, false, 192), "html", null, true);
+                        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["subfamilia"], "nombre", [], "any", false, false, false, 239), "html", null, true);
                         echo "</a>
 \t\t\t\t\t\t\t\t\t\t\t\t\t</li>
 \t\t\t\t\t\t\t\t\t\t\t\t";
@@ -447,7 +531,7 @@ class __TwigTemplate_ad728d72b5d4d451cc9ddddcc8ad8cf7 extends Template
                     $_parent = $context['_parent'];
                     unset($context['_seq'], $context['_iterated'], $context['_key'], $context['subfamilia'], $context['_parent'], $context['loop']);
                     $context = array_intersect_key($context, $_parent) + $_parent;
-                    // line 195
+                    // line 242
                     echo "\t\t\t\t\t\t\t\t\t\t\t</ul>
 \t\t\t\t\t\t\t\t\t\t</div>
 \t\t\t\t\t\t\t\t\t";
@@ -455,7 +539,7 @@ class __TwigTemplate_ad728d72b5d4d451cc9ddddcc8ad8cf7 extends Template
                 $_parent = $context['_parent'];
                 unset($context['_seq'], $context['_iterated'], $context['_key'], $context['familia'], $context['_parent'], $context['loop']);
                 $context = array_intersect_key($context, $_parent) + $_parent;
-                // line 198
+                // line 245
                 echo "\t\t\t\t\t\t\t\t</div>
 \t\t\t\t\t\t\t</div>
 \t\t\t\t\t\t</li>
@@ -464,33 +548,33 @@ class __TwigTemplate_ad728d72b5d4d451cc9ddddcc8ad8cf7 extends Template
             $_parent = $context['_parent'];
             unset($context['_seq'], $context['_iterated'], $context['_key'], $context['categoria'], $context['_parent'], $context['loop']);
             $context = array_intersect_key($context, $_parent) + $_parent;
-            // line 202
+            // line 249
             echo "\t\t\t\t</ul>
 \t\t\t";
-        } elseif (        // line 203
+        } elseif (        // line 250
 array_key_exists("familias", $context)) {
-            // line 204
+            // line 251
             echo "\t\t\t\t<ul class=\"dropdown-menu submenu2 mobile-menu\" style=\"display: none;\">
 \t\t\t\t\t";
-            // line 205
+            // line 252
             $context['_parent'] = $context;
-            $context['_seq'] = twig_ensure_traversable((isset($context["familias"]) || array_key_exists("familias", $context) ? $context["familias"] : (function () { throw new RuntimeError('Variable "familias" does not exist.', 205, $this->source); })()));
+            $context['_seq'] = twig_ensure_traversable((isset($context["familias"]) || array_key_exists("familias", $context) ? $context["familias"] : (function () { throw new RuntimeError('Variable "familias" does not exist.', 252, $this->source); })()));
             foreach ($context['_seq'] as $context["_key"] => $context["familia"]) {
-                // line 206
+                // line 253
                 echo "\t\t\t\t\t\t";
-                $context["familia_id"] = twig_get_attribute($this->env, $this->source, twig_split_filter($this->env, twig_get_attribute($this->env, $this->source, $context["familia"], "url", [], "any", false, false, false, 206), "-"), 0, [], "array", false, false, false, 206);
-                // line 207
+                $context["familia_id"] = twig_get_attribute($this->env, $this->source, twig_split_filter($this->env, twig_get_attribute($this->env, $this->source, $context["familia"], "url", [], "any", false, false, false, 253), "-"), 0, [], "array", false, false, false, 253);
+                // line 254
                 echo "\t\t\t\t\t\t<li class=\"has-submenu py-1 item-menu-cat\" data-id=\"";
-                echo twig_escape_filter($this->env, (isset($context["familia_id"]) || array_key_exists("familia_id", $context) ? $context["familia_id"] : (function () { throw new RuntimeError('Variable "familia_id" does not exist.', 207, $this->source); })()), "html", null, true);
+                echo twig_escape_filter($this->env, (isset($context["familia_id"]) || array_key_exists("familia_id", $context) ? $context["familia_id"] : (function () { throw new RuntimeError('Variable "familia_id" does not exist.', 254, $this->source); })()), "html", null, true);
                 echo "\">
 \t\t\t\t\t\t\t<div class=\"d-flex align-items-center\">
 \t\t\t\t\t\t\t\t<a href=\"";
-                // line 209
-                echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getUrl("familia-grid", ["param" => twig_get_attribute($this->env, $this->source, $context["familia"], "url", [], "any", false, false, false, 209)]), "html", null, true);
+                // line 256
+                echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getUrl("familia-grid", ["param" => twig_get_attribute($this->env, $this->source, $context["familia"], "url", [], "any", false, false, false, 256)]), "html", null, true);
                 echo "\" class=\"dropdown-item flex-grow-1 d-flex align-items-center\" style=\"height: 35px;\">
 \t\t\t\t\t\t\t\t\t<span>";
-                // line 210
-                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["familia"], "nombre", [], "any", false, false, false, 210), "html", null, true);
+                // line 257
+                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["familia"], "nombre", [], "any", false, false, false, 257), "html", null, true);
                 echo "</span>
 \t\t\t\t\t\t\t\t</a>
 \t\t\t\t\t\t\t\t<button class=\"btn-toggle-submenu btn btn-sm mr-2\" type=\"button\" aria-expanded=\"false\">
@@ -498,23 +582,23 @@ array_key_exists("familias", $context)) {
 \t\t\t\t\t\t\t\t</button>
 \t\t\t\t\t\t\t</div>
 \t\t\t\t\t\t\t<div class=\"menu-cat dropdown-menu wrapper-fam-items submenu3\" id=\"wrapper-fam-items-";
-                // line 216
-                echo twig_escape_filter($this->env, (isset($context["familia_id"]) || array_key_exists("familia_id", $context) ? $context["familia_id"] : (function () { throw new RuntimeError('Variable "familia_id" does not exist.', 216, $this->source); })()), "html", null, true);
+                // line 263
+                echo twig_escape_filter($this->env, (isset($context["familia_id"]) || array_key_exists("familia_id", $context) ? $context["familia_id"] : (function () { throw new RuntimeError('Variable "familia_id" does not exist.', 263, $this->source); })()), "html", null, true);
                 echo "\" style=\"display: none;\">
 \t\t\t\t\t\t\t\t<div class=\"fam-items\">
 \t\t\t\t\t\t\t\t\t<ul class=\"mt-2\">
 \t\t\t\t\t\t\t\t\t\t";
-                // line 219
+                // line 266
                 $context['_parent'] = $context;
-                $context['_seq'] = twig_ensure_traversable(twig_get_attribute($this->env, $this->source, $context["familia"], "sub", [], "any", false, false, false, 219));
+                $context['_seq'] = twig_ensure_traversable(twig_get_attribute($this->env, $this->source, $context["familia"], "sub", [], "any", false, false, false, 266));
                 foreach ($context['_seq'] as $context["_key"] => $context["subfamilia"]) {
-                    // line 220
+                    // line 267
                     echo "\t\t\t\t\t\t\t\t\t\t\t<li class=\"service-box-v1\">
 \t\t\t\t\t\t\t\t\t\t\t\t<a href=\"";
-                    // line 221
-                    echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getUrl("subfamilia", ["param" => twig_get_attribute($this->env, $this->source, $context["subfamilia"], "url", [], "any", false, false, false, 221)]), "html", null, true);
+                    // line 268
+                    echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getUrl("subfamilia", ["param" => twig_get_attribute($this->env, $this->source, $context["subfamilia"], "url", [], "any", false, false, false, 268)]), "html", null, true);
                     echo "\">";
-                    echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["subfamilia"], "nombre", [], "any", false, false, false, 221), "html", null, true);
+                    echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["subfamilia"], "nombre", [], "any", false, false, false, 268), "html", null, true);
                     echo "</a>
 \t\t\t\t\t\t\t\t\t\t\t</li>
 \t\t\t\t\t\t\t\t\t\t";
@@ -522,7 +606,7 @@ array_key_exists("familias", $context)) {
                 $_parent = $context['_parent'];
                 unset($context['_seq'], $context['_iterated'], $context['_key'], $context['subfamilia'], $context['_parent'], $context['loop']);
                 $context = array_intersect_key($context, $_parent) + $_parent;
-                // line 224
+                // line 271
                 echo "\t\t\t\t\t\t\t\t\t</ul>
 \t\t\t\t\t\t\t\t</div>
 \t\t\t\t\t\t\t</div>
@@ -532,72 +616,72 @@ array_key_exists("familias", $context)) {
             $_parent = $context['_parent'];
             unset($context['_seq'], $context['_iterated'], $context['_key'], $context['familia'], $context['_parent'], $context['loop']);
             $context = array_intersect_key($context, $_parent) + $_parent;
-            // line 229
+            // line 276
             echo "\t\t\t\t</ul>
 \t\t\t";
         }
-        // line 231
+        // line 278
         echo "\t\t</div>
 \t\t";
-        // line 232
-        if (twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, (isset($context["config"]) || array_key_exists("config", $context) ? $context["config"] : (function () { throw new RuntimeError('Variable "config" does not exist.', 232, $this->source); })()), "data", [], "any", false, false, false, 232), "promocionesboolean", [], "any", false, false, false, 232)) {
-            // line 233
+        // line 279
+        if (twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, (isset($context["config"]) || array_key_exists("config", $context) ? $context["config"] : (function () { throw new RuntimeError('Variable "config" does not exist.', 279, $this->source); })()), "data", [], "any", false, false, false, 279), "promocionesboolean", [], "any", false, false, false, 279)) {
+            // line 280
             echo "\t\t\t<span>
 \t\t\t\t<a href=\"";
-            // line 234
+            // line 281
             echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("promociones");
             echo "\" class=\"enlacenavheader\">PROMOCIONES</a>
 \t\t\t</span>
 \t\t";
         }
-        // line 237
+        // line 284
         echo "\t\t";
-        if (twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, (isset($context["config"]) || array_key_exists("config", $context) ? $context["config"] : (function () { throw new RuntimeError('Variable "config" does not exist.', 237, $this->source); })()), "data", [], "any", false, false, false, 237), "quienessomosboolean", [], "any", false, false, false, 237)) {
-            // line 238
+        if (twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, (isset($context["config"]) || array_key_exists("config", $context) ? $context["config"] : (function () { throw new RuntimeError('Variable "config" does not exist.', 284, $this->source); })()), "data", [], "any", false, false, false, 284), "quienessomosboolean", [], "any", false, false, false, 284)) {
+            // line 285
             echo "\t\t\t<span>
 \t\t\t\t<a href=\"";
-            // line 239
+            // line 286
             echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("quienessomos");
             echo "\" class=\"enlacenavheader\">QUIENES SOMOS</a>
 \t\t\t</span>
 \t\t";
         }
-        // line 242
+        // line 289
         echo "\t\t";
-        if (twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, (isset($context["config"]) || array_key_exists("config", $context) ? $context["config"] : (function () { throw new RuntimeError('Variable "config" does not exist.', 242, $this->source); })()), "data", [], "any", false, false, false, 242), "recursosboolean", [], "any", false, false, false, 242)) {
-            // line 243
+        if (twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, (isset($context["config"]) || array_key_exists("config", $context) ? $context["config"] : (function () { throw new RuntimeError('Variable "config" does not exist.', 289, $this->source); })()), "data", [], "any", false, false, false, 289), "recursosboolean", [], "any", false, false, false, 289)) {
+            // line 290
             echo "\t\t\t<span>
 \t\t\t\t<a href=\"";
-            // line 244
+            // line 291
             echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("recursos");
             echo "\" class=\"enlacenavheader\">RECURSOS</a>
 \t\t\t</span>
 \t\t";
         }
-        // line 247
+        // line 294
         echo "\t\t";
-        if ((array_key_exists("cms", $context) && twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, (isset($context["config"]) || array_key_exists("config", $context) ? $context["config"] : (function () { throw new RuntimeError('Variable "config" does not exist.', 247, $this->source); })()), "data", [], "any", false, false, false, 247), "mostrar_info_cms_nav", [], "any", false, false, false, 247))) {
-            // line 248
+        if ((array_key_exists("cms", $context) && twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, (isset($context["config"]) || array_key_exists("config", $context) ? $context["config"] : (function () { throw new RuntimeError('Variable "config" does not exist.', 294, $this->source); })()), "data", [], "any", false, false, false, 294), "mostrar_info_cms_nav", [], "any", false, false, false, 294))) {
+            // line 295
             echo "\t\t\t<div class=\"nav-item\" style=\"text-align:center\">
 \t\t\t\t<span class=\"enlacenavheader\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\" role=\"button\">
 \t\t\t\t\tINFORMACIÓN
 \t\t\t\t</span>
 \t\t\t\t<ul class=\"dropdown-menu container w-auto mt-1\">
 \t\t\t\t\t";
-            // line 253
+            // line 300
             $context['_parent'] = $context;
-            $context['_seq'] = twig_ensure_traversable((isset($context["cms"]) || array_key_exists("cms", $context) ? $context["cms"] : (function () { throw new RuntimeError('Variable "cms" does not exist.', 253, $this->source); })()));
+            $context['_seq'] = twig_ensure_traversable((isset($context["cms"]) || array_key_exists("cms", $context) ? $context["cms"] : (function () { throw new RuntimeError('Variable "cms" does not exist.', 300, $this->source); })()));
             foreach ($context['_seq'] as $context["_key"] => $context["item"]) {
-                // line 254
+                // line 301
                 echo "\t\t\t\t\t\t<li>
 \t\t\t\t\t\t\t<a class=\"dropdown-item py-3\" href=\"";
-                // line 255
-                echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getUrl("textos", ["item" => twig_get_attribute($this->env, $this->source, $context["item"], "web_url", [], "any", false, false, false, 255)]), "html", null, true);
+                // line 302
+                echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getUrl("textos", ["item" => twig_get_attribute($this->env, $this->source, $context["item"], "web_url", [], "any", false, false, false, 302)]), "html", null, true);
                 echo "\">
 \t\t\t\t\t\t\t\t<i class=\"mdi mdi-text-box-outline mr-1\"></i>
 \t\t\t\t\t\t\t\t";
-                // line 257
-                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["item"], "nombre", [], "any", false, false, false, 257), "html", null, true);
+                // line 304
+                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["item"], "nombre", [], "any", false, false, false, 304), "html", null, true);
                 echo "
 \t\t\t\t\t\t\t</a>
 \t\t\t\t\t\t</li>
@@ -606,13 +690,13 @@ array_key_exists("familias", $context)) {
             $_parent = $context['_parent'];
             unset($context['_seq'], $context['_iterated'], $context['_key'], $context['item'], $context['_parent'], $context['loop']);
             $context = array_intersect_key($context, $_parent) + $_parent;
-            // line 261
+            // line 308
             echo "\t\t\t\t\t";
-            if (twig_get_attribute($this->env, $this->source, (isset($context["config"]) || array_key_exists("config", $context) ? $context["config"] : (function () { throw new RuntimeError('Variable "config" does not exist.', 261, $this->source); })()), "formularioRecogida", [], "any", false, false, false, 261)) {
-                // line 262
+            if (twig_get_attribute($this->env, $this->source, (isset($context["config"]) || array_key_exists("config", $context) ? $context["config"] : (function () { throw new RuntimeError('Variable "config" does not exist.', 308, $this->source); })()), "formularioRecogida", [], "any", false, false, false, 308)) {
+                // line 309
                 echo "\t\t\t\t\t\t<li>
 \t\t\t\t\t\t\t<a class=\"dropdown-item py-3\" href=\"";
-                // line 263
+                // line 310
                 echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getUrl("recogida");
                 echo "\">
 \t\t\t\t\t\t\t\t<i class=\"mdi mdi-text-box-outline mr-1\"></i>
@@ -621,12 +705,12 @@ array_key_exists("familias", $context)) {
 \t\t\t\t\t\t</li>
 \t\t\t\t\t";
             }
-            // line 269
+            // line 316
             echo "\t\t\t\t</ul>
 \t\t\t</div>
 \t\t";
         }
-        // line 272
+        // line 319
         echo "\t</div>
 \t<script>
 \t\tdocument.addEventListener(\"DOMContentLoaded\", function () { // Menu móvil hamburguesa
@@ -874,7 +958,7 @@ this.querySelector('i').classList.replace('mdi-chevron-down', 'mdi-chevron-up');
 
     public function getDebugInfo()
     {
-        return array (  630 => 272,  625 => 269,  616 => 263,  613 => 262,  610 => 261,  600 => 257,  595 => 255,  592 => 254,  588 => 253,  581 => 248,  578 => 247,  572 => 244,  569 => 243,  566 => 242,  560 => 239,  557 => 238,  554 => 237,  548 => 234,  545 => 233,  543 => 232,  540 => 231,  536 => 229,  526 => 224,  515 => 221,  512 => 220,  508 => 219,  502 => 216,  493 => 210,  489 => 209,  483 => 207,  480 => 206,  476 => 205,  473 => 204,  471 => 203,  468 => 202,  459 => 198,  451 => 195,  440 => 192,  437 => 191,  433 => 190,  426 => 188,  423 => 187,  419 => 186,  414 => 184,  405 => 178,  401 => 177,  395 => 175,  392 => 174,  388 => 173,  385 => 172,  383 => 171,  375 => 165,  370 => 162,  361 => 156,  358 => 155,  355 => 154,  345 => 150,  340 => 148,  337 => 147,  333 => 146,  326 => 141,  323 => 140,  317 => 137,  314 => 136,  311 => 135,  305 => 132,  302 => 131,  299 => 130,  293 => 127,  290 => 126,  288 => 125,  285 => 124,  282 => 123,  279 => 122,  276 => 121,  273 => 120,  271 => 119,  259 => 110,  254 => 108,  250 => 107,  237 => 96,  227 => 89,  219 => 84,  211 => 79,  207 => 77,  199 => 73,  197 => 72,  190 => 68,  183 => 64,  179 => 63,  176 => 62,  170 => 59,  166 => 58,  161 => 56,  156 => 55,  154 => 54,  151 => 53,  144 => 48,  139 => 46,  135 => 45,  125 => 42,  121 => 41,  116 => 38,  114 => 37,  104 => 29,  98 => 25,  92 => 22,  87 => 20,  84 => 19,  81 => 18,  75 => 15,  70 => 13,  67 => 12,  64 => 11,  58 => 8,  53 => 6,  50 => 5,  48 => 4,  43 => 1,);
+        return array (  714 => 319,  709 => 316,  700 => 310,  697 => 309,  694 => 308,  684 => 304,  679 => 302,  676 => 301,  672 => 300,  665 => 295,  662 => 294,  656 => 291,  653 => 290,  650 => 289,  644 => 286,  641 => 285,  638 => 284,  632 => 281,  629 => 280,  627 => 279,  624 => 278,  620 => 276,  610 => 271,  599 => 268,  596 => 267,  592 => 266,  586 => 263,  577 => 257,  573 => 256,  567 => 254,  564 => 253,  560 => 252,  557 => 251,  555 => 250,  552 => 249,  543 => 245,  535 => 242,  524 => 239,  521 => 238,  517 => 237,  510 => 235,  507 => 234,  503 => 233,  498 => 231,  489 => 225,  485 => 224,  479 => 222,  476 => 221,  472 => 220,  469 => 219,  467 => 218,  459 => 212,  454 => 209,  445 => 203,  442 => 202,  439 => 201,  429 => 197,  424 => 195,  421 => 194,  417 => 193,  410 => 188,  407 => 187,  401 => 184,  398 => 183,  395 => 182,  389 => 179,  386 => 178,  383 => 177,  377 => 174,  374 => 173,  372 => 172,  369 => 171,  366 => 170,  363 => 169,  360 => 168,  357 => 167,  355 => 166,  343 => 157,  338 => 155,  334 => 154,  321 => 143,  311 => 136,  308 => 135,  300 => 130,  292 => 125,  289 => 124,  281 => 119,  273 => 114,  265 => 109,  257 => 104,  249 => 99,  246 => 98,  243 => 97,  241 => 96,  233 => 91,  225 => 86,  217 => 81,  214 => 80,  206 => 75,  203 => 74,  200 => 73,  198 => 72,  196 => 71,  190 => 68,  183 => 64,  179 => 63,  176 => 62,  170 => 59,  166 => 58,  161 => 56,  156 => 55,  154 => 54,  151 => 53,  144 => 48,  139 => 46,  135 => 45,  125 => 42,  121 => 41,  116 => 38,  114 => 37,  104 => 29,  98 => 25,  92 => 22,  87 => 20,  84 => 19,  81 => 18,  75 => 15,  70 => 13,  67 => 12,  64 => 11,  58 => 8,  53 => 6,  50 => 5,  48 => 4,  43 => 1,);
     }
 
     public function getSourceContext()
@@ -945,34 +1029,81 @@ this.querySelector('i').classList.replace('mdi-chevron-down', 'mdi-chevron-up');
 \t\t\t\t\t\t<img src=\"{{ asset('images/carrito.svg') }}\" width=\"40\" height=\"40\" alt=\"Carrito\" title=\"Carrito\">
 \t\t\t\t\t</a>
 \t\t\t\t\t<div class=\"nav-item dropdown\">
-\t\t\t\t\t\t<span data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\" role=\"button\">
-\t\t\t\t\t\t\t<img src=\"{{ asset('images/login.svg') }}\" width=\"40\" height=\"40\" alt=\"Gestion\" title=\"Gestion\">
-\t\t\t\t\t\t</span>
-\t\t\t\t\t\t<ul class=\"dropdown-menu container w-auto mt-1\">
-\t\t\t\t\t\t\t<li>
-\t\t\t\t\t\t\t\t{% if app.user.isAdmin %}
-\t\t\t\t\t\t\t\t\t<a href=\"{{ url('admin') }}\" class=\"dropdown-item py-2\">
-\t\t\t\t\t\t\t\t\t\tADMINISTRACIÓN
-\t\t\t\t\t\t\t\t\t</a>
-\t\t\t\t\t\t\t\t{% endif %}
-\t\t\t\t\t\t\t</li>
-\t\t\t\t\t\t\t<li>
-\t\t\t\t\t\t\t\t<a class=\"dropdown-item py-2\" href=\"{{ url('gestion') }}\">
-\t\t\t\t\t\t\t\t\tGESTIÓN
-\t\t\t\t\t\t\t\t</a>
-\t\t\t\t\t\t\t</li>
-\t\t\t\t\t\t\t<li>
-\t\t\t\t\t\t\t\t<a class=\"dropdown-item py-2\" href=\"{{ url('cliente-seleccion') }}\">
-\t\t\t\t\t\t\t\t\tSELECCIONAR CLIENTE
-\t\t\t\t\t\t\t\t</a>
-\t\t\t\t\t\t\t</li>
-\t\t\t\t\t\t\t<li>
-\t\t\t\t\t\t\t\t<a class=\"dropdown-item py-2\" href=\"{{ url('app_logout') }}\">
-\t\t\t\t\t\t\t\t\tCERRAR SESIÓN
-\t\t\t\t\t\t\t\t</a>
-\t\t\t\t\t\t\t</li>
-\t\t\t\t\t\t</ul>
-\t\t\t\t\t</div>
+    <span data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\" role=\"button\">
+        <img src=\"{{ asset('images/login.svg') }}\" width=\"40\" height=\"40\" alt=\"Gestion\" title=\"Gestion\">
+    </span>
+    <ul class=\"dropdown-menu container w-auto mt-1\">
+        {% if app.user.isClient is empty %}
+            {# Menú para administradores/gestores #}
+            {% if app.user.isAdmin %}
+                <li>
+                    <a href=\"{{ url('admin') }}\" class=\"dropdown-item py-2\">
+                        <i class=\"mdi mdi-cog mr-1\"></i>ADMINISTRACIÓN
+                    </a>
+                </li>
+            {% endif %}
+            <li>
+                <a class=\"dropdown-item py-2\" href=\"{{ url('gestion') }}\">
+                    <i class=\"mdi mdi-text-box-multiple-outline mr-1\"></i>GESTIÓN
+                </a>
+            </li>
+            <li>
+                <a class=\"dropdown-item py-2\" href=\"{{ url('cliente-seleccion') }}\">
+                    <i class=\"mdi mdi-account-search mr-1\"></i>SELECCIONAR CLIENTE
+                </a>
+            </li>
+            <li>
+                <a href=\"{{ url('gestion-carritos-lista') }}\" class=\"dropdown-item py-2\">
+                    <i class=\"mdi mdi-cart-arrow-right mr-1\"></i>CARRITOS ACTIVOS
+                </a>
+            </li>
+        {% else %}
+            {# Menú para clientes #}
+            {% if app.user.getClient != 0 %}
+                <li>
+                    <a href=\"{{ url('cliente-mis-datos') }}\" class=\"dropdown-item py-2\">
+                        <i class=\"mdi mdi-account-edit mr-1\"></i>MIS DATOS
+                    </a>
+                </li>
+                <li>
+                    <a href=\"{{ url('documentos',{'tipo': 2}) }}\" class=\"dropdown-item py-2\">
+                        <i class=\"mdi mdi-clipboard-outline mr-1\"></i>PEDIDOS
+                    </a>
+                </li>
+                <li>
+                    <a href=\"{{ url('documentos',{'tipo': 4}) }}\" class=\"dropdown-item py-2\">
+                        <i class=\"mdi mdi-clipboard-text-outline mr-1\"></i>ALBARANES
+                    </a>
+                </li>
+                <li>
+                    <a href=\"{{ url('documentos',{'tipo': 8}) }}\" class=\"dropdown-item py-2\">
+                        <i class=\"mdi mdi-clipboard-check-outline mr-1\"></i>FACTURAS
+                    </a>
+                </li>
+                <li>
+                    <a href=\"{{ url('cliente-top') }}\" class=\"dropdown-item py-2\">
+                        <i class=\"mdi mdi-chart-bar-stacked mr-1\"></i>TOP COMPRAS
+                    </a>
+                </li>
+            {% endif %}
+            <li>
+                <a class=\"dropdown-item py-2\" href=\"{{ url('gestion') }}\">
+                    <i class=\"mdi mdi-text-box-multiple-outline mr-1\"></i>GESTIÓN
+                </a>
+            </li>
+            <li>
+                <a class=\"dropdown-item py-2\" href=\"{{ url('cliente-seleccion') }}\">
+                    <i class=\"mdi mdi-account-search mr-1\"></i>SELECCIONAR CLIENTE
+                </a>
+            </li>
+        {% endif %}
+        <li>
+            <a class=\"dropdown-item py-2\" href=\"{{ url('app_logout') }}\">
+                <i class=\"mdi mdi-logout mr-1\"></i>CERRAR SESIÓN
+            </a>
+        </li>
+    </ul>
+</div>
 \t\t\t\t{% endif %}
 \t\t\t</div>
 \t\t</div>

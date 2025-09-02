@@ -42,7 +42,7 @@ abstract class SqlOrm
     protected int $numPkFields = 0;
 
     /** @var string Nombre del campo autoincremental (si existe). */
-    protected string $autoIncrementField;
+    protected string $autoIncrementField = '';
 
     /** @var bool Indica si debemos calcular un código sumando 1 al campo de la clave primaria al insertar un registro. */
     protected bool $calcCodeNewReg = false;

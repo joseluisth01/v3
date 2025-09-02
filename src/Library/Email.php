@@ -93,16 +93,21 @@ EOT;
             return false;
         }
 
-        if ($_ENV['APP_ENV'] === 'dev') {
+        // Verificar si debemos enviar emails reales o redirigir
+        $sendRealEmails = $_ENV['SEND_REAL_EMAILS'] ?? 'false';
+        $redirectEmails = $_ENV['APP_ENV'] === 'dev' && $sendRealEmails !== 'true';
+
+        if ($redirectEmails) {
             try {
                 $this->mail->addAddress('produccion@tictac-comunicacion.es');
             } catch (\Exception $e) {
             }
-            $body .= '<hr><br>Destinatarios: '.implode('; ', is_array($emails) ? $emails : [$emails]);
+            $body .= '<hr><br>Destinatarios: ' . implode('; ', is_array($emails) ? $emails : [$emails]);
             if (!empty($emailBCC)) {
-                $body.= "<br>BCC: $emailBCC";
+                $body .= "<br>BCC: $emailBCC";
             }
         } else {
+            // Envío real a los destinatarios
             if (empty($emails)) {
                 return false;
             }
@@ -152,9 +157,9 @@ EOT;
 
     private function writeLog($text)
     {
-        $logFileName = $this->config->getProjectDir().'/var/log/email.log';
+        $logFileName = $this->config->getProjectDir() . '/var/log/email.log';
         $flag = file_exists($logFileName) ? FILE_APPEND : 0;
-        $info = date('Y-m-d H:i:s').' ERROR: '.$text.PHP_EOL;
+        $info = date('Y-m-d H:i:s') . ' ERROR: ' . $text . PHP_EOL;
         file_put_contents($logFileName, $info, $flag);
     }
 }
